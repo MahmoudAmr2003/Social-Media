@@ -1,0 +1,51 @@
+.nav2 i
+{
+    color: black;
+}
+.setting
+{
+    position: absolute; top: 70px; right: 0; z-index: 99999; color: rgb(0, 0, 0); width: 0 ; background-color: white; height: 0;
+    overflow: hidden;
+}
+.showSetting
+{
+    width: 200px !important;
+    height: auto;
+   padding: 13px;
+}
+.setting p
+{
+    margin:  5px 0 !important;
+}
+.catog
+{
+    display: flex;
+    justify-content: space-between;
+align-items: center;
+color: black;
+cursor: pointer;
+padding: 0 10px;
+}
+.catog i
+{
+    color: black;
+}
+.icon
+{
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: transparent;
+    border: solid rgba(0, 0, 0, 0.111) 0.1px;
+}
+.catog:hover
+{
+    background-color: rgba(0, 0, 0, 0.188);
+}
+*
+{
+    box-sizing: border-box;
+}

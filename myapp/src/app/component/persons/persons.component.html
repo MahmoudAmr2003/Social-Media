@@ -1,0 +1,52 @@
+<section @zoomInOut class="p-4" style="height: auto;">
+
+
+
+<div class="container">
+    <div class="mx-2" >
+        <h1 style="font-weight: 600;">
+            Users
+        </h1>
+        <div class="myinput" style="position: relative;">
+            <input type="text" placeholder="search users" (keyup)="searchUsers($event)" >
+            <div class="d-flex align-items-center justify-content-center" style="position: absolute; font-size: 25px;  top: 0; height: 60px; width: 100px;">
+                <i class="fa-solid fa-magnifying-glass "></i>
+            </div>
+        </div>
+    </div>
+<div class="row w-100 h-100">
+    <div  *ngFor="let i of usersDataShowing;trackBy:trackById; let n=index" class="person col-lg-4 col-md-6 col-12  mt-3 ">
+<div [routerLink]="['/userProfile',i.docId]"  class="mycard d-flex align-items-center justify-content-between mx-2 shadow-sm p-4" style="cursor: pointer;">
+    <div class="userImg">
+        <div class="" style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden;">
+        <img [src]="i.img1" alt="" class="w-100">
+     
+        </div>
+     
+       <div >
+        <div class="cont" style="width: 200px; margin-left: 20px;">
+            <h4>{{i.fullName}}</h4>
+            <p cl class="m-0">{{i.jop}}</p>
+            </div>
+
+       </div>
+
+
+    
+</div>
+    </div>
+</div>
+</div>
+
+
+
+<div *ngIf="noresult" class="d-flex justify-content-center align-items-center w-100 " style="height: 60vh;">
+<div class="" style="width: 400px; height: 400px; text-align: center;">
+    <img src="/Search-rafiki.png" alt="" class="w-100">
+    <h1 class="m-0">No Result Found </h1>
+    <p>please Try agin</p>
+
+</div>
+</div>
+
+

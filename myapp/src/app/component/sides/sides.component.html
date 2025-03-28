@@ -1,0 +1,111 @@
+<section class="w-100 ">
+
+
+    <nav     class="navinfo justify-content-end   w-100 px-3 py-2 " style="position: fixed; z-index: 99999999999; background-color: rgb(175, 13, 13);" >
+        <div class="navinfo2 d-flex justify-content-between align-items-center px-1" style="width: 100%;">
+           
+
+            <div class="mb-1 px-3">
+                
+                <img  [src]="imgUrl" alt="" class="smallImg" style="margin-right:0px;">
+      
+       
+
+            </div>
+            <div class="" style="border-radius: 30px; background-color: rgba(143, 174, 194, 0.078);">
+            
+                <div class="d-flex align-items-center text-white justify-content-between px-2">
+                   
+                    <button (click)=" clear()"  routerLink="/notif" type="button" class="btn position-relative mx-1">
+                        <i routerLink="/notif" class="fa-solid fa-bell me-3" style="color: white;"></i>
+                    
+                        <span class="position-absolute top-0   translate-middle badge rounded-pill bg-danger">
+                          {{notifNums}}
+                          <span class="visually-hidden">unread messages</span>
+                        </span>
+                      </button>
+                
+                    <i class="fa-brands fa-facebook-messenger mx-2"></i>
+
+                    
+
+                    <button class="m-0"  mat-button>  <mat-icon>dark_mode</mat-icon></button>
+                
+                  
+
+                   
+                </div>
+            
+        
+          
+            </div>
+           
+        </div>
+       
+                 
+        </nav>
+   
+     
+
+
+</section>
+
+<div class="w-100 d-flex justify-content-center">
+
+    <div class="nav2 container mt-1 mb-0" style="position: fixed; z-index: 999999999999999999999; top: 50px;">
+        <nav class="row">
+        <div class="col-12 d-flex justify-content-around shadow-lg bg-light align-items-center" style="height: auto;">
+        <div routerLink="/home" class="icon">
+            <button type="button" class="btn" placement="bottom" ngbTooltip="Home">
+            <i class="fa-solid fa-house" ></i>
+                
+
+</button>
+        </div>
+        <div  routerLink="/persons" class="icon"> 
+             <button type="button" class="btn" placement="bottom" ngbTooltip="Poeble">
+                            <i class="fa-solid fa-user-group"></i>
+
+            </button>
+        </div>
+        <div  routerLink="/profile" class="icon">
+        
+            <button type="button" class="btn" placement="bottom" ngbTooltip="Profile">
+                <i class="fa-solid fa-user"></i>
+
+</button>
+    
+        </div>
+        <div (click)="showMenue()" class="icon">
+            <button type="button" class="btn" placement="bottom" ngbTooltip="More">
+                <i  class="fa-solid fa-bars"></i>
+
+
+</button>
+        </div>
+          
+          
+        </div>
+        <div [ngClass]="{'showSetting':show_menue}" class="setting shadow-lg">
+    <div (click)="routeTo('frinds')" class="catog" >
+        <p>My Frinds</p>
+        <i class="fa-solid fa-user-group" routerLink="/persons"></i>
+    
+    </div>
+    <div (click)="routeTo('add_data')" class="catog" >
+        <p>Edite My Profile</p>
+        <i class="fa-solid fa-user-pen"></i>
+    </div>
+    
+    <div class="catog" (click)="logOut()">
+        <p>Log Out</p>
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </div>
+    
+        </div>
+        </nav>
+        </div>
+        
+</div>
+
+    

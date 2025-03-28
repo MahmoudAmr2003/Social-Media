@@ -1,0 +1,77 @@
+
+<section   class="mt-5 w-100 h-100 d-flex justify-content-center align-items-center  shadow-sm" style=" width: 100%;background-color: white;">
+
+ 
+    <div class="resign  d-flex justify-content-start align-items-center " style="width: 80%; height: 100%; border-radius: 10px; border: solid rgba(0, 0, 0, 0.147) 0.1px; z-index: 0; position: relative;overflow: hidden; border: solid white 0.3px;">
+      
+    
+<div class="theform d-flex justify-content-center px-3" style="  padding-bottom: 10px;">
+  <div class="w-100">
+    <div class="w-100  d-flex justify-content-center">
+      <img src="/vecteezy_modern-and-professional-letter-m-initials-logo-design_10517695.jpg" alt="" class=" mx-auto" style="width: 100px; border-radius: 50%;">
+     </div>
+    <h4 class=" " >Sign Up </h4>
+
+
+    <form (ngSubmit)="resignForm(resign)" [formGroup]="resign" class="w-100 " style="width:100% !important;">
+<div class="myinputs d-flex  w-100">
+  <div  class="w-100">
+    <div class="myfield">
+      <input [ngStyle]="{'border': resign.get('name')?.errors!=null&&resign.get('name')?.touched? 'solid red':'solid rgba(0, 0, 0, 0.238) 0.5px  '}"  formControlName="name"  type="text" placeholder="Name" class=" w-100 mb-2" >
+    <div *ngIf="resign.get('name')?.errors!=null&&resign.get('name')?.touched"  style="color: red !important;  padding: 0 30px;" class="error">
+      <p *ngIf="resign.get('name')?.errors?.['required']" style="color: red;" class="m-0">Field Required</p>
+      <p *ngIf="resign.get('name')?.errors?.['pattern']">Name must be only a-z A-z  </p>
+      
+      <p *ngIf="resign.get('name')?.errors?.['minlength']">Minimum is 3 </p>
+      <p *ngIf="resign.get('name')?.errors?.['maxlength']">Maximum is 30 </p>
+    </div>
+    </div>
+<div class="myfield">
+  <input [ngStyle]="{'border': resign.get('email')?.errors!=null&&resign.get('email')?.touched? 'solid red':'solid rgba(0, 0, 0, 0.238) 0.5px  '}" formControlName="email" type="text" placeholder="Email" class="w-100 mb-2">
+<div  *ngIf="resign.get('email')?.errors!=null&&resign.get('email')?.touched" style="color: red;  padding: 0 30px;"  class="error">
+  <p *ngIf="resign.get('email')?.errors?.['required']">Email is required</p>
+      <p *ngIf="resign.get('email')?.errors?.['email']">Unavailable Email</p>
+     </div>
+</div>
+<div class="myfield w-100" style="width: 100% !important;">
+  <input [ngStyle]="{'border': resign.get('password')?.errors!=null&&resign.get('password')?.touched? 'solid red':'solid rgba(0, 0, 0, 0.238) 0.5px  '}" class="w-100" formControlName="password" type="text" placeholder=" Password" matInput [type]="hide() ? 'password' : 'text'" />
+<div *ngIf="resign.get('password')?.errors!=null&& resign.get('password')?.touched" style="color: red;  padding: 0 30px;" class="error">
+  <p *ngIf="resign.get('password')?.errors?.['required']">Password is required</p>
+  <p *ngIf="resign.get('password')?.errors?.['minlength']">Minimum is 5</p>
+  <p *ngIf="resign.get('password')?.errors?.['maxlength']"> Maximum is 30 </p>
+
+  <p *ngIf="resign.get('password')?.errors?.['pattern']">Unavailable Password</p>
+</div>
+</div>
+      <button  mat-button
+      type="button"
+      matSuffix
+      (click)="clickEvent($event)"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide()"><mat-icon>{{eye}}</mat-icon></button>
+      
+  </div>
+</div>
+    
+  <div class="d-flex justify-content-center w-100 mt-3">
+    <button  [disabled]="resign.invalid"  type="submit" class="btn btn-dark px-4 py-2 w-50">Sign Up</button>
+  </div>
+    </form>
+    <div class=" text-center mt-4 d-flex align-items-center">
+      <p>Have an account already</p>
+      <a routerLink="/login" class=" mb-3 mx-2">Sign In</a>
+     
+      <div>
+
+        </div>
+      </div>
+  </div>
+</div>
+<div class="photo d-flex justify-content-center align-items-center " style="width: 30%;">
+  <img src="/Sign up-rafiki.png" alt="kkkk" class="w-100">
+</div>
+
+
+</div>
+</section>
+

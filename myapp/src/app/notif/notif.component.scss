@@ -1,0 +1,17 @@
+.photo
+{
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 50%;
+    padding: 0;
+    border: solid rgba(0, 0, 0, 0.097) 0.1px;
+
+}
+@media only screen and (max-width:1000px)
+{
+    .content
+    {
+        font-size: 12px;
+    }
+}

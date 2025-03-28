@@ -1,0 +1,90 @@
+
+
+@media only screen and (max-width:1200px)
+{
+    .theform
+    {
+        width: 100% !important;
+
+    }
+    .photo
+    {
+        display: none !important;
+        overflow: hidden;
+    }
+    .error
+    {
+        left: 30% !important;
+    }
+   
+    .resign
+    {
+        width: 90% !important;
+        height: 80vh !important;
+    }
+  
+}
+.resign
+{
+    height:auto;
+}
+.Resign::after
+{
+    content:'';
+background-color: rgb(249, 4, 249);
+width: 150px;
+height: 150px;
+top: -75px;
+position: absolute;
+left: -75px;
+transform: rotate(45deg);
+}
+.Resign
+{
+    position: relative;
+    overflow: hidden;
+
+}
+.error p
+{
+color: red !important;
+margin: 0 !important;
+}
+
+input
+{
+    background-color: transparent;
+    color: rgb(244, 2, 244) !important;
+    padding:10px 50px;
+}
+input:focus
+{
+    background-color: transparent;
+}
+.myfield
+{
+    position: relative;
+    margin-top: 10px;
+}
+.error
+{
+    position: absolute;
+    top: 0;
+    font-size: 14px;
+    left: 48%;
+}
+
+
+
+.theform
+{
+    width: 70%;
+}
+.photo
+{
+    width: 30%;
+}
+.hide
+{
+    display: none !important;
+}

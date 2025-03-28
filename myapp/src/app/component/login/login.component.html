@@ -1,0 +1,77 @@
+
+
+<section class=" w-100     d-flex justify-content-center align-items-center shadow-sm mt-5  py-2" style=" width: 100%; position: relative; background-color: white; color: black;">
+ 
+    <div class="resign d-flex justify-content-start p-2 " style="width: 80%; height: 100%; border-radius: 10px; border: solid rgba(0, 0, 0, 0.147) 0.1px; z-index: 0; position: relative;overflow: hidden; border: solid white 0.3px;">
+    
+    <div class="theform  d-flex justify-content-center px-3 align-items-center" style="    padding-bottom: 10px;">
+      <div class="w-100">
+        <div class="w-100  d-flex justify-content-center">
+          <img src="/vecteezy_modern-and-professional-letter-m-initials-logo-design_10517695.jpg" alt="" class=" mx-auto" style="width: 100px; border-radius: 50%;">
+         </div>
+        <h4 class="m-4 ">Log In</h4>
+        <form [formGroup]="login" (ngSubmit)="loginForm(login)">
+    <div class="myinputs d-flex justify-content-center w-100">
+      <div class="w-100">
+      <div class="mb-3" style="position: relative;">
+        <input   [ngStyle]="{'border': login.get('email')?.errors!=null&&login.get('email')?.touched? 'solid red':' solid rgba(0, 0, 0, 0.238) 0.5px  '}" formControlName="email" type="text" placeholder="Email" class=" ">
+<div class="px-3 d-flex justify-content-start align-items-center" style="width: 100%; height: 100%; position: absolute; top: 0; z-index: -1;">
+  <mat-icon class="icon">account_circle</mat-icon>
+
+</div>
+    
+    <div class="warn"  *ngIf="login.get('email')?.errors!=null&&login.get('email')?.touched">
+      <p *ngIf="login.get('email')?.errors?.['required']">Email is required</p>
+          <p *ngIf="login.get('email')?.errors?.['email']">Unavailable Email</p>
+         </div>
+        </div>
+         <div class="" style="position: relative;">
+          <input   [ngStyle]="{'border': login.get('password')?.errors!=null&&login.get('password')?.touched? 'solid red':' solid rgba(0, 0, 0, 0.238) 0.5px  '}"  formControlName="password"  type="text" placeholder="Password" class=" mb-0" matInput [type]="hide() ? 'password' : 'text'" />
+
+          <div class="px-3 d-flex justify-content-start align-items-center" style="width: 100%; height: 100%; position: absolute; top: 0; z-index: -1;">
+            <mat-icon class="icon">account_circle</mat-icon>
+          
+          </div>
+  
+    <div class="warn" *ngIf="login.get('password')?.errors!=null&& login.get('password')?.touched">
+      <p *ngIf="login.get('password')?.errors?.['required']"> Password is required</p>
+      <p *ngIf="login.get('password')?.errors?.['minlength']">Minimum is 5</p>
+      <p *ngIf="login.get('password')?.errors?.['maxlength']">Maximum is 30</p>
+    
+      <p *ngIf="login.get('password')?.errors?.['pattern']">Unavailable Password</p>
+    </div>
+    
+  </div>
+          <button class="mt-0" mat-button
+          type="button"
+          matSuffix
+          (click)="clickEvent($event)"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide()"><mat-icon>{{eye}}</mat-icon></button>
+      </div>
+    </div>
+      
+      <div class="d-flex justify-content-center w-100 mt-3">
+      </div>
+<div class="w-100  d-flex justify-content-center">
+  <button [disabled]="login.invalid" type="submit"  class="btn btn-dark px-4 py-2 w-50" style="border-radius:0;">Log in</button>
+
+</div>    
+        </form>
+        <div class="text-center mt-3 d-flex justify-content-between">
+       <div class="d-flex">
+        <p> Have not an account </p>
+        <a routerLink="/resign"  class=" mb-3 mx-2">Sign Up</a>
+       </div>
+        
+          </div>
+      </div>
+    </div>
+  
+    </div>
+    <div *ngIf="load==true" [hidden]="!load"  class="w-100 d-flex justify-content-center align-items-center " style="height: 100%; position:absolute; top: 0;">
+      <app-loading></app-loading>
+  </div>
+    </section>
+ 
+

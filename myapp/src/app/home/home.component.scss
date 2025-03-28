@@ -1,0 +1,53 @@
+.user_Info
+{
+    height: auto;
+   
+}
+.Search_add
+{
+    border-radius: 5px;
+}
+
+.Search_add button,input
+{
+    border-radius: 25px;
+}
+.plus_icon
+{
+    color: white;
+    margin-left: 5px;
+}
+p,h6
+{
+    margin: 0;
+    padding: 0;
+}
+
+
+.home_header
+{
+
+    padding: 20px;
+    color: green;
+}
+.home_header i
+{
+    font-size: 19px;
+}
+
+.icon i
+{
+font-size: 30px;
+}
+
+.addPost i
+{
+font-size: 30px;
+}
+@media only screen and (max-width:768px)
+{
+.col-md-4
+{
+display: none;
+}
+}

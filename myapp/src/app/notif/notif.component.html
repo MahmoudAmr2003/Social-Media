@@ -1,0 +1,18 @@
+<div class="container p-2">
+    <div class="row">
+    <div *ngFor="let notif of sortedNotifications;trackBy:trackById"  class="col-11 mx-auto mt-2  shadow-sm px-3 py-2" routerLink="/frinds">
+<div class="d-flex align-items-center">
+    <div class="photo">
+<img [src]="notif.image" alt="" class="w-100">
+
+    </div>
+    <div class="content mx-3">
+        <p >{{notif.message}} <span style=" font-weight: 600;" class="text-info">{{notif.name}}</span></p>
+        <p style="font-size: 11px ;color: gray;">{{notif.date?.toDate()|date:'short'}}</p>
+
+    </div>
+    <hr>
+</div>
+    </div>
+    </div>
+</div>

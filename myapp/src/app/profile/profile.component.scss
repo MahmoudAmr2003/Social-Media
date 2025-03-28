@@ -1,0 +1,164 @@
+@media only screen and (max-width:768px)
+{
+  
+.mydialog
+{
+  top: 300px;
+}
+.alert_deleting p
+ {
+  font-size: 10px;
+ }
+}
+
+.alert_deleting
+{
+  position: absolute; top: -0 !important; z-index: 9999;
+}
+.alert_deleting p
+{
+color: white;
+}
+
+.cover
+{
+width: 100%;
+margin: auto;
+  background-repeat: no-repeat;
+  height:60vh;
+  background-size:100% 100%;
+}
+.field
+{
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+i
+{
+
+  margin-right: 9px;
+}
+p
+{
+
+margin: 0 !important;
+}
+.userinfo
+{
+  margin-top: 50px;
+  width:100%;
+}
+// profile image
+.profileImg
+{
+  width:180px; height: 180px; border-radius: 50%; overflow: hidden; position: absolute; bottom: -80px; border: solid white 5px;
+  margin-right: 50px;
+}
+// 
+
+
+
+// icon_stylign
+.icon
+{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: solid rgba(0, 0, 0, 0.275) 0.1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.icon i 
+{
+  font-size: 20px;
+}
+.icon:hover
+{
+  background-color: red;
+  color: white;
+}
+
+
+
+.postType
+{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position:  relative !important;
+  overflow: hidden;
+  width: 100%;
+  margin: 20px 0;
+}
+
+
+.dialog
+{
+  width: 0;
+  height: auto;
+  overflow: hidden;
+
+  top:70%;
+  right: 400px;
+  transition: all 0.4s;
+
+
+}
+.showDialog
+{
+ 
+  width: 200px;
+  height: auto;
+  transition: all 0.4s;
+ 
+  border: solid rgba(0, 0, 0, 0.193) 0.3px;
+}
+.wrong
+{
+  top: 0;
+  left: 0;
+}
+.photo
+{
+  width: 50px ; height: 50px ; border-radius: 50%; overflow: hidden;
+}
+label
+{
+  height: 100px;
+ 
+}
+.label
+{
+  background-color: red !important;
+
+}
+
+
+// 
+
+
+p,h6
+{
+    margin: 0;
+    padding: 0;
+}
+.date
+{
+    font-size: 12px;
+    color: gray;
+}
+
+
+
+.menu 
+{
+ 
+  padding: 5px 10px;
+}
+.delete:hover
+{
+  color: red !important;
+  background-color: rgba(255, 0, 0, 0.347);
+}

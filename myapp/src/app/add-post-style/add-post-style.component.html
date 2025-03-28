@@ -1,0 +1,28 @@
+<div class="addPost  my-2 " style="position: relative;">
+    <hr>
+<div class="m-0">
+    <h6 class="p-0 m-0">Publich some thing</h6>
+    <div class="d-flex align-items-center mt-0">
+
+  <div (click)="showDialog()"   class="icon mt-0 p-4" style="border: solid rgba(255, 255, 255, 0.193) 0.3px; ">
+            <i class="fa-solid fa-plus m-0"></i>
+        </div>
+
+        
+<div  [class.showDialog]="show_dialog" class="dialog shadow-slgm mt-3"  style="margin-left: 30px;">
+   
+
+    <div routerLink="/addPost"  class="postType ">
+
+    <p appChangeColor="orange"><i class="fa-solid fa-pen-clip"></i></p>
+    <p>Post</p>
+
+    </div>
+        <div routerLink="/addImg"  class="postType ">
+         <p appChangeColor="green">  <i class="fa-solid fa-image"></i></p>
+         <p >Photo</p>
+  </div>
+</div>
+ </div>
+</div>
+</div>

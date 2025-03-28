@@ -1,0 +1,30 @@
+@media only screen and (max-width:768px)
+{
+  .bg
+  {
+    height: 40vh !important;
+  }
+}
+.gender
+{
+  width:70px ;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hide
+{
+width: 0 !important;
+transition: all 0.4s ease-out;
+overflow: hidden;
+padding: 0;
+height: 0;
+}
+.show
+{
+  width:100% !important;
+height: 100vh;
+  transition: all 0.4s 0.4s ;
+}
+/* HTML: <div class="loader"></div> */

@@ -1,0 +1,89 @@
+import { Routes } from '@angular/router';
+import { ResignComponent } from './component/resign/resign.component';
+import { LoginComponent } from './component/login/login.component';
+import { mygardGuard } from './gards/mygard.guard';
+import { SidesComponent } from './component/sides/sides.component';
+import { AddProfileDataComponent } from './component/add-profile-data/add-profile-data.component';
+
+import { PersonsComponent } from './component/persons/persons.component';
+import { LoadingComponent } from './loading/loading.component';
+
+
+
+
+
+
+export const routes: Routes = [
+
+    {path:"",redirectTo:'login',pathMatch:'full'},
+    {path:"login",component:LoginComponent},
+ 
+    {path:"side",canActivate:[mygardGuard],component:SidesComponent},
+    {path:"add_data",canActivate:[mygardGuard],component:AddProfileDataComponent},
+    {path:"load",component:LoadingComponent},
+
+    {path:"resign",component:ResignComponent},
+
+    {
+        path: 'frindsrequests', 
+     
+        canActivate:[mygardGuard],
+        loadComponent: () => import('./component/frindsrequests/frindsrequests.component').then(m => m.FrindsrequestsComponent),
+      },
+      {
+        path: 'addPost', 
+     
+        canActivate:[mygardGuard],
+        loadComponent: () => import('./add-post/add-post.component').then(m => m.AddPostComponent),
+      },
+      {
+        path: 'post', 
+     
+        canActivate:[mygardGuard],
+        loadComponent: () => import('./the-post/the-post.component').then(m => m.ThePostComponent),
+      },
+      {
+        path: 'addImg', 
+     
+        canActivate:[mygardGuard],
+        loadComponent: () => import('./add-img-post/add-img-post.component').then(m => m.AddImgPostComponent),
+      },
+      {
+        path: 'home', 
+     
+        canActivate:[mygardGuard],
+        loadComponent: () => import('./home/home.component').then(m => m.HomeComponent),
+      },
+      
+
+     
+      {
+        path: 'profile', 
+     
+        canActivate:[mygardGuard],
+        loadComponent: () => import('./profile/profile.component').then(m => m.ProfileComponent),
+      },
+
+      {
+        path:'userProfile/:id',
+        canActivate:[mygardGuard,],
+        loadComponent:()=> import('./component/user/user.component').then(m=>m.UserComponent),
+      },
+      {
+        path:'persons',
+        canActivate:[mygardGuard,],
+component:PersonsComponent
+      },
+      {
+        path:'frinds',
+        canActivate:[mygardGuard,],
+loadComponent:()=>import('./frinds/frinds.component').then(m=>m.FrindsComponent)
+      },
+
+      {
+        path:'notif',
+        canActivate:[mygardGuard],
+        loadComponent:()=>import('./notif/notif.component').then(m=>m.NotifComponent)
+      }
+
+];

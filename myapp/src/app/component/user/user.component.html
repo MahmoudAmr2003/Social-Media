@@ -1,0 +1,109 @@
+<section @zoomInOut>
+
+    <div class="pageHeader" style="height: 90vh;">
+        <div class="w-100 " style="overflow: hidden; position: relative; height: 70%;">
+        <img [src]="profileData.img2" alt="" class="w-100" height="150%">
+        
+        </div>
+        <div>
+           
+           
+            <div  class="d-flex justify-content-start align-items-center px-3">
+        
+        
+              
+                <div style=" width: 150px; height: 150px; border-radius: 50%; border: solid white 3px; bottom: 20px;  overflow: hidden; position: relative;  " >
+                    <img [src]="profileData.img1" alt="" class="w-100">
+                        </div>
+                        <div class="mx-2">
+                            <h1>{{profileData.fullName}}</h1>
+                        </div>
+           </div>
+        <div *ngIf="profileData.userId!=myId" class="w-100">
+            <div *ngIf="!isMyfrind">
+                <div *ngIf="!isImResived" class="px-3">
+                    <button *ngIf="!isISended" (click)="sendRequest()" class="btn btn-primary p-2">Add Frind</button>
+                    <button *ngIf="isISended" disabled class="btn btn-light p-2">Request Added</button>
+                    </div>
+                    <div class="px-4" *ngIf="isImResived"  >  
+                     <p>{{profileData.fullName}} sended a request to you</p>
+                     <div class="d-flex justify-content-start align-items-center" style="width: 20%;">
+                         <button (click)="AcceptRequestToMe(profileData.userId,profileData.img1,profileData.fullName);AcceptRequestToFrind();CancleRequest()"  class="btn btn-primary p-1 mx-2">Accept</button>
+                         <button (click)="CancleRequest()" class="btn btn-danger p-1">Cancle</button>
+                     </div>
+                    </div>
+            </div>
+            <div *ngIf="isMyfrind" class="mt-3 w-100">
+              <h5 class=" p-2 mx-auto" style="color: forestgreen;">Your Frind</h5>
+            </div>
+        </div>
+        <div  *ngIf="profileData.userId==myId" class="text-center">
+            <h1>You</h1>
+        </div>
+        </div>
+        
+        
+        
+        </div>
+        <!--  -->
+        
+        
+        
+        
+        
+        <!--  -->
+        <mat-tab-group mat-align-tabs="end" class="mt-4">
+        
+            <mat-tab label="Posts">
+        
+        <app-the-post [allPosts]="userPosts"></app-the-post>
+        
+            </mat-tab>
+        
+         <!--  -->
+            <mat-tab label="About : {{profileData.fullName}}">
+                <div class="container w-100 bf-danger" >
+                    <div class="row">
+                        <div class="col-md-11 mx-auto text-center py-5">
+                            <h2 class="text-info">{{profileData.fullName}}</h2>
+                            <h3 class="mt-3 ">{{profileData.jop}}</h3>
+                            <h4 class="mt-3 text-info">{{profileData.mobilePhone}}</h4>
+                            <h5 class="mt-3">{{profileData.gender}}</h5>
+                            <h6 class="mt-3">{{profileData.data}}</h6>
+                            <p>Love the {{profileData.hobbies}}</p>
+                            
+                            <p></p>
+        
+                        </div>
+                    </div>
+                    </div>
+            </mat-tab>
+            <!--  -->
+            <mat-tab label="More">
+                <div class="container w-100 bf-danger" style="height: 400px;">
+                    <div class="row">
+                        
+        <div class="mt-3 w-100">
+            <div>
+                <h6>Frinds</h6>
+              
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <div *ngFor="let frind of userFrinds|slice:0:7;trackBy:trackById2" >
+                    <div style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden;">
+                    <img [src]="frind.frindImg" alt="" class="w-100">
+                    </div>
+                        </div>
+              </div>
+                        <button class="btn btn-light p-2 ">See All</button>
+            </div>
+        
+        
+            
+        </div>
+                    </div>
+                    </div>
+            </mat-tab>
+          </mat-tab-group>
+</section>

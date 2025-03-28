@@ -1,0 +1,11 @@
+
+  <div *ngIf="isLogged" class="w-100" style=" top:0; left: 0;">
+    <app-sides></app-sides>
+
+  </div>
+ <div style="position: absolute; top:100px;" class=" rout d-flex justify-content-center w-100 mt-0 p-0" >
+  <div [ngClass]="{'rout':isLogged}" class="container mt-0" >
+    <router-outlet></router-outlet>
+</div>
+
+ </div>

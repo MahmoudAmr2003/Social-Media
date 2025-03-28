@@ -1,0 +1,95 @@
+<section   class="profile w-100  p-4 m-0" style="position: relative; " @zoomInOut>
+
+
+
+<div >
+    <!--  background and Profile Images -->
+    <div class="cover d-flex justify-content-end w-100" [ngStyle]="{'background-image':'url('+profilData.img1+')'}" style="position: relative;">
+    <div  class="profileImg d-flex ">
+        <img [src]="profilData.img2" alt="" class="w-100">
+    </div>
+
+</div> 
+<!--  -->
+
+
+<!--  user Information -->
+<div   class="userinfo shadow-sm mt-4 data py-4 mx-auto" style=" border-radius: 10px; border: solid rgba(255, 255, 255, 0.477) 0.5px;cursor: pointer;">
+    <div class="px-4">
+        <h6  >About me:</h6>
+    </div>
+<div>
+<div class="field w-100 justify-content-between px-3">
+<div class="d-flex align-items-center">
+    <i class="fa-solid fa-signature"></i>
+<p > {{profilData.fristname}}{{profilData.lastname}}</p>
+</div>
+<div class="d-flex align-items-center" style="width: 120px;">
+    <i class="fa-solid fa-phone"></i>
+    <p>{{profilData.mobilePhone}}</p>
+</div>
+</div>
+
+<div class="field w-100 justify-content-between  px-3">
+    <div class="d-flex infield  align-items-center " style="width: 120px;">
+
+        <i class="fa-solid fa-user"></i>
+    <p>{{profilData.gender}}</p>
+    </div>
+    <div class="d-flex  align-items-center" style="width: 120px">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <p>{{profilData.role}}</p>
+    </div>
+    </div>
+
+<div class="field w-100 justify-content-between px-3">
+    <div class="d-flex justify-content-start  infield align-items-center">
+        <i class="fa-solid fa-plane-circle-check"></i>
+    <p>{{profilData.jop}}</p>
+    </div>
+    <div class="d-flex align-items-center" style="width: 120px;">
+        <i class="fa-solid fa-earth-americas"></i>
+        <p> {{profilData.city}}</p>
+    </div>
+    </div>
+ 
+        <div class="field w-100 justify-content-between px-3">
+            <div class="d-flex justify-content-start  infield align-items-center">
+                <i class="fa-solid fa-envelope"></i>
+            <p>{{profilData.email}}</p>
+            </div>
+          
+            </div>
+          
+</div>
+
+<div class="text-center my-3 text-primary">
+    <h6>{{profilData.info}}</h6>
+    </div>
+</div>
+<!--  -->
+
+<!--  Pluse Icon to Add Post -->
+
+<!--  -->
+</div>
+</section>
+
+
+
+    <!--  -->
+<hr>
+
+
+
+<app-the-post [allPosts]="allPosts"></app-the-post>
+
+        
+  
+
+    
+        <!--  -->
+
+
+            
+

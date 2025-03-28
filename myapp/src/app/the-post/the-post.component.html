@@ -1,0 +1,105 @@
+
+<ng-container *ngIf="allPosts.length>0; else noPosts">
+    <div  *ngFor="let post of allPosts;let n=index;trackBy:trackById" class="post my-3 shadow-sm  text-white " style="border:  dashed white 0.2px; color: white !important; font-weight: 500;"> 
+        <!-- head of the post -->
+    <div>
+        <div class="post_head  w-100 d-flex align-items-center justify-content-between mx-auto px-3">
+    
+           <div class="d-flex align-items-center">
+            <div class="img_container" (click)="userProfile(post.id)">
+                <img [src]="post.postOwnerImg" alt="" class="w-100">
+                </div>
+                
+                <div class="mx-3">
+                <h6>{{post.postOwnerName}}</h6>
+                <p class="date m-0">{{post.date.toDate()|date:'short'}}</p>
+                </div>
+           </div>
+     <div>
+        <i class="bi bi-three-dots-vertical m-0"></i>
+     </div>
+            </div>
+    </div>
+    <!--post content  -->
+    <div class="text-center " style="word-wrap: break-word;">
+    <h3 [ngStyle]="{'color':post.postBg}">{{post.post}}</h3>
+    </div>
+    
+    <div>
+        <div class="w-100 mx-auto p-3 ">
+            <p>{{post.cabtio}}</p>
+        </div> 
+        <div *ngIf="post.imgUrl" class="w-100 d-flex justify-content-center">
+            <img [src]="post.imgUrl" alt="" class="w-100 mx-auto" style="max-height: 600px;">
+        </div>
+    
+    </div>
+    <hr>
+    <!-- comments && likes -->
+    <div class="comments_likes container  shadow-sm bg-dark" style="height: 40px; border: none;">
+    <div class="row h-100">
+    <div class="col-4 icon  h-100 ">
+          <i (click)="getLike(post.docId,post.likes,post.id)" [ngStyle]="{'color' :isLiked(post.likes)? 'red':'white'}" class="bi bi-heart-fill"></i>
+    
+        <p *ngIf="post.likes"  style="color: white;" class="m-0 mx-2">{{post.likes.length}}</p>
+    </div>
+<!-- commentes -->
+    <div class="col-4 icon">
+
+
+<i (click)="openComments()"   class="bi bi-chat-heart-fill"></i>
+    
+    </div>
+    <div class="col-4 icon">
+        <i class="bi bi-arrow-return-right"></i>
+    </div>
+    </div>
+    </div>
+    
+    
+    </div>
+    
+</ng-container>
+
+<div>
+
+    <div [ngClass]="{'showPcommment':showComments}" class="pcomment">
+
+        <div class="" style="overflow-y: auto;" >
+          <div style="position: fixed;">
+            <p class="text-dark m-4">Comments</p>
+          </div>
+            <div  *ngFor="let i of allPosts"  class=" d-flex justify-content-end  my-2 p-2">
+                <div  class="comment mx-3">
+                <h6 style="color: black;">{{i.postOwnerName}}</h6>
+    
+                    ونعم بالله اللهم بلغنا ليلية لبقدر وتقبلها منا  امين
+                </div>
+            <div class="d-flex align-items-center justify-content-around">
+    
+                <div class="img mx-2" style="width: 40px; height: 40px;">
+                    <img [src]="i.postOwnerImg" alt="" class="w-100">
+                </div>
+    
+            </div>
+            
+           
+              </div>
+             
+              
+                        
+            </div> 
+            <div class="d-flex justify-content-start align-items-center p-3" style="background-color: white;  position: sticky;
+  bottom: 0; ">
+                <input type="text" name="" id="" class="w-100 px-2 py-1" placeholder="Add Comment">
+                <button class="btn btn-light mx-2">Send</button>
+                         </div> 
+    </div>
+</div>
+
+
+
+<ng-template #noPosts>
+    <h1>لا يوجد بوستات حتى الآن</h1>
+  </ng-template>
+
