@@ -36,10 +36,11 @@ const MysecondaryApp=initializeApp(secondaryApp,'secondary');
 
 bootstrapApplication(AppComponent, {
   providers: [
+    
     provideHttpClient(),
     provideAnimationsAsync(),
     provideRouter(routes),
-  provideFirebaseApp(()=>initializeApp(environment.firebase)) , provideFirestore(() => getFirestore()), provideStorage(() => getStorage(MysecondaryApp)),
+  provideFirebaseApp(()=>initializeApp(environment.firebase)) , provideFirestore(() => getFirestore()), provideStorage(() => getStorage(MysecondaryApp)), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync(),
   
   
   

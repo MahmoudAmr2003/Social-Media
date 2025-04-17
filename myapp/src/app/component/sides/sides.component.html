@@ -29,7 +29,7 @@
 
                     
 
-                    <button class="m-0"  mat-button>  <mat-icon>dark_mode</mat-icon></button>
+                 
                 
                   
 
@@ -55,8 +55,8 @@
     <div class="nav2 container mt-1 mb-0" style="position: fixed; z-index: 999999999999999999999; top: 50px;">
         <nav class="row">
         <div class="col-12 d-flex justify-content-around shadow-lg bg-light align-items-center" style="height: auto;">
-        <div routerLink="/home" class="icon">
-            <button type="button" class="btn" placement="bottom" ngbTooltip="Home">
+        <div  class="icon">
+            <button (click)="routeTo('/home')" type="button" class="btn" placement="bottom" ngbTooltip="Home">
             <i class="fa-solid fa-house" ></i>
                 
 
@@ -96,11 +96,18 @@
         <p>Edite My Profile</p>
         <i class="fa-solid fa-user-pen"></i>
     </div>
+
+    <div class="catog" routerLink="/savedPosts">
+        <p>Saved Posts </p>
+        <i class="fa-solid fa-bookmark"></i>
+    </div>
     
     <div class="catog" (click)="logOut()">
         <p>Log Out</p>
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
     </div>
+    
+  
     
         </div>
         </nav>

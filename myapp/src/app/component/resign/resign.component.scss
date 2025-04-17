@@ -39,6 +39,10 @@ position: absolute;
 left: -75px;
 transform: rotate(45deg);
 }
+p
+{
+    color: black;
+}
 .Resign
 {
     position: relative;
@@ -54,7 +58,7 @@ margin: 0 !important;
 input
 {
     background-color: transparent;
-    color: rgb(244, 2, 244) !important;
+width: 100%;  
     padding:10px 50px;
 }
 input:focus

@@ -8,6 +8,7 @@ import { LoadingComponent } from '../../loading/loading.component';
 
 import { ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { FireService } from '../../fire.service';
 
 
 @Component({
@@ -30,9 +31,8 @@ mahmoud:string='Mahmoud';
     password:new FormControl(null,[Validators.minLength(5),Validators.maxLength(20),Validators.pattern('^[a-zA-Z0-9\u0621-\u064A\u0660-\u0669]+$'),Validators.required]),
   })
   
-  constructor(private _AuthService:AuthService, private _Router:Router,private cd:ChangeDetectorRef)
+  constructor(private _AuthService:AuthService, private _Router:Router,private cd:ChangeDetectorRef, private _FireService:FireService)
   {
-
   }
   ngOnChanges(): void {
   
@@ -50,8 +50,11 @@ this.isSubscribe= this._AuthService.login(login.value).subscribe(
   
       this._AuthService.isLogged.next(true);
     localStorage.setItem("userDataTaken","done");
-    this._Router.navigate(['/profile']);
+    this._Router.navigate(['/home']);
     localStorage.setItem("userId",response.localId);
+this.getmyInfo();
+
+
      
 },
 error:(error)=>{
@@ -67,10 +70,30 @@ alert("Error");
 }
 
 
+subscription:any[]=[];
+
+profilData:any={};
+getmyInfo()
+{ 
+  const id=localStorage.getItem('userId')||'';
+this.subscription.push(
+  this._FireService.getMyData(id).subscribe({
+    next:(res)=>{
+      
+  this.profilData=res;
+  localStorage.setItem("userImg",res.img1);
+  localStorage.setItem("userName",res.fullName);
+  localStorage.setItem("userId",res.userId);
 
 
-
-
+  
+    },
+    error:(error)=>{
+  alert(`Eror:  ${error}`);
+    }
+   }) 
+)
+}
 
 
 
@@ -93,6 +116,12 @@ if(this.eye=="visibility")
     this.hide.set(!this.hide());
     
     event.stopPropagation();
+  }
+
+
+  getMyData()
+  {
+
   }
   ngOnDestroy(): void {
     if(this.isSubscribe)

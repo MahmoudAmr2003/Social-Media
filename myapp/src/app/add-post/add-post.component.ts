@@ -20,30 +20,14 @@ this.getmyInfo();
   
 }
   constructor(private _FireService:FireService, private _Router:Router){}
-  colorArray = [
-    "#1abc9c", // Turquoise
-  "#2ecc71", // Emerald
-  "#3498db", // Peter River
-  "#9b59b6", // Amethyst
-  "#34495e", // Wet Asphalt
-  "#16a085", // Green Sea
-  "#27ae60", // Nephritis
-  "#2980b9", // Belize Hole
  
-  
-    
-  ];
-  
 post:string='';
 postbgColor:string='';
   
 clear()
 {
   this.post='';
-  this.postbgColor='';
-  this.showSpinner=false;
-
-  this._Router.navigate(['/home'])
+  
 }
 getmyInfo()
 { const id=localStorage.getItem('userId')||'';
@@ -60,26 +44,19 @@ getmyInfo()
    }) 
 
 }
- @ViewChild('textarea') textarea!:ElementRef<HTMLDialogElement>;
-
-changColorOfTextarea(backGrounColor:string)
-{
-  this.postbgColor=backGrounColor;
-this.textarea.nativeElement.style.color=`${backGrounColor}`;
-
-}
-showSpinner:boolean=false;
+ 
 
 senPost()
 {
-this.showSpinner=true;
+
   const me={
     image:localStorage.getItem("userImg"),
     id:localStorage.getItem('userId'),
     name:localStorage.getItem("userName")
   }
+  console.log(me);
 const date=new Date();
-const dataOfPost={id:me.id,post:this.post,postOwnerName:me.name,postOwnerImg:me.image,postBg:this.postbgColor,date:date};
+const dataOfPost={id:me.id,post:this.post,postOwnerName:me.name,postOwnerImg:me.image,date:date};
 this._FireService.sendPost(dataOfPost);
 
 this.clear();

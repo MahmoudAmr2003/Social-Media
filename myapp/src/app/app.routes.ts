@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { CommentComponent } from './comment/comment.component';
+import { provideRouter, Routes } from '@angular/router';
 import { ResignComponent } from './component/resign/resign.component';
 import { LoginComponent } from './component/login/login.component';
 import { mygardGuard } from './gards/mygard.guard';
@@ -7,6 +8,9 @@ import { AddProfileDataComponent } from './component/add-profile-data/add-profil
 
 import { PersonsComponent } from './component/persons/persons.component';
 import { LoadingComponent } from './loading/loading.component';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { HomeComponent } from './home/home.component';
+
 
 
 
@@ -30,6 +34,7 @@ export const routes: Routes = [
         canActivate:[mygardGuard],
         loadComponent: () => import('./component/frindsrequests/frindsrequests.component').then(m => m.FrindsrequestsComponent),
       },
+      
       {
         path: 'addPost', 
      
@@ -84,6 +89,22 @@ loadComponent:()=>import('./frinds/frinds.component').then(m=>m.FrindsComponent)
         path:'notif',
         canActivate:[mygardGuard],
         loadComponent:()=>import('./notif/notif.component').then(m=>m.NotifComponent)
+      }
+,
+      {
+        path:'comment',
+        canActivate:[mygardGuard],
+        loadComponent:()=>import('./comment/comment.component').then(m=>m.CommentComponent)
+      },
+      {
+        path:'send',
+        canActivate:[mygardGuard],
+        loadComponent:()=>import('./send-requst/send-requst.component').then(m=>m.SendRequstComponent)
+      },
+      {
+        path:'savedPosts',
+        canActivate:[mygardGuard],
+        loadComponent:()=>import('./saved-posts/saved-posts.component').then(m=>m.SavedPostsComponent)
       }
 
 ];

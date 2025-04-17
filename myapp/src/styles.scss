@@ -1,4 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}/* You can add global styles to this file, and also import other style files */
 
 
 
@@ -84,10 +99,10 @@ body { margin: 0; }
 
 .img
 {
-    width: 100px;
-    height: 100px;
+   
     border-radius: 50%;
     overflow: hidden;
+    margin: 0;
 }
 
 .smallImg
@@ -103,12 +118,7 @@ a
 
 
 
-label
-{
-    color:#9200c3a1 !important;
-    font-size: 12px;
-    margin: 0 !important;
-}
+
 
 .myinput
 {
@@ -180,7 +190,7 @@ color: white;
 .date
 {
     font-size: 12px;
-    color: gray;
+    color: rgba(0, 0, 0, 0.622);
 }
 .post
 {
@@ -188,18 +198,67 @@ color: white;
 }
 body
 {
-  background-color:black !important;
-  color: white !important;
+  background-color:rgba(214, 207, 207, 0.152) !important;
+  color: black !important;
   font-family: "Montserrat", sans-serif !important;
 }
 
-input
-{
+
+// input
+// {
     
-    outline: none;
-    border: solid rgba(0, 0, 0, 0.238) 0.5px ;
+//     outline: none;
+//     border: solid rgba(0, 0, 0, 0.238) 0.5px ;
+//     padding: 10px 12px;
+// }
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
+
+li:hover
+{
+  background-color: rgba(0, 0, 0, 0.342);
+  cursor: pointer;
+}
+li
+{
+  margin-top: 10px;
+  font-weight: 500;
+}
+.wrongicon
+{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+font-size: 20px;
+}
+
+
+.profileImg
+{
+  width:180px; height: 180px; border-radius: 50%; overflow: hidden; position: absolute; bottom: -80px; border: solid white 5px;
+  margin-right: 50px;
+}
+
+.cover
+{
+width: 100%;
+margin: auto;
+  background-repeat: no-repeat;
+  height:70vh;
+  background-size:100% 120%;
 }
 // //////////////////////////////////// search
 
 
 /*Dialog Styles*/
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

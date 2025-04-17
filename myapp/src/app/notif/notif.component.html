@@ -1,6 +1,6 @@
-<div class="container p-2">
+<div *ngIf="!showPost" class="container p-2" @zoomInOut>
     <div class="row">
-    <div *ngFor="let notif of sortedNotifications;trackBy:trackById"  class="col-11 mx-auto mt-2  shadow-sm px-3 py-2" routerLink="/frinds">
+    <div *ngFor="let notif of sortedNotifications;trackBy:trackById"  class="col-11 mx-auto mt-2  shadow-sm px-3 py-2" (click)="getThePost(notif.postId)" >
 <div class="d-flex align-items-center">
     <div class="photo">
 <img [src]="notif.image" alt="" class="w-100">
@@ -15,4 +15,14 @@
 </div>
     </div>
     </div>
+</div>
+
+
+<div *ngIf="showPost" class="d-flex justify-content-center align-items-center w-100" style="height: 80vh; background-color: rgba(138, 138, 138, 0.226);" @zoomInOut>
+    <div  class="col-md-6 mx-auto " style="background-color: white;">
+<div>
+
+</div>
+        <app-the-post [allPosts]="[thePost]"></app-the-post>
+        </div>
 </div>

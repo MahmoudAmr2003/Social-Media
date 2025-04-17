@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { FireService } from '../../fire.service';
 import { zoomInOut } from '../../animation';
 import { Subscription } from 'rxjs';
+import { SendRequstComponent } from '../../send-requst/send-requst.component';
 
 
 @Component({
   selector: 'app-persons',
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule,RouterModule,SendRequstComponent],
   templateUrl: './persons.component.html',
   styleUrl: './persons.component.scss',
   animations:[zoomInOut]

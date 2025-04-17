@@ -14,3 +14,8 @@ p,h4,h1
     
     font-weight: 500;
 }
+.mycard:hover
+{
+transform: scale(1.1);
+transition: all 0.1s;
+}

@@ -19,8 +19,10 @@ export class  SidesComponent implements OnDestroy {
 imgUrl:string='';
   show_menue:boolean=false;
   showDash=localStorage.getItem("userId");
+
 constructor(private _AuthService:AuthService, private _Router:Router, private _FireService:FireService)
 {
+
 }
   userData:any;
 ngOnInit():void
@@ -61,6 +63,9 @@ showMenue()
 logOut()
 {
   this._AuthService.isUserDataCame.next(false);
+  localStorage.removeItem("userId");
+  localStorage.removeItem("userName");
+  localStorage.removeItem("userImg");
   localStorage.removeItem("userDataTaken");
   this._AuthService.logOut();
 }
@@ -76,9 +81,13 @@ this._Router.navigate(['/add_data']);
 ngOnDestroy(): void {
   this.show_menue=false;
 }
+scrollToTop(): void {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
  routeTo(path:string)
  {
 this._Router.navigate([`/${path}`]);
+this.scrollToTop();
 this.show_menue=false;
  }
 

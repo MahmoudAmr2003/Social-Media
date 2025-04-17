@@ -1,4 +1,136 @@
-.photo
-{
-  width: 50px ; height: 50px ; border-radius: 50%; overflow: hidden;
+
+/* إعدادات عامة */
+:host {
+  display: block;
+  margin: 20px auto;
+  max-width: 600px;
+  font-family: Arial, sans-serif;
+}
+
+.post-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin: 10px;
+}
+
+/* رأس المنشور */
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.user-info h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.user-info p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #888;
+}
+
+/* مساحة كتابة المنشور */
+.post-body textarea {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  resize: vertical;
+  min-height: 80px;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* قسم رفع الصورة */
+.post-image-upload {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.upload-btn {
+  display: inline-block;
+  background-color: #4267b2;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.upload-btn:hover {
+  background-color: #365899;
+}
+
+/* إخفاء عنصر رفع الملف */
+.post-image-upload input[type="file"] {
+  display: none;
+}
+
+/* معاينة الصورة */
+.image-preview {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.image-preview img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+/* زر النشر */
+.post-footer {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.post-btn {
+  background-color: #1877f2;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.post-btn:hover {
+  background-color: #0f66d0;
+}
+
+/* التجاوب مع الشاشات الصغيرة */
+@media (max-width: 600px) {
+  .post-container {
+    margin: 10px;
+    padding: 10px;
+  }
+  
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .user-info h4 {
+    font-size: 14px;
+  }
+  
+  .post-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
 }

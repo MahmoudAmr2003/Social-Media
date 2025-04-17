@@ -4,25 +4,46 @@
     <h6 class="p-0 m-0">Publich some thing</h6>
     <div class="d-flex align-items-center mt-0">
 
-  <div (click)="showDialog()"   class="icon mt-0 p-4" style="border: solid rgba(255, 255, 255, 0.193) 0.3px; ">
+  <div (click)="showDialog()"   class="icon mt-0 p-4" style="border: solid rgba(18, 8, 8, 0.193) 0.3px; ">
             <i class="fa-solid fa-plus m-0"></i>
         </div>
 
         
-<div  [class.showDialog]="show_dialog" class="dialog shadow-slgm mt-3"  style="margin-left: 30px;">
+<div  [class.showDialog]="show_dialog" class="dialog shadow-lg mt-3"  style="margin-left: 30px;">
    
 
-    <div routerLink="/addPost"  class="postType ">
+    <div (click)="addPost('post')"  class="postType ">
 
     <p appChangeColor="orange"><i class="fa-solid fa-pen-clip"></i></p>
     <p>Post</p>
 
     </div>
-        <div routerLink="/addImg"  class="postType ">
+        <div (click)="addPost('img')" class="postType ">
          <p appChangeColor="green">  <i class="fa-solid fa-image"></i></p>
          <p >Photo</p>
   </div>
 </div>
  </div>
 </div>
+
+
+<div *ngIf="type=='post'" style="position: absolute; top: 0 ; z-index: 99999;" class=" col-12" @zoomInOut>
+    <div (click)="skip()"  class=" p-1">
+        <div  class="wrongicon">
+         <i class="fa-solid fa-xmark"></i>
+        </div>
+       </div>
+<app-add-post></app-add-post>
+
+</div>
+<div *ngIf="type=='img'" style="position: absolute; top: -70% ; z-index: 9999999;"  class="col-12 " @zoomInOut>
+    <div  class=" p-1">
+        <div (click)="skip()" class="wrongicon">
+         <i class="fa-solid fa-xmark"></i>
+        </div>
+       </div>
+<app-add-img-post></app-add-img-post>
+
+</div>
+
 </div>

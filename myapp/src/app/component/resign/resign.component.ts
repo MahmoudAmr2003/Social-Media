@@ -1,3 +1,4 @@
+import { LoadingComponent } from './../../loading/loading.component';
 import { SharedmoduleModule } from '../../sharedmodule/sharedmodule.module';
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, signal, SimpleChanges, ViewChild, NgModule } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,7 +9,7 @@ import { DatabaseService } from '../../services/database.service';
 
 @Component({
   selector: 'app-resign',
-  imports: [SharedmoduleModule],
+  imports: [SharedmoduleModule,LoadingComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './resign.component.html',
   styleUrl: './resign.component.scss',
@@ -54,9 +55,10 @@ event.stopPropagation();
   // 
 
 
-
+  load:boolean=false;
   resignForm(resign:FormGroup)
 {
+  this.load=true;
   this.auth.resign(resign.value).subscribe({
     next:(response)=>{
       this.onLoginSuccess();
@@ -65,7 +67,7 @@ event.stopPropagation();
     localStorage.setItem("role",resign.value.role);
 
     console.log(localStorage.getItem("userId"))
-  
+  this.load=false;
     //********************************** */
   this._DatabaseService.postUserData(resign.value).subscribe({
     next:(response)=>{

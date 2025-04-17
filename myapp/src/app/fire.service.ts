@@ -2,20 +2,13 @@
 import {Injectable, NgZone } from '@angular/core';
 import { Storage, ref, uploadBytesResumable,getDownloadURL } from '@angular/fire/storage';
 import { collection, Firestore, docData, doc, collectionData, addDoc, query, where, deleteDoc, serverTimestamp, updateDoc, arrayUnion, orderBy, deleteField, arrayRemove, DocumentReference } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, from, Observable } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class FireService {
-
-  me={
-    image:localStorage.getItem("userImg"),
-    id:localStorage.getItem('userId'),
-    name:localStorage.getItem("userName"),
-    type:'like'
-  }
 
   notifNumber=new BehaviorSubject<number>(0);
   $notifs=this.notifNumber.asObservable();
@@ -86,10 +79,12 @@ deleteDoc(collectionName:string,id:string)
 
 }
 
-addFrind(requestDetails:any)
+addFrind(requestDetails:any):Observable<any>
 {
   const collRef=collection(this._Firestore,'frindsRequst');
-  addDoc(collRef,requestDetails);
+ return from(
+  addDoc(collRef,requestDetails)
+ )
 }
 
 acceptRequest(id:string,frindData:any)
@@ -151,12 +146,22 @@ increaceNotNum()
 getLike(docId:string,likes:any[],postOwnerId:string,notNum:number)
 {
   
+  const me={
+    image:localStorage.getItem("userImg"),
+    id:localStorage.getItem('userId'),
+    name:localStorage.getItem("userName"),
+    type:'like',
+    postId:docId
+    
+  }
+
 const myNotif={
   image:localStorage.getItem("userImg"),
   id:localStorage.getItem('userId'),
   name:localStorage.getItem("userName"),
    message:`Your Post has been liked by `,
 type:'like',
+postId:docId,
 date:new Date()
 }
   const id=localStorage.getItem('userId');
@@ -166,7 +171,7 @@ date:new Date()
 
   if(didILiked==true)
   {
-   this.removeLike(docId,this.me);
+   this.removeLike(docId,me);
 
 console.log('removed');
 
@@ -176,7 +181,7 @@ console.log('removed');
    
     console.log(postOwnerId);
 
-   this.sendLike(docId,this.me);
+   this.sendLike(docId,me);
     this.inc_Dec_Notifucation(postOwnerId,notNum);
     this.sendNotifection(postOwnerId,myNotif);
   
@@ -185,7 +190,7 @@ console.log('added')
  }
  else
  {
- this.sendLike(docId,this.me);
+ this.sendLike(docId,me);
 console.log('added under');
 
 
@@ -195,18 +200,47 @@ console.log('added under');
  }
 }
 
-inc_Dec_Notifucation(postOwnerId:string,notNum:number)
+inc_Dec_Notifucation(postId:string,notNum:number)
 {
   if(Number.isNaN(notNum))
     {
-     this.numderOfNotifecation(postOwnerId,1);
+     this.numderOfNotifecation(postId,1);
     }
     else
     {
-     this.numderOfNotifecation(postOwnerId,notNum+1);
+     this.numderOfNotifecation(postId,notNum+1);
     
     }
 }
+pushUserInSaver(postId:string)
+{
+  const userId=localStorage.getItem('userId');
+const docRef=doc(this._Firestore,`posts/${postId}`);
+updateDoc(docRef,{savers:arrayUnion(userId)});
+}
+
+popUserInSaver(postId:string)
+{
+  const userId=localStorage.getItem('userId');
+const docRef=doc(this._Firestore,`posts/${postId}`);
+updateDoc(docRef,{savers:arrayRemove(userId)});
+}
+
+getSavedPosts(id:string):Observable<any>
+{
+const collRef=collection(this._Firestore,'posts');
+const qRef=query(collRef,where('savers','array-contains',id));
+return collectionData(qRef,{idField:'docId'});
+
+}
+
+
+getOnePost(id:string):Observable<any>
+{
+const docRef=doc(this._Firestore,`posts/${id}`);
+return docData(docRef,{idField:'docId'});
+}
+
 
 }
 

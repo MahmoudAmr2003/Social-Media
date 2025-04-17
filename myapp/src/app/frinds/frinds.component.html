@@ -16,15 +16,20 @@
 <div>
     <h5> Frinds {{myFrinds.length}} </h5>
 </div>
-        <div  *ngFor="let i of myNewFrinds;trackBy:trackById" class="frind col-md-3 col-12  frind p-3 my-2" >
-<div  (click)="userProfile(i.frindId)"  class="inCenter justify-content-start" >
-<div class="img">
-<img [src]="i.frindImg" alt="" class="w-100">
-</div>
-<p class="mx-2">{{i.frindName}}</p>
-<p style="color: green;">Frind</p>
-</div>
-</div>
+  <div class="row d-flex flex-wrap">
+    <div  *ngFor="let i of myNewFrinds;trackBy:trackById" class="frind col-md-4 col-lg-2 col-6  mx-0 frind p-3 my-2" >
+        <div  (click)="userProfile(i.frindId)"  class="inCenter justify-content-start" >
+        <div class="img" style="width: 80px; height: 80px;">
+        <img [src]="i.frindImg" alt="" class="w-100">
+        </div>
+        <p class="mx-2">{{i.frindName}}</p>
+        <button class="btn btn-success w-100 d-flex align-items-center justify-content-center gap-2" >
+            <i class="bi bi-person-check-fill"></i>
+         Frind
+          </button>
+        </div>
+        </div>
+  </div>
 
         </div>
     </section>

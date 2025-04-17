@@ -3,6 +3,10 @@
     height: auto;
    
 }
+body
+{
+    color: black   !important;
+}
 .Search_add
 {
     border-radius: 5px;
@@ -44,10 +48,10 @@ font-size: 30px;
 {
 font-size: 30px;
 }
-@media only screen and (max-width:768px)
+@media only screen and (min-width:768px)
 {
 .col-md-4
 {
-display: none;
+    position: fixed;
 }
 }

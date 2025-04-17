@@ -1,0 +1,28 @@
+
+  
+
+
+  <div *ngIf="comments" class="container py-3 bg-white">
+   
+
+    <div  *ngFor="let comment of comments|sortArray;trackBy:trackById" class="d-flex align-items-start mb-3 p-3 bg-white rounded shadow-sm comment-item">
+      
+
+      <img [src]="comment.image" alt="Avatar" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
+      
+  
+      <div class="w-100">
+        <div class="comment-body">
+          <h6 class="mb-1">{{ comment.name }}</h6>
+          <p class="mb-0">{{ comment.comment }}</p>
+        </div>
+        <div class="comment-footer text-muted small mt-1">
+          {{ comment.date|spicialDate}} · 
+         
+        </div>
+      </div>
+    </div>
+  
+ 
+  </div>
+  

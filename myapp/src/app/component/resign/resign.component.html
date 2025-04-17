@@ -1,5 +1,5 @@
 
-<section   class="mt-5 w-100 h-100 d-flex justify-content-center align-items-center  shadow-sm" style=" width: 100%;background-color: white;">
+<!-- <section   class="mt-5 col--md-8 col-12 mx-auto py-4  d-flex justify-content-center align-items-center  shadow-sm" style=" width: 100%;background-color: transparent; color: white; height: auto;">
 
  
     <div class="resign  d-flex justify-content-start align-items-center " style="width: 80%; height: 100%; border-radius: 10px; border: solid rgba(0, 0, 0, 0.147) 0.1px; z-index: 0; position: relative;overflow: hidden; border: solid white 0.3px;">
@@ -59,7 +59,7 @@
     </form>
     <div class=" text-center mt-4 d-flex align-items-center">
       <p>Have an account already</p>
-      <a routerLink="/login" class=" mb-3 mx-2">Sign In</a>
+      <a routerLink="/resign" class=" mb-3 mx-2">Sign In</a>
      
       <div>
 
@@ -73,5 +73,89 @@
 
 
 </div>
-</section>
+</section> -->
 
+
+
+<section class=" col-10 col-md-6  mx-auto   d-flex justify-content-center align-items-center shadow-lg mt-5 bg-white text-black  py-2" style="  position: relative; background-color: transparent; color:white; height:auto;">
+ 
+  <div class="resign d-flex justify-content-start p-2 " style="width: 100%; height: 100%; z-index: 0; position: relative;overflow: hidden;">
+  
+  <div class="theform  d-flex justify-content-center px-3 align-items-center" style="    padding-bottom: 10px;">
+    <div class="w-100">
+     
+      <h4 class="m-4 ">Sign Up </h4>
+     
+      <form (ngSubmit)="resignForm(resign)" [formGroup]="resign" >
+        <div class="myfield">
+          <input [ngStyle]="{'border': resign.get('name')?.errors!=null&&resign.get('name')?.touched? 'solid red':'solid black '}"  formControlName="name"  type="text" placeholder="Name" class=" w-100 mb-2" >
+        <div *ngIf="resign.get('name')?.errors!=null&&resign.get('name')?.touched"  style="color: red !important;  padding: 0 30px;" class="error">
+          <p *ngIf="resign.get('name')?.errors?.['required']" style="color: red;" class="m-0">Field Required</p>
+          <p *ngIf="resign.get('name')?.errors?.['pattern']">Name must be only a-z A-z  </p>
+          
+          <p *ngIf="resign.get('name')?.errors?.['minlength']">Minimum is 3 </p>
+          <p *ngIf="resign.get('name')?.errors?.['maxlength']">Maximum is 30 </p>
+        </div>
+        </div>
+  <div class="myinputs d-flex justify-content-center w-100">
+    <div class="w-100">
+    <div class="mb-3" style="position: relative;">
+      <input   [ngStyle]="{'border': resign.get('email')?.errors!=null&&resign.get('email')?.touched? 'solid red':' solid black '}" formControlName="email" type="text" placeholder="Email" class=" ">
+<div class="px-3 d-flex justify-content-start align-items-center" style="width: 100%; height: 100%; position: absolute; top: 0; z-index: -1;">
+<mat-icon class="icon">account_circle</mat-icon>
+
+</div>
+  
+  <div class="error"  *ngIf="resign.get('email')?.errors!=null&&resign.get('email')?.touched">
+    <p *ngIf="resign.get('email')?.errors?.['required']">Email is required</p>
+        <p *ngIf="resign.get('email')?.errors?.['email']" style="color: red;">Unavailable Email</p>
+       </div>
+      </div>
+       <div class="" style="position: relative;">
+        <input   [ngStyle]="{'border': resign.get('password')?.errors!=null&&resign.get('password')?.touched? 'solid red':' solid black '}"  formControlName="password"  type="text" placeholder="Password" class=" mb-0" matInput [type]="hide() ? 'password' : 'text'" />
+
+        <div class="px-3 d-flex justify-content-start align-items-center" style="width: 100%; height: 100%; position: absolute; top: 0; z-index: -1;">
+          <i class="fa-solid fa-lock"></i>
+        
+        </div>
+
+  <div class="error" *ngIf="resign.get('password')?.errors!=null&& resign.get('password')?.touched">
+    <p *ngIf="resign.get('password')?.errors?.['required']"> Password is required</p>
+    <p *ngIf="resign.get('password')?.errors?.['minlength']">Minimum is 5</p>
+    <p *ngIf="resign.get('password')?.errors?.['maxlength']">Maximum is 30</p>
+  
+    <p *ngIf="resign.get('password')?.errors?.['pattern']">Unavailable Password</p>
+  </div>
+  
+</div>
+        <button class="mt-0" mat-button
+        type="button"
+        matSuffix
+        (click)="clickEvent($event)"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide()"><mat-icon>{{eye}}</mat-icon></button>
+    </div>
+  </div>
+    
+    <div class="d-flex justify-content-center w-100 mt-3">
+    </div>
+<div class="w-100  d-flex justify-content-center">
+<button [disabled]="resign.invalid" type="submit"  class="btn btn-dark px-4 py-2 w-50" style="border-radius:0;">Log in</button>
+
+</div>    
+      </form>
+      <div class="text-center mt-3 d-flex justify-content-between ">
+     <div class="d-flex">
+      <p> Have not an account </p>
+      <a routerLink="/login"  class=" mb-3 mx-2">Sign Up</a>
+     </div>
+      
+        </div>
+    </div>
+  </div>
+
+  </div>
+  <div *ngIf="load==true" [hidden]="!load"  class="w-100 d-flex justify-content-center align-items-center " style="height: 100%; position:absolute; top: 0;">
+    <app-loading></app-loading>
+</div>
+  </section>

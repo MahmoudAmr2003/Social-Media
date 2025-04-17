@@ -35,7 +35,10 @@ $isUserDataCame=this.isUserDataCame.asObservable();
 logOut()
 {
   localStorage.removeItem("userId");
-  localStorage.removeItem("userId");
+  localStorage.removeItem("userImg");
+  localStorage.removeItem("userName");
+
+
 
   this.isLogged.next(false);
   this.islight.next(false);

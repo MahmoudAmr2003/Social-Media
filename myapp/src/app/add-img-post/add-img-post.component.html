@@ -1,4 +1,4 @@
-<div  class=" col-md-8 col-10 mb-4  shadow-sm p-4  mx-auto mt-4" style="height: 500px; background-color: white;" @zoomInOut >
+<!-- <div  class=" col-md-8 col-10 mb-4  shadow-sm p-4  mx-auto mt-4" style="height: 500px; background-color: white;" @zoomInOut >
 
     <div class="text-center">
     <h5>Creat Post</h5>
@@ -42,4 +42,54 @@
          </div>
     </div>
    
-</div>
+</div> -->
+
+<div class="post-container" style="position: relative;">
+    <!-- رأس المنشور: صورة المستخدم وبياناته -->
+    <div class="post-header">
+      <img class="profile-pic" [src]="profilData.img1"alt="صورة المستخدم">
+      <div class="user-info">
+        <h4> {{profilData.fullName}}</h4>
+        <p>Share What Is In YOur Mind ....</p>
+      </div>
+    </div>
+  
+    <!-- مساحة كتابة المنشور -->
+    <div class="post-body">
+      <textarea  [(ngModel)]="cabtion"  placeholder=" What Do You Think"></textarea>
+    </div>
+  
+    <!-- قسم رفع الصورة -->
+
+  
+    <!-- معاينة الصورة (استاتيك) -->
+    <div class="image-preview">
+        <div *ngIf="imgUrl" style="height: 200px; overflow: hidden;">
+      <img  [src]="imgUrl" alt="معاينة الصورة">
+
+        </div>
+        <label *ngIf="!imgUrl" for="imageInput" class="w-100">
+            <div  class="w-100 d-flex justify-content-center align-items-center" style="height: 200px; border: dashed rgba(0, 0, 0, 0.321) 0.1px;">
+                <i class="fas fa-image text-dark" style="font-size: 30px;"></i>
+            </div>
+       
+        </label>
+    
+    </div>
+
+    <div class="post-image-upload">
+        <!-- نستعمل label كزر لفتح اختيار الصورة -->
+        <input #myfile (change)="creat_Url(myfile)"  type="file" id="imageInput" accept="image/*">
+      </div>
+  
+    <!-- زر النشر -->
+    <div class="post-footer">
+      <button [disabled]="imgUrl==''" (click)="uploadimages(myfile)" class="post-btn">Post</button>
+    </div>
+   <div    *ngIf="showSpinner"
+  class="w-100 d-flex justify-content-center align-items-center">
+    <div  class="d-flex justify-content-center align-items-center " style=" position: absolute;top: 50%;" >
+        <app-loading></app-loading>
+     </div>
+   </div>
+  </div>

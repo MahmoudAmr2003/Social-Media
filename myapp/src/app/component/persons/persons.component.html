@@ -15,10 +15,10 @@
         </div>
     </div>
 <div class="row w-100 h-100">
-    <div  *ngFor="let i of usersDataShowing;trackBy:trackById; let n=index" class="person col-lg-4 col-md-6 col-12  mt-3 ">
-<div [routerLink]="['/userProfile',i.docId]"  class="mycard d-flex align-items-center justify-content-between mx-2 shadow-sm p-4" style="cursor: pointer;">
+    <div  *ngFor="let i of usersDataShowing;trackBy:trackById; let n=index" class="person col-lg-3 col-md-4 col-12  mt-3 " >
+<div  class="mycard d-flex align-items-center justify-content-between mx-2 shadow-sm p-2" style="border: solid rgba(255, 255, 255, 0.145) 0.1px;">
     <div class="userImg">
-        <div class="" style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden;">
+        <div [routerLink]="['/userProfile',i.docId]"  class="" style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden;">
         <img [src]="i.img1" alt="" class="w-100">
      
         </div>
@@ -31,7 +31,9 @@
 
        </div>
 
-
+       <div>
+        <app-send-requst [resiverId]="i.userId" [notNum]="i.notifNums" [personName]="i.fullName" [personImage]="i.img1"></app-send-requst>
+    </div>
     
 </div>
     </div>

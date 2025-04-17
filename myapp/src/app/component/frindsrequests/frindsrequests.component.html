@@ -7,20 +7,29 @@
         <div *ngFor="let request of myRequsts" class="col-md-11">
             <div class="w-100 p-3 d-flex justify-content-between" style="border: solid rgba(0, 0, 0, 0.097) 0.1px;">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="img">
+                    <div class="" style="width: 60px ; height: 60px ; border-radius: 50%; overflow: hidden;">
                         <img [src]="request.userImg" alt="" class="w-100">
                         </div>
                                <div>
-                                <p>{{request.userName}}</p>
+                                <p class="my-0 mx-3">{{request.userName}}</p>
                                </div>
                 </div>
-                <div class="d-flex align-items-center">
-                  <div>
-                    <button (click)="AccebtReqTome(request.senderId,request.userImg,request.userName);AcceptRequestToFrind(request.senderId);cancleRequest(request.docId)" class="btn btn-primary p-2" style="display: block;">Accept</button>
-                    <button (click)="cancleRequest(request.docId)" class="btn btn-danger p-2 mt-1">Cancle</button>
+              
 
+                    <div class="d-flex justify-content-start align-items-center" style="width: 100%;">
+
+
+                      <button (click)="AccebtReqTome(request.senderId,request.userImg,request.userName);AcceptRequestToFrind(request.senderId);cancleRequest(request.docId)"  class="btn btn-success   d-flex align-items-center justify-content-center ">
+                <i class="bi bi-check-lg"></i>
+             Accetp 
+              </button>
+                      
+                      <button  (click)="cancleRequest(request.docId)"  class="btn btn-danger mx-1 d-flex align-items-center justify-content-center ">
+           <i class="bi bi-x-lg"></i>
+     Cancle 
+         </button>
                   </div>
-                </div>
+
      </div>
         </div>
     </div>

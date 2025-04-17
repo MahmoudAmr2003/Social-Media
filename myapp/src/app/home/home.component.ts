@@ -11,7 +11,7 @@ import { ThePostComponent } from '../the-post/the-post.component';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule,RouterModule,AddPostStyleComponent,ThePostComponent],
+  imports: [CommonModule,RouterModule,AddPostStyleComponent,ThePostComponent  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   animations:[zoomInOut]
@@ -44,6 +44,11 @@ this.myData=res;
 this.frinds=res.frinds;
 this.myNewFrinds=this.frinds;
 this._FireService.notifNumber.next(res.notifNums);
+localStorage.setItem('userImg',res.img1);
+localStorage.setItem('userName',res.fullName);
+localStorage.setItem('userId',res.userId);
+
+
 
   }
 })
@@ -74,7 +79,7 @@ getPosts()
 this.isSubscribe.push(
   this._FireService.getCollection('posts').subscribe({
     next:(res)=>{
-     console.log(res);
+
 this.allPosts=res;
 
 this.sortedPosts=this.allPosts.sort((a,b)=>b.date?.seconds-a.date?.seconds);

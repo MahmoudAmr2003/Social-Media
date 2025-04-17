@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SharedmoduleModule } from '../../sharedmodule/sharedmodule.module';
 import { FormGroup,FormControl,Validators } from '@angular/forms';
 import { doc, Firestore, serverTimestamp, updateDoc } from '@angular/fire/firestore';
@@ -6,22 +6,29 @@ import { FireService } from '../../fire.service';
 import { Router } from '@angular/router';
 import {LoadingComponent } from '../../loading/loading.component';
 import { CloudinaryService } from '../../cloudinary.service';
-
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 @Component({
   selector: 'app-add-profile-data',
-  imports: [SharedmoduleModule,LoadingComponent],
+  imports: [SharedmoduleModule,LoadingComponent,MatFormFieldModule,MatRadioModule],
   templateUrl: './add-profile-data.component.html',
   styleUrl: './add-profile-data.component.scss'
 })
-export class AddProfileDataComponent {
+export class AddProfileDataComponent implements OnInit {
 img2Url:string='';
 img1Url:string='';
 date:any;
   constructor(private _Firestore:Firestore, private _FireService:FireService, private _Router:Router, private _CloudinaryService:CloudinaryService)
   {
   }
+  ngOnInit(): void {
+    
+    this.getMyData();
+  }
+  
+
  myForm=new FormGroup({
   img1:new FormControl(''),
   img2:new FormControl(''),
@@ -84,7 +91,7 @@ if(theFile)
               }
                     this.saveUserData();
       
-this._Router.navigate(['/profile']);
+this._Router.navigate(['/home']);
               
     },
     error:(error)=>{
@@ -92,9 +99,47 @@ this._Router.navigate(['/profile']);
     }
   })
 }
-  
+else
+{
+this.load=true;
+
+this.saveUserData();
+this._Router.navigate(['/home']);
+
 
 }
+  
+}
+
+// editeData()
+// {
+//   const theFile=file.files?.item(0);
+
+//   if(theFile)
+//     {
+//       this._CloudinaryService.uplodImg(theFile).subscribe({
+//         next:(res)=>{
+    
+//           if(this.myForm.get('img1')?.value=='')
+//                   {
+//             this.myForm.get('img1')?.setValue(res.secure_url);
+//                   }
+//                   else
+//                   {
+//             this.myForm.get('img2')?.setValue(res.secure_url);
+            
+//                   }
+//                         this.saveUserData();
+          
+//     this._Router.navigate(['/home']);
+                  
+//         },
+//         error:(error)=>{
+//           this.load=false;
+//         }
+//       })
+//     }
+// }
 saveUserData()
 {
   const id=localStorage.getItem('userId');
@@ -102,6 +147,27 @@ saveUserData()
   updateDoc(docRef,this.myForm.value);
   localStorage.setItem("userDataTaken",'true');
 }
+
+
+myId:string=localStorage.getItem("userId")||'';
+
+getMyData()
+{
+  if(this.myId)
+  {
+    this._FireService.getMyData(this.myId).subscribe({
+      next:(res)=>{
+    this.myForm.patchValue(res);
+    this.img1Url=res.img2;
+    this.img2Url=res.img1;
+    
+      }
+    })
+  }
+
+}
+
+
 
 show_hide:boolean=false;
 showAndHide()

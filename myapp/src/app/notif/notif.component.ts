@@ -3,12 +3,15 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FireService } from '../fire.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ThePostComponent } from '../the-post/the-post.component';
+import { zoomInOut } from '../animation';
 
 @Component({
   selector: 'app-notif',
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule,RouterModule,ThePostComponent],
   templateUrl: './notif.component.html',
-  styleUrl: './notif.component.scss'
+  styleUrl: './notif.component.scss',
+  animations:[zoomInOut]
 })
 export class NotifComponent implements OnInit,OnDestroy {
   isSubscirbe!:Subscription;
@@ -47,4 +50,22 @@ this.isSubscirbe.unsubscribe();
   }
 }
 
+thePost:any[]=[];
+showPost:boolean=false;
+getThePost(postId:string)
+{
+  console.log(postId);
+this._FireService.getOnePost(postId).subscribe({
+  next:(res)=>{
+    
+this.thePost=res;
+console.log(res);
+console.log(this.thePost);
+this.showPost=true;
+  }
+})
 }
+
+}
+// getQuery(collectionName:string,fieldName:string,condition:any,value:any):Observable<any>
+
