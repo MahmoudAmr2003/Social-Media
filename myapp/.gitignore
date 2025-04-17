@@ -2,6 +2,7 @@
 
 # Compiled output
 /dist
+/public
 /tmp
 /out-tsc
 /bazel-out
@@ -10,7 +11,8 @@
 /node_modules
 npm-debug.log
 yarn-error.log
-
+public
+add-post
 # IDEs and editors
 .idea/
 .project
@@ -27,7 +29,6 @@ yarn-error.log
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
-
 # Miscellaneous
 /.angular/cache
 .sass-cache/
@@ -36,10 +37,10 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
-
 # System files
 .DS_Store
 Thumbs.db
+mmm
 
 # Firebase
 .firebase
