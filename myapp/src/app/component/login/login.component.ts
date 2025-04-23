@@ -9,6 +9,7 @@ import { LoadingComponent } from '../../loading/loading.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FireService } from '../../fire.service';
+import { MyDataService } from '../../my-data.service';
 
 
 @Component({
@@ -21,6 +22,8 @@ import { FireService } from '../../fire.service';
   standalone: true
 })
 export class LoginComponent implements OnChanges,OnDestroy {
+  hh:any;
+
   isSubscribe!:Subscription;
   @ViewChild('email') email!:ElementRef;
 // num:number=0;
@@ -30,9 +33,9 @@ mahmoud:string='Mahmoud';
     email:new FormControl(null,[Validators.email,Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),Validators.required]),
     password:new FormControl(null,[Validators.minLength(5),Validators.maxLength(20),Validators.pattern('^[a-zA-Z0-9\u0621-\u064A\u0660-\u0669]+$'),Validators.required]),
   })
-  
-  constructor(private _AuthService:AuthService, private _Router:Router,private cd:ChangeDetectorRef, private _FireService:FireService)
+  constructor(private _AuthService:AuthService, private _Router:Router,private cd:ChangeDetectorRef, private _FireService:FireService, private _MyDataService:MyDataService)
   {
+   
   }
   ngOnChanges(): void {
   
@@ -81,12 +84,9 @@ this.subscription.push(
     next:(res)=>{
       
   this.profilData=res;
-  localStorage.setItem("userImg",res.img1);
-  localStorage.setItem("userName",res.fullName);
-  localStorage.setItem("userId",res.userId);
-
-
-  
+  console.log(res);
+ localStorage.setItem('user',JSON.stringify(res));
+ this._MyDataService.setMyData();
     },
     error:(error)=>{
   alert(`Eror:  ${error}`);

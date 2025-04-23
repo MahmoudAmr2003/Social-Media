@@ -1,96 +1,10 @@
 
 <ng-container *ngIf="allPosts.length>0; else noPosts" class="col-12" >
     <div    *ngFor="let post of allPosts;let n=index;trackBy:trackById"  class="post my-3 shadow-lg mt-2  text-white col-12" style="font-weight: 500;position: relative;"> 
-        <!-- head of the post -->
-
-        <div *ngIf="showComments==n" class="back p-1">
-         <div (click)="closeComments()" class="wrongicon">
-          <i class="fa-solid fa-xmark"></i>
-         </div>
-        </div>
-    <div class="d-flex justify-content-center align-items-center w-100">
-
-      <div *ngIf="showComments==n" @zoomInOut class=" text-black commentDiv col-10 mx-auto col-md-5 bg-white">
-        
-           <div *ngIf="post.comments" class=" w-100  py-2">
-            <h4 class="text-center"> Comments  {{post.comments.length}}</h4>
-           </div>
-        <app-comment [comments]="post.comments"></app-comment>
-           <!-- إضافة تعليق جديد -->
-<div class="new-comment mt-4 bg-black" style="position: sticky; bottom: 0;">
-    <div class="d-flex align-items-start">
-      <!-- صورة المستخدم لإضافة التعليق -->
-  
-      
-      <!-- حقل الإدخال -->
-      <div class="w-100 p-3 bg-white" >
-        <textarea
-        [(ngModel)]="comment"
-          class="form-control"
-          rows="2"
-          placeholder="add comment"
-        ></textarea>
-        <div class="d-flex justify-content-end mt-2">
-          <button (click)="sendComment(post.docId,post.id)"  class="btn btn-primary btn-sm">
-            comment
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-    </div>
-    </div>
-         
+     
  <div class="d-flex justify-content-center align-items-center" >
     
-    <!-- <div  *ngIf="showComments==n"  class="pcomment col-12 col-md-6" @zoomInOut >
-       
-
-        <div class="" style="overflow-y: auto;">
-
-           <div *ngIf="post.comments">
-            
-            <div  *ngFor="let i of post.comments|sortArray;trackBy:trackById"  class="w-100 d-flex justify-content-start  my-2 p-3 ">
-                <div class="mx-2">
-          
-                    <div class="img mx-2" style="width: 40px; height: 40px;">
-                        <img [src]="i.image" alt="" class="w-100">
-                    </div>
-        
-                </div>
-                <div class="d-flex justify-content-end" style="width: 90%;">
-              <div class="w-100">
-                <div  class="comment mx-3 w-100 ">
-                    <div class="nameandDate d-flex justify-content-between align-items-center">
-                      <h6 style="color:black; font-weight: 600;" >{{i.name}}</h6>
-                    </div>
-      
-                <p>{{i.comment}}</p>
-                            </div>
-                     <div class="px-3">
-                        <p *ngIf="i.date" class="date">{{(i.date)|spicialDate}}</p>
-                     </div>
-              </div>
-
-
-             
-                </div>
-              
-             
-                </div>
-               
-           </div>
-          
-                        
-            </div> 
-            <div class="d-flex justify-content-start align-items-center p-3 mt-5 mb-0 w-100" style="background-color: white;  position: sticky; bottom:0;">
-                <input [(ngModel)]="comment" type="text" name="" id="" class="input w-100" placeholder="Add Comment">
-
-               
-                <i (click)="sendComment(post.docId,post.id)"  class="btn bi bi-send text-bg-info text-white mx-2 p-2"  style="font-size: 20px;" ></i>
-                         </div> 
-    </div> -->
+    
     
 
       
@@ -107,12 +21,12 @@
     
            <div class="d-flex align-items-center">
             <div [routerLink]="['/userProfile',post.id]" class="img_container" >
-                <img [src]="post.postOwnerImg" alt="" class="w-100">
+                <img [src]="post.userData.image" alt="" class="w-100">
             
                 </div>
                 
                 <div class="mx-3 text-dark">
-                <h6>{{post.postOwnerName}}</h6>
+                <h6>{{post.userData.name}}</h6>
                 <p class="date m-0">{{post.date.toDate()|date:'short'}}</p>
                 </div>
            </div>
@@ -129,7 +43,7 @@
             <p *ngIf="!saved"  class="m-0">Save Post</p>
             <p *ngIf="saved"   class="m-0">Cansle Saving</p>
         </li>
-        <li *ngIf="myId==post.id" (click)="deletePost(post.docId)" class="w-100 p-2 my-1 d-flex justify-content-between align-items-center">
+        <li *ngIf="myId==post.userData.id" (click)="deletePost(post.docId)" class="w-100 p-2 my-1 d-flex justify-content-between align-items-center">
             <i class="fa-solid fa-trash"></i>
             <p class="m-0">Delete Post</p>
 
@@ -156,16 +70,23 @@
     <!-- comments && likes -->
     <div class="comments_likes container  shadow-lg bg-dark" style="height: 40px; border: none;">
     <div class="row h-100">
-    <div class="col-4 icon  h-100 ">
-          <i (click)="getLike(post.docId,post.likes,post.id)" [ngStyle]="{'color' :isLiked(post.likes)? 'red':'white'}" class="bi bi-heart-fill"></i>
+    <div  class="col-4 icon  h-100 ">
     
-        <p *ngIf="post.likes"  style="color: white;" class="m-0 mx-2">{{post.likes.length}}</p>
+          <i   (click)="toggleLike(post.docId)" class="bi bi-heart-fill"></i>
+
+      
+    <p data-bs-toggle="offcanvas" data-bs-target="#offcanvasLike" aria-controls="offcanvasBottom" (click)="getLikes(post.docId)" class="my-0 mx-2" style="cursor: pointer;">{{post.likeCount}}</p>
+         
     </div>
 <!-- commentes -->
-    <div (click)="openComments(n)" class="col-4 icon d-flex align-items-center">
+    <div (click)="getComments(post.docId)"  class="btn btn-secondary me-2"
+    type="button"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasComments"
+    aria-controls="offcanvasComments"   class="col-4 icon d-flex align-items-center">
 
-<i    class="bi bi-chat-heart-fill mx-2"></i>
-<p *ngIf="post.comments" class="m-0">{{post.comments.length}}</p>
+<i     class="bi bi-chat-heart-fill mx-2">{{post.commentCount}}</i>
+
     
     </div>
     <div class="col-4 icon">
@@ -178,6 +99,47 @@
     </div>
    
     
+
+<div class="offcanvas offcanvas-bottom col-md-6 col-12 mx-auto mb-5" tabindex="-1" id="offcanvasComments" aria-labelledby="offcanvasCommentsLabel" style="height: 80vh; overflow-y: auto;">
+<div class="offcanvas-header">
+<h5 id="offcanvasCommentsLabel">Comments</h5>
+<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+</div>
+<div class="offcanvas-body d-flex flex-column p-3">
+<!-- Comments List -->
+<div *ngFor="let c of allComments;trackBy:trackById2" class="d-flex mb-3">
+<img [src]="c.userImage"
+   class="rounded-circle me-2"
+   width="40" height="40"
+   alt="{{c.userName}}">
+<div class="bg-light rounded px-3 py-2 flex-grow-1">
+<strong>{{ c.userName }}</strong>
+<p class="mb-1">{{ c.comment }}</p>
+<small class="text-muted">{{ (c.date ).toDate()| date:'short' }}</small>
+</div>
+</div>
+
+<!-- Spacer to push input to bottom -->
+<div class="d-flex justify-content-center py-2">
+  <div class="mt-auto pt-2 border-top col-md-5 mx-auto  col-11 px-3 mb-2" style="position: fixed;bottom: 50px; background-color: white; z-index: 99999999;">
+    <div class="input-group">
+    <input [(ngModel)]="comment"
+           type="text"
+           class="form-control"
+           placeholder="Write a comment..."
+           aria-label="Write a comment">
+    <button class="btn btn-primary" (click)="sendComment(post.docId)"
+    >
+      Post
+    </button>
+    </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+  
     </div>
     
 </ng-container>
@@ -196,3 +158,25 @@
    </div>
   </ng-template>
 
+  
+
+  <div class="offcanvas offcanvas-bottom col-md-6 col-12 mx-auto" tabindex="-1" id="offcanvasLike" aria-labelledby="offcanvasBottomLabel" style="height: 80vh !important;">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasBottomLabel">Reactive Poeple ❤️</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body small">
+<div class="d-flex justify-content-start align-items-center">
+  <div *ngFor="let like of likedPoeple;trackBy:trackById2" class="d-flex align-items-center">
+    <div class="img" style="width: 40px ; height: 40px;">
+      <img [src]="like.userImage" alt="" class="w-100">
+    </div>
+    <div>
+      <h6 class="my-0 mx-2">{{like.userName}}</h6>
+    </div>
+    </div>
+</div>
+    </div>
+  </div>
+
+  <!-- post-detail.component.html -->

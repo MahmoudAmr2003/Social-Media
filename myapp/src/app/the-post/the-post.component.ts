@@ -1,15 +1,18 @@
-import { Component, ElementRef, HostListener, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Firestore } from '@angular/fire/firestore';
+import { MyDataService } from './../my-data.service';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { FireService } from '../fire.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { zoomInOut } from '../animation';
 import { CommentService } from '../comment.service';
 import { FormsModule } from '@angular/forms';
-import { CommentComponent } from '../comment/comment.component';
+import { LikeCommentService } from '../like-comment.service';
+
 
 @Component({
   selector: 'app-the-post',
-  imports: [CommonModule,FormsModule,CommentComponent,RouterModule],
+  imports: [CommonModule,FormsModule,RouterModule],
   templateUrl: './the-post.component.html',
   styleUrl: './the-post.component.scss',
 animations:[zoomInOut]
@@ -21,117 +24,104 @@ export class ThePostComponent implements OnInit {
 
 
 
-showComments:number=-1;
+
+
+
+
+
+
+
+
+
+
   @Input() allPosts:any[]=[]
   myId=localStorage.getItem('userId')||'';
-image:string=localStorage.getItem("userImg")||'';
 saved:boolean=false;
-
-constructor(private _FireService:FireService , private _Router:Router ,private _CommentService:CommentService,private elRef:ElementRef )
+allLikes:any[]=[];
+user:any={};
+constructor(private _FireService:FireService , private _Router:Router ,private _CommentService:CommentService,private elRef:ElementRef,private _LikeCommentService:LikeCommentService,private _MyDataService:MyDataService ,private _Firestore:Firestore)
 {
 document.body.classList.remove('no-scroll');
-
+_MyDataService.setMyData();
+this.user=_MyDataService.userData;
 }
 ngOnInit(): void {
+
+
   this.getSPosts();
-  
+ 
+
 }
 
 
-@HostListener('document:click', ['$event'])
-
-
-checkoutSideClick(event:MouseEvent)
+toggleLike(postId:string)
 {
-if(this.showComments!==-1&& !this.elRef.nativeElement.contains(event.target))
-{
-  this.showComments=-1;
-  document.body.classList.remove('no-scroll');
+this._LikeCommentService.toggleLike(postId,this.user);
 }
-}
-show:boolean=false;
-
-openComments(index:number)
+likedPoeple:any[]=[];
+getLikes(postId:string)
 {
-  this.show!=this.show;
+this._LikeCommentService.getLikes(postId).subscribe({
+  next:(res)=>{
+this.likedPoeple=res;
+console.log(res);
+  }
+})
+}
+sendComment(postId:string)
+{
   console.log("hello");
-  this.showComments=index;
-  document.body.classList.add('no-scroll');
-
+  console.log(postId,this.user,this.comment)
+this._LikeCommentService.sendComment(postId,this.user,this.comment);
 }
-closeComments()
+allComments:any[]=[];
+getComments(postId:string)
 {
-  this.showComments=-1;
-  document.body.classList.remove('no-scroll');
-
+this._LikeCommentService.getComments(postId).subscribe({
+  next:(res)=>{
+    console.log(postId);
+    console.log(res);
+    console.log(this.allComments);
+this.allComments=res;
+  },
+  error:(error)=>
+  {
+    console.log("ERROR"+ error);
+  }
+})
 }
-  likeColor:string=''
-
-getLike(docId:string,likes:any[],postOwnerId:string)
+getPostId(postId:string)
 {
-  let notNums=0;
-  this._FireService.$notifs.subscribe({
-    next:(res)=>{
-      notNums=res;
-    }
-  })
-  this._FireService.getLike(docId,likes,postOwnerId,notNums);
-
+console.log(postId);
 }
 
-isLiked(likes:any):boolean
-{
-return likes&&likes.some((i:any)=>i.id===this.myId);
-}
-userProfile(id: string): void {
-  console.log(id);
-  localStorage.setItem('personId',id);
-  this._Router.navigate(['/userProfile']);
-    }
 
 
-    isSubscribe:any[]=[];
 
-    sortedPosts:any[]=[];
+
+
+
+
+    
+
 
   
 
 
 trackById(index:number,item:any)
 {
-  return item.id;
+  return item.userData.id;
+}
+
+
+trackById2(index:number,item:any)
+{
+  return item.postId;
 }
 
 ////////////////
 comment:string='';
-sendComment(postId:string,ownerId:string)
-{
-if(this.comment)
-{
 
- const  me={
-    image:localStorage.getItem("userImg"),
-    id:localStorage.getItem('userId'),
-    name:localStorage.getItem("userName"),
-    type:'comment',
-    postId:postId,
-    comment:this.comment,
-    date:new Date()
-  }
-this._CommentService.sendComment(postId,me).subscribe({
-  next:(res)=>{
-  
-    this.clearComment();
-    this._CommentService.sendNotifection(ownerId,postId);
-    this._FireService.inc_Dec_Notifucation(ownerId,this._FireService.notifNumber.getValue());
-  },
-  error:(error)=>{
-    console.log(error);
-  }
-})
-
-}
-}
 clearComment()
 {
   this.comment='';

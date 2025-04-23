@@ -44,9 +44,6 @@ this.myData=res;
 this.frinds=res.frinds;
 this.myNewFrinds=this.frinds;
 this._FireService.notifNumber.next(res.notifNums);
-localStorage.setItem('userImg',res.img1);
-localStorage.setItem('userName',res.fullName);
-localStorage.setItem('userId',res.userId);
 
 
 

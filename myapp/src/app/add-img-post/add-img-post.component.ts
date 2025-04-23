@@ -6,6 +6,7 @@ import { CloudinaryService } from '../cloudinary.service';
 import { LoadingComponent } from '../loading/loading.component';
 import { Router } from '@angular/router';
 import { zoomInOut } from '../animation';
+import { MyDataService } from '../my-data.service';
 
 @Component({
   selector: 'app-add-img-post',
@@ -15,8 +16,10 @@ import { zoomInOut } from '../animation';
   animations:[zoomInOut]
 })
 export class AddImgPostComponent implements OnInit {
-  constructor(private _CloudinaryService:CloudinaryService, private _FireService:FireService , private _Router:Router)
-  {}
+  constructor(private _CloudinaryService:CloudinaryService, private _FireService:FireService , private _Router:Router, private _MyDataService:MyDataService)
+  {
+    _MyDataService.setMyData();
+  }
 
 ngOnInit(): void {
   this.getmyInfo();
@@ -71,13 +74,10 @@ showSpinner:boolean=false;
 
 senPost()
 {
-  const me={
-    image:localStorage.getItem("userImg"),
-    id:localStorage.getItem('userId'),
-    name:localStorage.getItem("userName")
-  }
+  const userData=this._MyDataService.userData;
+ 
 const date=new Date();
-const dataOfPost={id:me.id,postOwnerName:me.name,postOwnerImg:me.image,date:date,imgUrl:this.realImgUrl,cabtio:this.cabtion};
+const dataOfPost={userData,date:date,imgUrl:this.realImgUrl,cabtio:this.cabtion,likeCount:0,commentCount:0};
 this._FireService.sendPost(dataOfPost);
 
 this.clear();

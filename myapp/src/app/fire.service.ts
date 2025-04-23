@@ -154,16 +154,9 @@ getLike(docId:string,likes:any[],postOwnerId:string,notNum:number)
     postId:docId
     
   }
+  const user =JSON.parse(localStorage.getItem('user')||'{}');
 
-const myNotif={
-  image:localStorage.getItem("userImg"),
-  id:localStorage.getItem('userId'),
-  name:localStorage.getItem("userName"),
-   message:`Your Post has been liked by `,
-type:'like',
-postId:docId,
-date:new Date()
-}
+const myNotif={name:user.fullName,image:user.img1,id:user.userId,   message:`Your Post has been liked by `,type:'like',posId:docId,date:new Date()}
   const id=localStorage.getItem('userId');
  if(likes)
  {
@@ -199,6 +192,8 @@ console.log('added under');
 
  }
 }
+
+
 
 inc_Dec_Notifucation(postId:string,notNum:number)
 {

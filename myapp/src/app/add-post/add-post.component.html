@@ -39,7 +39,7 @@
 
 
       <div class="post-container">
-        <!-- Header: صورة المستخدم واسم المستخدم -->
+
         <div class="post-header">
           <img class="profile-pic" [src]="profilData.img1" alt="Profile Picture">
           <div class="user-info">
@@ -48,12 +48,12 @@
           </div>
         </div>
       
-        <!-- مساحة المنشور -->
+    
         <div class="post-body">
           <textarea  [(ngModel)]="post" placeholder=" What do you think?"></textarea>
         </div>
       
-        <!-- Footer: زر النشر -->
+      
         <div class="post-footer">
           <button [disabled]="post==''" (click)="senPost()" class="post-btn">نشر</button>
         </div>

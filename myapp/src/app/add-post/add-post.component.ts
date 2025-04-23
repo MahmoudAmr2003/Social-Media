@@ -1,8 +1,10 @@
+
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FireService } from '../fire.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { MyDataService } from '../my-data.service';
 
 
 @Component({
@@ -19,7 +21,10 @@ ngOnInit(): void {
 this.getmyInfo();
   
 }
-  constructor(private _FireService:FireService, private _Router:Router){}
+  constructor(private _FireService:FireService, private _Router:Router,private _MyDataService:MyDataService){
+this._MyDataService.setMyData();
+
+  }
  
 post:string='';
 postbgColor:string='';
@@ -48,15 +53,10 @@ getmyInfo()
 
 senPost()
 {
-
-  const me={
-    image:localStorage.getItem("userImg"),
-    id:localStorage.getItem('userId'),
-    name:localStorage.getItem("userName")
-  }
-  console.log(me);
+  const userData=this._MyDataService.userData;
+  console.log(userData);
 const date=new Date();
-const dataOfPost={id:me.id,post:this.post,postOwnerName:me.name,postOwnerImg:me.image,date:date};
+const dataOfPost={userData,post:this.post,date:date,likeCount:0,commentCount:0};
 this._FireService.sendPost(dataOfPost);
 
 this.clear();

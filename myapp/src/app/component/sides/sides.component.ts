@@ -64,8 +64,7 @@ logOut()
 {
   this._AuthService.isUserDataCame.next(false);
   localStorage.removeItem("userId");
-  localStorage.removeItem("userName");
-  localStorage.removeItem("userImg");
+ localStorage.removeItem('user');
   localStorage.removeItem("userDataTaken");
   this._AuthService.logOut();
 }
