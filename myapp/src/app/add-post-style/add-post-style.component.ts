@@ -28,4 +28,8 @@ skip()
 {
   this.type='';
 }
+skipFromChild(event:string)
+{
+this.type=event;
+}
 }

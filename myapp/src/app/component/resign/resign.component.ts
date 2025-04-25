@@ -21,7 +21,13 @@ standalone:true
 export class ResignComponent implements OnChanges {
   orderdDate:Date=new Date();
 userDataArray:any;
-constructor(private auth:AuthService,private _router:Router,private _DatabaseService:DatabaseService,private _MatSnackBar:MatSnackBar, private _FireService:FireService, private _MyDataService:MyDataService)
+constructor(private auth:AuthService,
+  private _router:Router,
+  private _DatabaseService:DatabaseService,
+  private _MatSnackBar:MatSnackBar,
+   private _FireService:FireService, 
+  private _MyDataService:MyDataService,
+private _AuthService:AuthService)
   {
 // auth.isLogged.next(false);
 
@@ -96,24 +102,6 @@ event.stopPropagation();
   }
 
 
-
-  getmyInfo()
-{ 
-  const id=localStorage.getItem('userId')||'';
-
-  this._FireService.getMyData(id).subscribe({
-    next:(res)=>{
-      
-  
- localStorage.setItem('user',JSON.stringify(res));
- this._MyDataService.setMyData();
-    },
-    error:(error)=>{
-  alert(`Eror:  ${error}`);
-    }
-   }) 
-
-}
 
 
 goToDashbored()

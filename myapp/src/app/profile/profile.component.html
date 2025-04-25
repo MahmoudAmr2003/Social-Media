@@ -34,23 +34,7 @@
     </ul>
   <button routerLink="/add_data" class="btn btn-warning p-1 text-white mt-2 mx-0">Edite Profile</button>
 
-    <h4 *ngIf="profilData.frinds" class="mt-2">Frinds : {{profilData.frinds.length}}</h4>
-    
-    <div *ngIf="profilData.frinds">
-    
-      <div class="d-flex align-items-center">
-        <div  *ngFor="let frind of profilData.frinds " class="m-2 d-flex" style="width: 40px; height: 40px;">
-            <div class="img w-100 h-100 mt-2 mx-0 p-0 " style="border: solid rgba(0, 0, 0, 0.329) 0.1px;" >
-            <img [src]="frind.frindImg" alt="" class="w-100">
-            </div>
-         
-            <hr>
-            
-            </div>
-            
-      </div>
-    
-    </div>
+   <app-frinds [myId]="id"></app-frinds>
     <hr>
     <div class="d-flex align-items-center bg-success p-2 text-white">
         <i class="fa-brands fa-facebook-messenger my-0 " style="font-size: 30px; color: white;"></i>

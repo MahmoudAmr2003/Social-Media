@@ -12,10 +12,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ThePostComponent } from '../the-post/the-post.component';
 import {MatButtonModule} from '@angular/material/button';
 import { AddPostStyleComponent } from '../add-post-style/add-post-style.component';
+import { FrindsComponent } from '../frinds/frinds.component';
 
 @Component({
   selector: 'app-profile',
-imports: [FormsModule,CommonModule, FormsModule,RouterModule,NgbModule,ThePostComponent,MatButtonModule,AddPostStyleComponent],
+imports: [FormsModule,CommonModule, FormsModule,RouterModule,NgbModule,ThePostComponent,MatButtonModule,AddPostStyleComponent,FrindsComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 animations:[zoomInOut]

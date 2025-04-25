@@ -1,6 +1,6 @@
 <div  class="w-100">
 <div *ngIf="resiverId!=myId">
-    <div *ngIf="!isMyfrind">
+    <div *ngIf="!check_If_The_Person_Myfrind()">
         <div *ngIf="!isImResived" class="px-3">
      
             <button *ngIf="!isISended" (click)="sendRequest()"  class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2"
@@ -19,7 +19,8 @@
              <div class="d-flex justify-content-start align-items-center" style="width: 100%;">
 
 
-                 <button (click)="AcceptRequestToMe(resiverId,personImage,personName);AcceptRequestToFrind();CancleRequest()" class="btn btn-success   d-flex align-items-center justify-content-center ">
+                 <button (click)="  
+                 AcceptRequst();  AcceptRequst2();CancleRequest()" class="btn btn-success   d-flex align-items-center justify-content-center ">
            <i class="bi bi-check-lg"></i>
         Accetp 
          </button>
@@ -31,7 +32,7 @@ Cancle
              </div>
             </div>
     </div>
-    <div *ngIf="isMyfrind" class="mt-3 w-100">
+    <div *ngIf="    check_If_The_Person_Myfrind()" class="mt-3 w-100">
         <button class="btn btn-success w-100 d-flex align-items-center justify-content-center gap-2" >
             <i class="bi bi-person-check-fill"></i>
          Frind

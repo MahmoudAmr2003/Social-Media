@@ -1,5 +1,5 @@
 import { FireService } from './../fire.service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CloudinaryService } from '../cloudinary.service';
@@ -16,6 +16,8 @@ import { MyDataService } from '../my-data.service';
   animations:[zoomInOut]
 })
 export class AddImgPostComponent implements OnInit {
+  @Output() sended=new EventEmitter<string>();
+
   constructor(private _CloudinaryService:CloudinaryService, private _FireService:FireService , private _Router:Router, private _MyDataService:MyDataService)
   {
     _MyDataService.setMyData();
@@ -81,6 +83,7 @@ const dataOfPost={userData,date:date,imgUrl:this.realImgUrl,cabtio:this.cabtion,
 this._FireService.sendPost(dataOfPost);
 
 this.clear();
+this.sended.emit('');
 }
 
 

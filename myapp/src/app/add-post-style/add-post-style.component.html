@@ -33,7 +33,7 @@
          <i class="fa-solid fa-xmark"></i>
         </div>
        </div>
-<app-add-post></app-add-post>
+<app-add-post (sended)="skipFromChild($event)"></app-add-post>
 
 </div>
 <div *ngIf="type=='img'" style="position: absolute; top: -70% ; z-index: 9999999;"  class="col-12 " @zoomInOut>
@@ -42,7 +42,7 @@
          <i class="fa-solid fa-xmark"></i>
         </div>
        </div>
-<app-add-img-post></app-add-img-post>
+<app-add-img-post (sended)="skipFromChild($event)"></app-add-img-post>
 
 </div>
 

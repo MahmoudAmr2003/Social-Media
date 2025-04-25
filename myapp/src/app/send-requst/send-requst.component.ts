@@ -1,7 +1,7 @@
 import { Frinds } from './../frinds';
 import { Subscription } from 'rxjs';
 import { serverTimestamp } from '@angular/fire/firestore';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FireService } from '../fire.service';
 import { CommonModule } from '@angular/common';
 import { MyDataService } from '../my-data.service';
@@ -13,10 +13,9 @@ import { LikeCommentService } from '../like-comment.service';
   templateUrl: './send-requst.component.html',
   styleUrl: './send-requst.component.scss'
 })
-export class SendRequstComponent implements OnInit {
+export class SendRequstComponent implements OnInit,OnDestroy {
 myId=localStorage.getItem("userId")||'';
 @Input() resiverId:string='';
-@Input() notNum:number=0;
 @Input() personName:string='';
 @Input() personImage:string='';
  frinds:any[]=[];
@@ -31,11 +30,13 @@ constructor( private _FireService:FireService, private _MyDataService:MyDataServ
 
 }
  ngOnInit(): void {
+  this._MyDataService.setMyData();
+    this.user=this._MyDataService.userData; 
    this. getMyData();
   this.getResiverPeople();
   this.getSenderPeople();
   
-
+this.getMyFrinds();
  }
 
 
@@ -44,8 +45,7 @@ constructor( private _FireService:FireService, private _MyDataService:MyDataServ
  this.subscribtion.push(
    this._FireService.getMyData(this.myId).subscribe({
      next:(res)=>{
-   this.frinds=res.frinds||[];
-
+ 
    this.check_If_The_Person_Myfrind();
  
      }
@@ -57,7 +57,7 @@ user:any={};
   {
     this._MyDataService.setMyData();
   this.user=this._MyDataService.userData;
-  
+ 
     const reqData={senderId:this.myId,resiverId:this.resiverId,userImg:this.user.image,userName:this.user.name,date:serverTimestamp()};
   const date=new Date();
     this._FireService.addFrind(reqData).subscribe({
@@ -132,16 +132,10 @@ user:any={};
   
   check_If_The_Person_Myfrind():boolean
   {
-    if(this.frinds.length!=0)
-    {
-  this.isMyfrind=this.frinds.some(des=>des.frindId===this.resiverId);
+    return this.myFrins.includes(this.resiverId);
+
   
-  return this.isMyfrind;
-  }
-  else
-  {
-    return false;
-  }
+  
   }
   
   
@@ -149,33 +143,60 @@ user:any={};
   {
     const newArray=this.senderPeople.filter(x=>x.senderId===this.resiverId);
   const docId=newArray[0].docId;
-  console.log(docId);
+  
   const collectionName='frindsRequst';
   this._FireService.deleteDoc(collectionName,docId);
   this.isImResived=false;
-    console.log(newArray);
-  }
-  AcceptRequestToMe(frindId:string,frindImg:string,frindName:string)
-  {
-    const id =localStorage.getItem('userId')||'';
-    const frindData={frindId:frindId,frindImg:frindImg,frindName:frindName};
-    this._FireService.acceptRequest(id,frindData);
-
-  
+    
   }
   
-  AcceptRequestToFrind()
+  
+  AcceptRequst()
   {
     this._MyDataService.setMyData();
-    this.user=this._MyDataService.userData;
-    const senderId=localStorage.getItem("userId")||'';
-    const date=new Date();
-  const message='The request has been accspted by '
-    const frindData={frindId:senderId,frindImg:this.user.image,userName:this.user.name,message:message,senderId:senderId};
-    this._FireService.acceptRequest(this.resiverId,frindData);
-   this._LikeCommentService.sendFrindRequstNotif(this.user,`Accepted your requrst`,this.resiverId);
-  this._LikeCommentService.inAndDisNotifNumber(senderId);
+    this.user=this._MyDataService.userData; 
+  
+const frindShip=
+{
+userId:this.user.id,
+frindId:this.resiverId,
+frindName:this.personName,
+frindImage:this.personImage
+}
+
+this._FireService.acceptTheRequest(frindShip);
   }
+  AcceptRequst2()
+  {
+    this._MyDataService.setMyData();
+    this.user=this._MyDataService.userData; 
   
-  
+const frindShip=
+{
+userId:this.resiverId,
+frindId:this.user.id,
+frindName:this.user.name,
+frindImage:this.user.image
+}
+
+this._FireService.acceptTheRequest2(frindShip);
+  }
+  myFrins:any[]=[];
+  getMyFrinds()
+  {
+   
+  this.subscribtion.push(
+    this._FireService.getMyFrinds(this.user.id).subscribe({
+      next:(res)=>{
+        console.log(res);
+this.myFrins=res.map((f:any)=>f.frindShip.frindId);
+
+      }
+    })
+  )
+  }
+
+  ngOnDestroy(): void {
+    this.subscribtion.forEach(sub=>sub.unsubscribe);
+  }
 }

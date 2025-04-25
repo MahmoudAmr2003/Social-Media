@@ -1,16 +1,16 @@
 
 import { CommonModule } from '@angular/common';
-import { Component,ElementRef,OnDestroy,OnInit, ViewChild } from '@angular/core';
+import { Component,ElementRef,Input,OnDestroy,OnInit } from '@angular/core';
 import { FrindsrequestsComponent } from '../component/frindsrequests/frindsrequests.component';
 import { FireService } from '../fire.service';
 import { Router } from '@angular/router';
 import { zoomInOut } from '../animation';
 import { Subscription } from 'rxjs';
-
-
+import { hide } from '@popperjs/core';
+import { sub } from 'date-fns';
 @Component({
   selector: 'app-frinds',
-  imports: [CommonModule,CommonModule,FrindsrequestsComponent  ],
+  imports: [CommonModule,CommonModule,FrindsrequestsComponent],
   templateUrl: './frinds.component.html',
   styleUrl: './frinds.component.scss',
   animations:[zoomInOut]
@@ -18,50 +18,55 @@ import { Subscription } from 'rxjs';
 
 export class FrindsComponent implements OnInit,OnDestroy {
   isSubcribe!:Subscription;
-  myId=localStorage.getItem('userId')||'';
-myFrinds:any[]=[];
-myNewFrinds:any[]=[];
+  id=localStorage.getItem('userId')||'';
+  @Input() myId:string='';
+  showAllFrinds:boolean=false;
  constructor(private _FireService:FireService, private _Router:Router){
 
  }
+myFrinds:any[]=[];
 
+searchedFrinds:any[]=[];
  ngOnInit(): void {
 this.getMyFrinds();
  }
- searchAboutFrinds(event:any)
- {
-console.log(event.target.value);
-this.myNewFrinds=this.myFrinds.filter((x)=>{
-  return x.frindName.includes(event.target.value);
-})
- }
- notifNum:number=0;
+ subs!:Subscription;
  getMyFrinds()
  {
-this.isSubcribe= this._FireService.getMyData(this.myId).subscribe({
+this.subs=  this._FireService.getMyFrinds(this.myId).subscribe({
   next:(res)=>{
-this.myFrinds=res.frinds||[];
-this.myNewFrinds=this.myFrinds;
+this.myFrinds=res;
+this.searchedFrinds=this.myFrinds;
 console.log(this.myFrinds);
   }
 })
  }
+ state:string='show';
+ showAll()
+ {
+  this.showAllFrinds=!this.showAllFrinds;
+  if(this.state=='show')
+  {
+    this.state='hide';
 
- 
- userProfile(id: string): void {
-  console.log(id);
-  localStorage.setItem('personId',id);
-  this._Router.navigate(['/userProfile']);
-    }
-    ngOnDestroy(): void {
-      
-      if(this.isSubcribe)
-      {
-        this.isSubcribe.unsubscribe();
-      }
-    }
-    trackById(index:number,item:any)
-    {
-return item.frindId;
-    }
+  }
+  else
+  {
+    this.state='show';
+  }
+ }
+
+ search(frind:HTMLInputElement)
+ {
+this.searchedFrinds=this.myFrinds.filter(word=>word.frindShip.frindName.includes(frind.value));
+ }
+ trackById(index:number,item:any)
+ {
+return item.frindShip.userId;
+ }
+
+
+ ngOnDestroy(): void {
+   this.subs.unsubscribe();
+ }
 }

@@ -2,6 +2,7 @@
 import { Component,OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FireService } from '../../fire.service';
+import { SendRequstComponent } from '../../send-requst/send-requst.component';
 
 
 
@@ -12,7 +13,7 @@ import { FireService } from '../../fire.service';
 @Component({
   selector: 'app-frindsrequests',
   standalone:true,
-  imports: [CommonModule],
+  imports: [CommonModule,SendRequstComponent],
   templateUrl: './frindsrequests.component.html',
   styleUrl: './frindsrequests.component.scss',
  
@@ -42,33 +43,7 @@ this.notifNum=res.notifNums;
   }
 })
 }
-cancleRequest(id:string)
-{
-this._FireService.deleteDoc('frindsRequst',id);
-}
 
 
-AccebtReqTome(frindId:string,frindImg:string,frindName:string)
-{
-  const frindData={frindId:frindId,frindImg:frindImg,frindName:frindName};
-  this._FireService.acceptRequest(this.myId,frindData);
-
-}
-
-AcceptRequestToFrind(frindId:string)
-{
-  const senderId=localStorage.getItem("userId");
-  const userImg=localStorage.getItem("userImg");
-  const userName=localStorage.getItem("userName");
-  const date=new Date();
-const message='The request has been accspted by '
-  const frindData={frindId:senderId,frindImg:userImg,frindName:userName};
-  const notif={userImg:userImg,userName:userName,date:date,message:message}
-  this._FireService.acceptRequest(frindId,frindData);
-  const notifType='acceptedRequests'
-
-
-
-}
 }
 

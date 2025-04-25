@@ -1,41 +1,4 @@
-<!-- <div  class=" col-md-8 col-10  shadow-lg p-4  mx-auto mt-4" style="height: 500px; position: relative;" @zoomInOut >
-<div>
-   <button routerLink="/home" class="btn btn-light"> <i class="bi bi-arrow-left" style="font-size: 22px;"></i></button>
-</div>
-          
-          <div class="text-center">
-          <h5>Creat Post</h5>
-          </div>
-          <div class="d-flex justify-content-start align-items-center">
-          <div class="photo mx-2">
-          <img [src]="profilData.img1" alt="" class="w-100">
-          </div>
-          <p class="my-0 mx-3"> {{profilData.fullName}}</p>
-          </div>
-          
-          
-         <div class="mt-4" style="height: 250px;">
-      
-          <textarea  [(ngModel)]="post"  #textarea  class="w-100  h-100 d-flex align-items-center"  name="" id="" style=" border: none; border: solid rgba(0, 0, 0, 0.225) 0.1px; outline: none; text-align: center; padding-top:15%; font-size: 30px; font-weight: 600;" placeholder="Write hrer" required></textarea>
-         </div> 
-      <div class="d-flex align-items-center justify-content-center mt-2 ">
-        <h4>Font Color :</h4>
-          <div  *ngFor="let color of colorArray" class="">
-      
-              <div (click)="changColorOfTextarea(color)"   [ngStyle]="{'background-color':color}" style="width: 15px ; height: 15px ; border-radius: 50% ; margin: 0 5px;">
-              
-              </div>
-      </div>
-      
-      </div>
-      
-          
-          <div class="w-100 d-flex justify-content-center align-items-center">
-              <button [disabled]="post==''" (click)="senPost()"  class="btn btn-dark w-75 mx-auto mt-3">Post</button>
-          </div>
-        
-          
-      </div> -->
+
 
 
       <div class="post-container">

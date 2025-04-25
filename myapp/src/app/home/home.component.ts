@@ -7,11 +7,12 @@ import { zoomInOut } from '../animation';
 import { Router, RouterModule } from '@angular/router';
 import { AddPostStyleComponent } from '../add-post-style/add-post-style.component';
 import { ThePostComponent } from '../the-post/the-post.component';
+import { FrindsComponent } from '../frinds/frinds.component';
 
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule,RouterModule,AddPostStyleComponent,ThePostComponent  ],
+  imports: [CommonModule,RouterModule,AddPostStyleComponent,ThePostComponent,FrindsComponent  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   animations:[zoomInOut]
@@ -41,11 +42,6 @@ this.isSubscribe.push(
 this._FireService.getMyData(this.myId).subscribe({
   next:(res)=>{
 this.myData=res;
-this.frinds=res.frinds;
-this.myNewFrinds=this.frinds;
-
-
-
 
   }
 })
@@ -63,7 +59,7 @@ ngOnDestroy(): void {
 
     searchAboutFrinds(event:any)
     {
-   console.log(event.target.value);
+  
    this.myNewFrinds=this.frinds.filter((x)=>{
      return x.frindName.toUpperCase().includes(event.target.value.toUpperCase());
    })

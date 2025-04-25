@@ -1,7 +1,7 @@
-import { map } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { Firestore } from '@angular/fire/firestore';
 import { MyDataService } from './../my-data.service';
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { FireService } from '../fire.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
@@ -9,6 +9,7 @@ import { zoomInOut } from '../animation';
 import { CommentService } from '../comment.service';
 import { FormsModule } from '@angular/forms';
 import { LikeCommentService } from '../like-comment.service';
+import { sub } from 'date-fns';
 
 
 @Component({
@@ -18,28 +19,13 @@ import { LikeCommentService } from '../like-comment.service';
   styleUrl: './the-post.component.scss',
 animations:[zoomInOut]
 })
-export class ThePostComponent implements OnInit {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export class ThePostComponent implements OnInit,OnDestroy {
   @Input() allPosts:any[]=[]
   myId=localStorage.getItem('userId')||'';
 saved:boolean=false;
 allLikes:any[]=[];
 user:any={};
+private subsArray:Subscription[]=[];
 constructor(private _FireService:FireService , private _Router:Router ,private _CommentService:CommentService,private elRef:ElementRef,private _LikeCommentService:LikeCommentService,private _MyDataService:MyDataService ,private _Firestore:Firestore)
 {
 
@@ -58,12 +44,14 @@ ngOnInit(): void {
 allUserLikes:any[]=[];
 getUserLikes()
 {
+this.subsArray.push(
   this._LikeCommentService.getUserLikes(this.user.id).subscribe({
     next:(res)=>{
       this.allUserLikes=res.map((like:any)=>like.postId)
-      console.log(this.allUserLikes);
+      
     }
   })
+)
 }
 
 isLiked(postId:string):boolean
@@ -79,17 +67,18 @@ this._LikeCommentService.toggleLike(post,this.user);
 likedPoeple:any[]=[];
 getLikes(postId:string)
 {
-this._LikeCommentService.getLikes(postId).subscribe({
-  next:(res)=>{
-this.likedPoeple=res;
-console.log(res);
-  }
-})
+this.subsArray.push(
+  this._LikeCommentService.getLikes(postId).subscribe({
+    next:(res)=>{
+  this.likedPoeple=res;
+  
+    }
+  })
+)
 }
 sendComment(post:any)
 {
-  console.log("hello");
-  console.log(post,this.user,this.comment)
+
 this._LikeCommentService.sendComment(post,this.user,this.comment);
 this.comment='';
 }
@@ -97,24 +86,19 @@ this.comment='';
 allComments:any[]=[];
 getComments(postId:string)
 {
-this._LikeCommentService.getComments(postId).subscribe({
-  next:(res)=>{
-    console.log(postId);
-    console.log(res);
-    console.log(this.allComments);
-this.allComments=res;
-  },
-  error:(error)=>
-  {
-    console.log("ERROR"+ error);
-  }
-})
+this.subsArray.push(
+  this._LikeCommentService.getComments(postId).subscribe({
+    next:(res)=>{
+     
+  this.allComments=res;
+    },
+    error:(error)=>
+    {
+      
+    }
+  })
+)
 }
-getPostId(postId:string)
-{
-console.log(postId);
-}
-
 
 
 
@@ -194,20 +178,22 @@ savedPostsArray:any[]=[];
 getSPosts()
 {
 const myId=localStorage.getItem('userId')||'';
-this._FireService.getSavedPosts(myId).subscribe({
-  next:(res)=>{
-   
-    this.savedPostsArray=res;
-    
-  },
-  error:(error)=>{
-    console.log(error);
-  }
-})
+this.subsArray.push(
+  this._FireService.getSavedPosts(myId).subscribe({
+    next:(res)=>{
+     
+      this.savedPostsArray=res;
+      
+    },
+    error:(error)=>{
+      
+    }
+  })
+)
 }
 checkIfISavedPost(postId:string):boolean
 {
-console.log(postId);
+
 
  this.saved= this.savedPostsArray.some(x=>x.docId===postId);
  return this.saved;
@@ -215,5 +201,9 @@ console.log(postId);
 }
 
 
+
+ngOnDestroy(): void {
+  this.subsArray.forEach(sub=>sub.unsubscribe());
+}
 
 }

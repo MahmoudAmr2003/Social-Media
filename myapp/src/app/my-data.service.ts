@@ -9,7 +9,7 @@ export class MyDataService {
   setMyData()
   {
    const user:any=JSON.parse(localStorage.getItem('user')||'{}');
-   console.log(user);
+
 
 this.userData={
   name:user.fullName,

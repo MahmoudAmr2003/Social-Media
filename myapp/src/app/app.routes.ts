@@ -1,7 +1,7 @@
 import { CommentComponent } from './comment/comment.component';
 import { provideRouter, Routes } from '@angular/router';
 import { ResignComponent } from './component/resign/resign.component';
-import { LoginComponent } from './component/login/login.component';
+import { LoginComponent } from './Atuth/login/login.component';
 import { mygardGuard } from './gards/mygard.guard';
 import { SidesComponent } from './component/sides/sides.component';
 import { AddProfileDataComponent } from './component/add-profile-data/add-profile-data.component';

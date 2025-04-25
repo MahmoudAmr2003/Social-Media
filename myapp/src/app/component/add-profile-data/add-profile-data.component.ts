@@ -8,6 +8,7 @@ import {LoadingComponent } from '../../loading/loading.component';
 import { CloudinaryService } from '../../cloudinary.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatRadioModule} from '@angular/material/radio';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class AddProfileDataComponent implements OnInit {
 img2Url:string='';
 img1Url:string='';
 date:any;
-  constructor(private _Firestore:Firestore, private _FireService:FireService, private _Router:Router, private _CloudinaryService:CloudinaryService)
+  constructor(private _Firestore:Firestore, private _FireService:FireService, private _Router:Router, private _CloudinaryService:CloudinaryService, private _AuthService:AuthService)
   {
   }
   ngOnInit(): void {
@@ -90,6 +91,7 @@ if(theFile)
         
               }
                     this.saveUserData();
+                    this._AuthService.isLogged.next(true);
       
 this._Router.navigate(['/home']);
               
@@ -145,6 +147,7 @@ saveUserData()
   const id=localStorage.getItem('userId');
   const docRef=doc(this._Firestore,`users/${id}`);
   updateDoc(docRef,this.myForm.value);
+this.getMyData();
   localStorage.setItem("userDataTaken",'true');
 }
 
@@ -159,6 +162,7 @@ getMyData()
       next:(res)=>{
     this.myForm.patchValue(res);
     this.img1Url=res.img2;
+    localStorage.setItem('user',JSON.stringify(res));
     this.img2Url=res.img1;
     
       }

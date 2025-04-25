@@ -1,27 +1,11 @@
-<div class="container" style="position: relative;" @zoomInOut> 
+<div class="container" style="position: relative; " @zoomInOut> 
 
     <div class="row">
-        <div class="col-md-4 col-12" style=" right: 0;">
+        <div class="col-md-4 col-12" style=" right: 0;overflow-y: auto;height: auto;">
             <div class="py-3">
-            <div class="myinput my-3" style="position: relative; ">
-                <input type="text" placeholder="search Frinds" (keyup)="searchAboutFrinds($event)" style="border-radius: 0;">
-            <h5 style="color:black;" class="my-2">Frinds : <span *ngIf="myNewFrinds" >{{myNewFrinds.length}}</span> </h5>
+          <app-frinds [myId]="myId"></app-frinds>
+            </div>
 
-                <!-- <div class="d-flex align-items-center justify-content-center mt-2" style="position: absolute; font-size: 25px;  top: 0; height: 60px; width: 100px;">
-                    <i class="fa-solid fa-magnifying-glass m-0" style="color: black;"></i>
-                </div> -->
-            </div>
-            </div>
-<div class="d-flex align-items-center">
-    <div *ngFor="let frind of myNewFrinds|slice:0:5 " class="m-2 " style="width: 40px; height: 40px;">
-        <div class="img w-100 h-100 mt-2 mx-0 p-0 " >
-        <img [src]="frind.frindImg" alt="" class="w-100">
-        </div>
-     
-        <hr>
-        
-        </div>
-</div>
 <div>
     <app-add-post-style></app-add-post-style>
     

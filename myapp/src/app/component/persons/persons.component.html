@@ -25,14 +25,14 @@
      
        <div >
         <div class="cont" style="width: 200px; margin-left: 20px;">
-            <h4>{{i.fullName}}</h4>
+            <h5>{{i.fullName}}</h5>
             <p cl class="m-0">{{i.jop}}</p>
             </div>
 
        </div>
 
        <div>
-        <app-send-requst [resiverId]="i.userId" [notNum]="i.notifNums" [personName]="i.fullName" [personImage]="i.img1"></app-send-requst>
+        <app-send-requst [resiverId]="i.userId" [personName]="i.fullName" [personImage]="i.img1"></app-send-requst>
     </div>
     
 </div>

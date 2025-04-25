@@ -1,5 +1,5 @@
 
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FireService } from '../fire.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +14,7 @@ import { MyDataService } from '../my-data.service';
   styleUrl: './add-post.component.scss'
 })
 export class AddPostComponent implements OnInit {
-
+@Output() sended =new EventEmitter<string>();
   profilData:any={};
   
 ngOnInit(): void {
@@ -54,11 +54,11 @@ getmyInfo()
 senPost()
 {
   const userData=this._MyDataService.userData;
-  console.log(userData);
 const date=new Date();
 const dataOfPost={userData,post:this.post,date:date,likeCount:0,commentCount:0};
 this._FireService.sendPost(dataOfPost);
 
 this.clear();
+this.sended.emit('');
 }
 }

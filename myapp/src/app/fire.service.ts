@@ -1,97 +1,103 @@
 
-import {Injectable, NgZone } from '@angular/core';
-import { Storage, ref, uploadBytesResumable,getDownloadURL } from '@angular/fire/storage';
+import {inject, Injectable, runInInjectionContext,Injector } from '@angular/core';
 import { collection, Firestore, docData, doc, collectionData, addDoc, query, where, deleteDoc, serverTimestamp, updateDoc, arrayUnion, orderBy, deleteField, arrayRemove, DocumentReference } from '@angular/fire/firestore';
-import { BehaviorSubject, from, Observable } from 'rxjs';
-
+import {  from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FireService {
 
- 
-constructor(private _Storage:Storage, private _Firestore:Firestore, private _NgZone:NgZone)
+  private firestore = inject(Firestore);
+  private injector  = inject(Injector);
+
+constructor()
 {
 
 }
   
-  
-//     uploadImg(file1:File):Observable<string>
-//     {
-   
-        
-//   const sRef=ref(this._Storage,`${file1.name}`);
-//   const uploadField=uploadBytesResumable(sRef,file1);
-//  return new Observable((observer)=>{
-//   uploadField.on(
-//     'state_changed',
-//     (snapshot)=>{
-//   const process=(snapshot.bytesTransferred/snapshot.totalBytes)*100;
-//   console.log(process+'% Uploaded');
-//     },
-//     (error)=>{
-//   console.log(error);
-//     },
-  
-//     ()=>{
-//       getDownloadURL(uploadField.snapshot.ref).then((Url)=>{
-     
-//    observer.next(Url);
-//       })
-//     }
-//   )
 
-  
-//       })
-//     }
-   
-getMyData(id:string):Observable<any>
-{
-const docRef=doc(this._Firestore,`users/${id}`);
-return docData(docRef,{idField:'Docid'});
-}
 
+   
 getCollection(collectionName:string):Observable<any>
 {
-    const collRef=collection(this._Firestore,`${collectionName}`);
+  return runInInjectionContext(this.injector, () => {
+    const collRef=collection(this.firestore,`${collectionName}`);
     // const qRef=query(collRef,orderBy('date','desc'));
-    return collectionData(collRef,{idField:'docId'})  
+    return collectionData(collRef,{idField:'docId'})  ;
+  })
 }
+getMyData(id:string):Observable<any>
+{
+  return runInInjectionContext(this.injector, () => {
+const docRef=doc(this.firestore,`users/${id}`);
+
+return docData(docRef,{idField:'Docid'});
+
+  })
+}
+
 
 sendPost(dataOfPost:any)
 {
-const collectionRef=collection(this._Firestore,'posts');
+  return runInInjectionContext(this.injector, () => {
+const collectionRef=collection(this.firestore,'posts');
 return addDoc(collectionRef,dataOfPost);
+  })
 }
 getQuery(collectionName:string,fieldName:string,condition:any,value:any):Observable<any>
 {
-const collRef=collection(this._Firestore,collectionName);
+  return runInInjectionContext(this.injector, () => {
+const collRef=collection(this.firestore,collectionName);
 const qRef=query(collRef,where(fieldName,condition,value),orderBy('date','desc'));
 return collectionData(qRef,{idField:'docId'});
+  })
 }
 
 deleteDoc(collectionName:string,id:string)
 {
-  const docRef=doc(this._Firestore,`${collectionName}/${id}`);
+  return runInInjectionContext(this.injector, () => {
+  const docRef=doc(this.firestore,`${collectionName}/${id}`);
   deleteDoc(docRef);
+  })
 
 }
 
 addFrind(requestDetails:any):Observable<any>
 {
-  const collRef=collection(this._Firestore,'frindsRequst');
+  return runInInjectionContext(this.injector, () => {
+  const collRef=collection(this.firestore,'frindsRequst');
  return from(
   addDoc(collRef,requestDetails)
  )
+})
 }
 
-acceptRequest(id:string,frindData:any)
+
+acceptTheRequest(frindShip:any)
 {
+  return runInInjectionContext(this.injector, () => {
+const collRef=collection(this.firestore,'frinds');
 
-  const docRef=doc(this._Firestore,`users/${id}`);
-  updateDoc(docRef,{frinds:arrayUnion(frindData)}); // add obj -- obj //  array:arrayUnion(obj); 
+addDoc(collRef,{frindShip});
+  })
+}
 
+acceptTheRequest2(frindShip:any)
+{
+  return runInInjectionContext(this.injector, () => {
+const collRef=collection(this.firestore,'frinds');
+
+addDoc(collRef,{frindShip});
+  })
+}
+getMyFrinds(myId:string):Observable<any>
+{
+  return runInInjectionContext(this.injector, () => {
+  const collRef=collection(this.firestore,`frinds`);
+  const q =query(collRef,where('frindShip.userId','==',myId));
+  return collectionData(q,{idField:'docId'});
+  })
 }
 
 
@@ -109,31 +115,38 @@ acceptRequest(id:string,frindData:any)
 
 pushUserInSaver(postId:string)
 {
+  return runInInjectionContext(this.injector, () => {
   const userId=localStorage.getItem('userId');
-const docRef=doc(this._Firestore,`posts/${postId}`);
+const docRef=doc(this.firestore,`posts/${postId}`);
 updateDoc(docRef,{savers:arrayUnion(userId)});
+  })
 }
 
 popUserInSaver(postId:string)
 {
+  return runInInjectionContext(this.injector, () => {
   const userId=localStorage.getItem('userId');
-const docRef=doc(this._Firestore,`posts/${postId}`);
+const docRef=doc(this.firestore,`posts/${postId}`);
 updateDoc(docRef,{savers:arrayRemove(userId)});
+  })
 }
 
 getSavedPosts(id:string):Observable<any>
 {
-const collRef=collection(this._Firestore,'posts');
+  return runInInjectionContext(this.injector, () => {
+const collRef=collection(this.firestore,'posts');
 const qRef=query(collRef,where('savers','array-contains',id));
 return collectionData(qRef,{idField:'docId'});
-
+  })
 }
 
 
 getOnePost(id:string):Observable<any>
 {
-const docRef=doc(this._Firestore,`posts/${id}`);
+  return runInInjectionContext(this.injector, () => {
+const docRef=doc(this.firestore,`posts/${id}`);
 return docData(docRef,{idField:'docId'});
+  })
 }
 
 
