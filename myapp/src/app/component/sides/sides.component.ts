@@ -1,3 +1,4 @@
+import { LikeCommentService } from './../../like-comment.service';
 import { Component, OnDestroy } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedmoduleModule } from '../../sharedmodule/sharedmodule.module';
@@ -6,6 +7,7 @@ import { Router } from '@angular/router';
 import { FireService } from '../../fire.service';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatIconModule} from '@angular/material/icon';
+
 @Component({
   selector: 'app-sides',
   imports: [SharedmoduleModule,MatBadgeModule,MatIconModule,NgbModule],
@@ -13,14 +15,15 @@ import {MatIconModule} from '@angular/material/icon';
   styleUrl: './sides.component.scss'
 })
 export class  SidesComponent implements OnDestroy {
-  notifNums:number=0;
+ 
   
 
 imgUrl:string='';
   show_menue:boolean=false;
   showDash=localStorage.getItem("userId");
+myId=localStorage.getItem('userId')||'';
 
-constructor(private _AuthService:AuthService, private _Router:Router, private _FireService:FireService)
+constructor(private _AuthService:AuthService, private _Router:Router, private _FireService:FireService ,private _LikeCommentService:LikeCommentService)
 {
 
 }
@@ -30,19 +33,11 @@ ngOnInit():void
 
 
 
-  this._FireService.$notifs.subscribe({
-    next:(number)=>{
-   this.notifNums=number;
-    }
-  })
 
 this.getmyData();
 
 }
- clear()
- {
-this._FireService.clearNotifNums()
- }
+notifNum:number=0;
 getmyData()
 {
   const myId=localStorage.getItem("userId")||''
@@ -50,7 +45,7 @@ this._FireService.getMyData(myId).subscribe({
   next:(res)=>{
   
 this.imgUrl=res.img1;
-this.notifNums=res.notifNums||0;
+this.notifNum=res.notifNum;
 
   }
 })
@@ -89,5 +84,10 @@ this._Router.navigate([`/${path}`]);
 this.scrollToTop();
 this.show_menue=false;
  }
-
+clearNotifNums()
+{
+  this._Router.navigate(['/notif']);
+  this._LikeCommentService.clearNotifs(this.myId);
+  
+}
 }

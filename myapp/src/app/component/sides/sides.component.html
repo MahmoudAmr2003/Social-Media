@@ -15,24 +15,17 @@
             <div class="" style="border-radius: 30px; background-color: rgba(143, 174, 194, 0.078);">
             
                 <div class="d-flex align-items-center text-white justify-content-between px-2">
-                   
-                    <button (click)=" clear()"  routerLink="/notif" type="button" class="btn position-relative mx-1">
-                        <i routerLink="/notif" class="fa-solid fa-bell me-3" style="color: white;"></i>
+                
                     
-                        <span class="position-absolute top-0   translate-middle badge rounded-pill bg-danger">
-                          {{notifNums}}
+                    <i (click)="clearNotifNums()" type="button" class="btn text-white position-relative fa-solid fa-bell me-3">
+                        
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                          {{notifNum}}
                           <span class="visually-hidden">unread messages</span>
                         </span>
-                      </button>
-                
+                      </i>
+
                     <i class="fa-brands fa-facebook-messenger mx-2"></i>
-
-                    
-
-                 
-                
-                  
-
                    
                 </div>
             

@@ -4,6 +4,8 @@ import { serverTimestamp } from '@angular/fire/firestore';
 import { Component, Input, OnInit } from '@angular/core';
 import { FireService } from '../fire.service';
 import { CommonModule } from '@angular/common';
+import { MyDataService } from '../my-data.service';
+import { LikeCommentService } from '../like-comment.service';
 
 @Component({
   selector: 'app-send-requst',
@@ -23,7 +25,7 @@ myId=localStorage.getItem("userId")||'';
 
 
 private subscribtion:Subscription[]=[];
-constructor( private _FireService:FireService)
+constructor( private _FireService:FireService, private _MyDataService:MyDataService, private _LikeCommentService:LikeCommentService)
 {
   this.myId=localStorage.getItem("userId")||'';
 
@@ -32,6 +34,8 @@ constructor( private _FireService:FireService)
    this. getMyData();
   this.getResiverPeople();
   this.getSenderPeople();
+  
+
  }
 
 
@@ -41,25 +45,26 @@ constructor( private _FireService:FireService)
    this._FireService.getMyData(this.myId).subscribe({
      next:(res)=>{
    this.frinds=res.frinds||[];
-   console.log(this.frinds);
+
    this.check_If_The_Person_Myfrind();
  
      }
    })
  )
  }
-
+user:any={};
   sendRequest()
   {
+    this._MyDataService.setMyData();
+  this.user=this._MyDataService.userData;
   
-    
-    const userImg=localStorage.getItem("userImg");
-    const userName=localStorage.getItem("userName");
-    const reqData={senderId:this.myId,resiverId:this.resiverId,userImg:userImg,userName:userName,date:serverTimestamp()};
+    const reqData={senderId:this.myId,resiverId:this.resiverId,userImg:this.user.image,userName:this.user.name,date:serverTimestamp()};
   const date=new Date();
     this._FireService.addFrind(reqData).subscribe({
       next:(res)=>{
-     
+   this._LikeCommentService.sendFrindRequstNotif(this.user,`${this.user.name} Sended request to you`,this.resiverId);
+  this._LikeCommentService.inAndDisNotifNumber(this.user.id);
+
       },
       error:(error)=>{
    
@@ -67,8 +72,7 @@ constructor( private _FireService:FireService)
     })
     const message='A friend request has been sent to you by';
     
-    this._FireService.sendNotifection(this.resiverId,{userImg:userImg,userName:userName,date,message:message,senderId:this.myId});
-  this.inc_Dec_Notifucation();
+
   
   }
   resivedPoeple:any[]=[];
@@ -97,7 +101,7 @@ constructor( private _FireService:FireService)
     
   this._FireService.getQuery('frindsRequst','resiverId','==',this.myId).subscribe({
     next:(res)=>{
-      console.log(res);
+
   this.senderPeople=res;
   this.check_If_This_Person_Send_To_Me();
   
@@ -112,7 +116,7 @@ constructor( private _FireService:FireService)
   isISended:boolean=false;
   check_If_ISend_To_This_Person():boolean
   {
-    console.log(this.resiverId);
+  
    this.isISended=this.resivedPoeple.some(des=>  des.resiverId===this.resiverId);
    return this.isISended;
   }
@@ -131,7 +135,7 @@ constructor( private _FireService:FireService)
     if(this.frinds.length!=0)
     {
   this.isMyfrind=this.frinds.some(des=>des.frindId===this.resiverId);
-  console.log(this.isMyfrind);
+  
   return this.isMyfrind;
   }
   else
@@ -156,27 +160,22 @@ constructor( private _FireService:FireService)
     const id =localStorage.getItem('userId')||'';
     const frindData={frindId:frindId,frindImg:frindImg,frindName:frindName};
     this._FireService.acceptRequest(id,frindData);
+
   
   }
   
   AcceptRequestToFrind()
   {
-    const senderId=localStorage.getItem("userId");
-    const userImg=localStorage.getItem("userImg");
-    const userName=localStorage.getItem("userName");
+    this._MyDataService.setMyData();
+    this.user=this._MyDataService.userData;
+    const senderId=localStorage.getItem("userId")||'';
     const date=new Date();
   const message='The request has been accspted by '
-  
-    const frindData={frindId:senderId,frindImg:userImg,frindName:userName,message:message,senderId:senderId};
+    const frindData={frindId:senderId,frindImg:this.user.image,userName:this.user.name,message:message,senderId:senderId};
     this._FireService.acceptRequest(this.resiverId,frindData);
-  
-  this._FireService.sendNotifection(this.resiverId,{userImg:userImg,userName:userName,date,message:message,senderId:this.myId});
-  this.inc_Dec_Notifucation();
+   this._LikeCommentService.sendFrindRequstNotif(this.user,`Accepted your requrst`,this.resiverId);
+  this._LikeCommentService.inAndDisNotifNumber(senderId);
   }
   
   
-inc_Dec_Notifucation()
-{
-  this._FireService.inc_Dec_Notifucation(this.resiverId,this.notNum);
-}
 }

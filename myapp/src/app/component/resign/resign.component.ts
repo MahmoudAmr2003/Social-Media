@@ -6,6 +6,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { DatabaseService } from '../../services/database.service';
+import { FireService } from '../../fire.service';
+import { MyDataService } from '../../my-data.service';
 
 @Component({
   selector: 'app-resign',
@@ -19,7 +21,7 @@ standalone:true
 export class ResignComponent implements OnChanges {
   orderdDate:Date=new Date();
 userDataArray:any;
-constructor(private auth:AuthService,private _router:Router,private _DatabaseService:DatabaseService,private _MatSnackBar:MatSnackBar)
+constructor(private auth:AuthService,private _router:Router,private _DatabaseService:DatabaseService,private _MatSnackBar:MatSnackBar, private _FireService:FireService, private _MyDataService:MyDataService)
   {
 // auth.isLogged.next(false);
 
@@ -92,6 +94,27 @@ event.stopPropagation();
     
   })
   }
+
+
+
+  getmyInfo()
+{ 
+  const id=localStorage.getItem('userId')||'';
+
+  this._FireService.getMyData(id).subscribe({
+    next:(res)=>{
+      
+  
+ localStorage.setItem('user',JSON.stringify(res));
+ this._MyDataService.setMyData();
+    },
+    error:(error)=>{
+  alert(`Eror:  ${error}`);
+    }
+   }) 
+
+}
+
 
 goToDashbored()
 {

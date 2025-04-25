@@ -1,5 +1,5 @@
 
-<ng-container *ngIf="allPosts.length>0; else noPosts" class="col-12" >
+<ng-container *ngIf="allPosts; else noPosts" class="col-12" >
     <div    *ngFor="let post of allPosts;let n=index;trackBy:trackById"  class="post my-3 shadow-lg mt-2  text-white col-12" style="font-weight: 500;position: relative;"> 
      
  <div class="d-flex justify-content-center align-items-center" >
@@ -20,7 +20,7 @@
         <div class="post_head  w-100 d-flex align-items-center justify-content-between mx-auto px-3" >
     
            <div class="d-flex align-items-center">
-            <div [routerLink]="['/userProfile',post.id]" class="img_container" >
+            <div [routerLink]="['/userProfile',post.userData.id]" class="img_container" >
                 <img [src]="post.userData.image" alt="" class="w-100">
             
                 </div>
@@ -72,7 +72,7 @@
     <div class="row h-100">
     <div  class="col-4 icon  h-100 ">
     
-          <i   (click)="toggleLike(post.docId)" class="bi bi-heart-fill"></i>
+          <i [ngClass]="{'red':isLiked(post.docId)}" tabindex="-1"  (click)="toggleLike(post)" class="like bi bi-heart-fill" ></i>
 
       
     <p data-bs-toggle="offcanvas" data-bs-target="#offcanvasLike" aria-controls="offcanvasBottom" (click)="getLikes(post.docId)" class="my-0 mx-2" style="cursor: pointer;">{{post.likeCount}}</p>
@@ -85,7 +85,8 @@
     data-bs-target="#offcanvasComments"
     aria-controls="offcanvasComments"   class="col-4 icon d-flex align-items-center">
 
-<i     class="bi bi-chat-heart-fill mx-2">{{post.commentCount}}</i>
+<i     class="bi bi-chat-heart-fill mx-2"></i>
+{{post.commentCount}}
 
     
     </div>
@@ -100,7 +101,7 @@
    
     
 
-<div class="offcanvas offcanvas-bottom col-md-6 col-12 mx-auto mb-5" tabindex="-1" id="offcanvasComments" aria-labelledby="offcanvasCommentsLabel" style="height: 80vh; overflow-y: auto;">
+<div class="offcanvas offcanvas-bottom col-md-6 col-12 mx-auto " tabindex="-1" id="offcanvasComments" aria-labelledby="offcanvasCommentsLabel" style="height: 70vh; overflow-y: auto;">
 <div class="offcanvas-header">
 <h5 id="offcanvasCommentsLabel">Comments</h5>
 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
@@ -121,14 +122,14 @@
 
 <!-- Spacer to push input to bottom -->
 <div class="d-flex justify-content-center py-2">
-  <div class="mt-auto pt-2 border-top col-md-5 mx-auto  col-11 px-3 mb-2" style="position: fixed;bottom: 50px; background-color: white; z-index: 99999999;">
+  <div class="mt-auto pt-2 border-top col-md-5 mx-auto  col-11 px-3 " style="position: fixed;bottom: 5px; background-color: white; z-index: 99999999;">
     <div class="input-group">
     <input [(ngModel)]="comment"
            type="text"
            class="form-control"
            placeholder="Write a comment..."
            aria-label="Write a comment">
-    <button class="btn btn-primary" (click)="sendComment(post.docId)"
+    <button class="btn btn-primary" (click)="sendComment(post)"
     >
       Post
     </button>
@@ -160,7 +161,7 @@
 
   
 
-  <div class="offcanvas offcanvas-bottom col-md-6 col-12 mx-auto" tabindex="-1" id="offcanvasLike" aria-labelledby="offcanvasBottomLabel" style="height: 80vh !important;">
+  <div class="offcanvas offcanvas-bottom col-md-6 col-12 mx-auto" tabindex="-1" id="offcanvasLike" aria-labelledby="offcanvasBottomLabel" style="height: 70vh !important;">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasBottomLabel">Reactive Poeple ❤️</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>

@@ -43,7 +43,7 @@ this._FireService.getMyData(this.myId).subscribe({
 this.myData=res;
 this.frinds=res.frinds;
 this.myNewFrinds=this.frinds;
-this._FireService.notifNumber.next(res.notifNums);
+
 
 
 

@@ -26,7 +26,7 @@
 <img [src]="img2Url" alt="" class="w-100">
 
 </div>
-<div style="position: absolute; bottom: 20px; left: 40%; z-index: 9999999;" class="">
+<div style="position: absolute; bottom: 0px; left: 40%; z-index: 9999999;" class="">
     <label for="img2">
    
         <i class="fa-solid fa-camera" style="font-size: 30px;"></i>
@@ -43,22 +43,22 @@
 
    
 
-<div  class=" col-md-8 col-11 p-2 mx-auto"> 
+<div  class=" col-md-8 col-11 p-2 mt-4 mx-auto"> 
 <div class="w-100">
 <form [formGroup]="myForm" action="" class="row w-100 px-3 mx-auto py-2  data">
-<div class="py-2 col-6">
+<div class="py-2 col-md-6 col-12">
     <label for="">Full Name</label>
     <input formControlName="fullName" type="text" class=" py-2 px-3  " placeholder="Full Name" >
 </div>
-<div class="py-2  col-6">
+<div class="py-2  col-md-6 col-12">
     <label for="">Mobile Phone</label>
     <input formControlName="mobilePhone" type="text" class=" py-2 px-3" placeholder="Mobile Phone">
 </div>
-<div class="py-2  col-6">
+<div class="py-2  col-md-6 col-12">
     <label for="">Jop</label>
     <input formControlName="jop" type="text" class=" py-2 px-3  mt-2" placeholder="Job">
 </div>
-<div class="py-2  col-6">
+<div class="py-2  col-md-6 col-12">
  
 
  <label for="Gender">Gender</label>
@@ -73,11 +73,11 @@
       
   
 </div>
-<div class="py-2  col-6">
+<div class="py-2  col-md-6 col-12">
     <label>Birth Day</label> 
     <input formControlName="birthDay" type="date"  min="1940-01-01" max="2023-12-31"  name="" id="" class=" mt-0 py-1">
 </div>
-<div class="py-2  col-6">
+<div class="py-2  col-md-6 col-12">
 <label>Hobbies</label>
 <select class="py-2" id="hobbies" formControlName="hobbies">
     <option value="sports" selected>Sports</option>
@@ -91,12 +91,12 @@
   </select>
 </div>
 <h6 class="mt-2 mb-0">Short Bio</h6>
-<div class="mt-3  d-flex justify-content-between">
-<textarea formControlName="shortBio" name="" id="" placeholder="Write Short bio About Your Selfe" class=" "></textarea>
+<div class="mt-3 col-12">
+<textarea formControlName="shortBio" name="" id="" placeholder="Write Short bio About Your Selfe" class="w-100"></textarea>
 <div class="mt-3 d-flex justify-content-end">
-    <button (click)="uploadImg(myImg1);uploadImg(myImg2)"  class="btn btn-light mx-3  px-3 py-2">Finish</button>
 </div>
 </div>
+<button (click)="uploadImg(myImg1);uploadImg(myImg2)"  class="btn btn-light mx-3  px-3 py-2">Finish</button>
 
 </form>
 </div>

@@ -42,7 +42,7 @@ this.userId=_ActivatedRoute.snapshot.params['id'];
   {
     const condition="=="
   this.subscribtion.push(
-    this._FireService.getQuery('posts','id',condition,this.userId).subscribe({
+    this._FireService.getQuery('posts','userData.id',condition,this.userId).subscribe({
       next:(res)=>{
         
 this.userPosts=res;
@@ -86,10 +86,6 @@ trackById2(index:number,item:any)
 return item.frindId;
 }
 
-inc_Dec_Notifucation()
-{
-  this._FireService.inc_Dec_Notifucation(this.userId,this.notNum);
-}
 
 
 ngOnDestroy(): void {

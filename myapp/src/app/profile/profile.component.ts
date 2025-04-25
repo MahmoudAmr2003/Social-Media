@@ -85,7 +85,7 @@ getMyPosts()
 {
   const condition="=="
 this.subscription.push(
-  this._FireService.getQuery('posts','id',condition,this.id).subscribe({
+  this._FireService.getQuery('posts','userData.id',condition,this.id).subscribe({
     next:(res)=>{
       
 this.allPosts=res;

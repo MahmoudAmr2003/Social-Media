@@ -84,7 +84,7 @@ this.subscription.push(
     next:(res)=>{
       
   this.profilData=res;
-  console.log(res);
+
  localStorage.setItem('user',JSON.stringify(res));
  this._MyDataService.setMyData();
     },

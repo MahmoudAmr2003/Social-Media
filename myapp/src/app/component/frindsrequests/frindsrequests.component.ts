@@ -1,6 +1,5 @@
-import { DatabaseService } from './../../services/database.service';
+
 import { Component,OnInit } from '@angular/core';
-import { FrindsService } from '../../frinds.service';
 import { CommonModule } from '@angular/common';
 import { FireService } from '../../fire.service';
 
@@ -67,17 +66,9 @@ const message='The request has been accspted by '
   const notif={userImg:userImg,userName:userName,date:date,message:message}
   this._FireService.acceptRequest(frindId,frindData);
   const notifType='acceptedRequests'
-this._FireService.sendNotifection(frindId,notif);
 
-if(Number.isNaN(this.notifNum))
-  {
-    this._FireService.numderOfNotifecation(frindId,1);
-  }
-  else
-  {
-    this._FireService.numderOfNotifecation(frindId,this.notifNum+1);
-  
-  }
+
+
 }
 }
 

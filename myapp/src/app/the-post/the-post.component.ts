@@ -1,3 +1,4 @@
+import { map } from 'rxjs';
 import { Firestore } from '@angular/fire/firestore';
 import { MyDataService } from './../my-data.service';
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
@@ -41,12 +42,12 @@ allLikes:any[]=[];
 user:any={};
 constructor(private _FireService:FireService , private _Router:Router ,private _CommentService:CommentService,private elRef:ElementRef,private _LikeCommentService:LikeCommentService,private _MyDataService:MyDataService ,private _Firestore:Firestore)
 {
-document.body.classList.remove('no-scroll');
+
 _MyDataService.setMyData();
 this.user=_MyDataService.userData;
 }
 ngOnInit(): void {
-
+  this.getUserLikes();
 
   this.getSPosts();
  
@@ -54,9 +55,26 @@ ngOnInit(): void {
 }
 
 
-toggleLike(postId:string)
+allUserLikes:any[]=[];
+getUserLikes()
 {
-this._LikeCommentService.toggleLike(postId,this.user);
+  this._LikeCommentService.getUserLikes(this.user.id).subscribe({
+    next:(res)=>{
+      this.allUserLikes=res.map((like:any)=>like.postId)
+      console.log(this.allUserLikes);
+    }
+  })
+}
+
+isLiked(postId:string):boolean
+{
+return this.allUserLikes.includes(postId);
+}
+
+
+toggleLike(post:any)
+{
+this._LikeCommentService.toggleLike(post,this.user);
 }
 likedPoeple:any[]=[];
 getLikes(postId:string)
@@ -68,12 +86,14 @@ console.log(res);
   }
 })
 }
-sendComment(postId:string)
+sendComment(post:any)
 {
   console.log("hello");
-  console.log(postId,this.user,this.comment)
-this._LikeCommentService.sendComment(postId,this.user,this.comment);
+  console.log(post,this.user,this.comment)
+this._LikeCommentService.sendComment(post,this.user,this.comment);
+this.comment='';
 }
+
 allComments:any[]=[];
 getComments(postId:string)
 {

@@ -10,8 +10,7 @@ import { BehaviorSubject, from, Observable } from 'rxjs';
 })
 export class FireService {
 
-  notifNumber=new BehaviorSubject<number>(0);
-  $notifs=this.notifNumber.asObservable();
+ 
 constructor(private _Storage:Storage, private _Firestore:Firestore, private _NgZone:NgZone)
 {
 
@@ -94,119 +93,20 @@ acceptRequest(id:string,frindData:any)
   updateDoc(docRef,{frinds:arrayUnion(frindData)}); // add obj -- obj //  array:arrayUnion(obj); 
 
 }
-sendNotifection(id:string,noti:any)
-{
-  
-const docRef=doc(this._Firestore,`users/${id}`);
-
-   updateDoc(docRef,{notfications:arrayUnion(noti)}).then((res)=>{
-console.log(res);
-  })
-.catch((error)=>{
-console.log(error);
-})
-  }
-
-
-
-numderOfNotifecation(id:string,theNumber:number)
-{
-const docRef=doc(this._Firestore,`users/${id}`);
-updateDoc(docRef,{notifNums:theNumber}); // ممكن تعمل  then
-}
- clearNotifNums()
- {
-  const myId=localStorage.getItem('userId')||'';
-  const docRef=doc(this._Firestore,`users/${myId}`);
-  updateDoc(docRef,{notifNums:0});
- }
-sendLike(postId:string,myData:any)
-{
-const docRef=doc(this._Firestore,`posts/${postId}`);
-updateDoc(docRef,{likes:arrayUnion(myData)});
-}
-removeLike(postId:string,myData:any)
-{
-const docRef=doc(this._Firestore,`posts/${postId}`);
-updateDoc(docRef,{likes:arrayRemove(myData)}).then((docref)=>{
-  console.log(myData);
-console.log(docref);
-}).catch((error)=>{
-  console.log(error);
-});
-}
-increaceNotNum()
-{
-  
-}
 
 
 
 
-getLike(docId:string,likes:any[],postOwnerId:string,notNum:number)
-{
-  
-  const me={
-    image:localStorage.getItem("userImg"),
-    id:localStorage.getItem('userId'),
-    name:localStorage.getItem("userName"),
-    type:'like',
-    postId:docId
-    
-  }
-  const user =JSON.parse(localStorage.getItem('user')||'{}');
 
-const myNotif={name:user.fullName,image:user.img1,id:user.userId,   message:`Your Post has been liked by `,type:'like',posId:docId,date:new Date()}
-  const id=localStorage.getItem('userId');
- if(likes)
- {
-  const didILiked=likes.some(i=>i.id==id);
-
-  if(didILiked==true)
-  {
-   this.removeLike(docId,me);
-
-console.log('removed');
-
-  }
-  else
-  {
-   
-    console.log(postOwnerId);
-
-   this.sendLike(docId,me);
-    this.inc_Dec_Notifucation(postOwnerId,notNum);
-    this.sendNotifection(postOwnerId,myNotif);
-  
-console.log('added')
-  }
- }
- else
- {
- this.sendLike(docId,me);
-console.log('added under');
-
-
- this.sendNotifection(postOwnerId,myNotif);
-  this.inc_Dec_Notifucation(postOwnerId,notNum);
-
- }
-}
+ 
 
 
 
-inc_Dec_Notifucation(postId:string,notNum:number)
-{
-  if(Number.isNaN(notNum))
-    {
-     this.numderOfNotifecation(postId,1);
-    }
-    else
-    {
-     this.numderOfNotifecation(postId,notNum+1);
-    
-    }
-}
+
+
+
+
+
 pushUserInSaver(postId:string)
 {
   const userId=localStorage.getItem('userId');

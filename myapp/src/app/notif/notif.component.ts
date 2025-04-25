@@ -2,10 +2,10 @@ import { Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FireService } from '../fire.service';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ThePostComponent } from '../the-post/the-post.component';
 import { zoomInOut } from '../animation';
-
+import { LikeCommentService } from '../like-comment.service';
 @Component({
   selector: 'app-notif',
   imports: [CommonModule,RouterModule,ThePostComponent],
@@ -17,10 +17,10 @@ export class NotifComponent implements OnInit,OnDestroy {
   isSubscirbe!:Subscription;
 notifications:any[]=[];
 sortedNotifications:any[]=[];
-constructor(private _FireService:FireService)
+constructor(private _FireService:FireService,private _LikeCommentService:LikeCommentService, private _Router:Router)
 {
-  this._FireService.notifNumber.next(0);
-  localStorage.setItem('notifSeen?','true')
+
+  
   
 
 }
@@ -30,10 +30,10 @@ this.getNotif();
 getNotif()
 {
   const myId=localStorage.getItem('userId')||'';
- this.isSubscirbe=this._FireService.getMyData(myId).subscribe({
+ this.isSubscirbe=this._LikeCommentService.getNotifications(myId).subscribe({
   next:(res)=>{
-this.notifications=res.notfications;
-console.log(res.notfications);
+this.notifications=res;
+console.log(res);
 this.sortedNotifications=this.notifications.sort((a,b)=>b.date?.seconds-a.date?.seconds); // معناها ان لb هو الاكبر يعني فنتا خليه الاحدث 
 
   }
@@ -52,20 +52,28 @@ this.isSubscirbe.unsubscribe();
 
 thePost:any[]=[];
 showPost:boolean=false;
-getThePost(postId:string)
+getThePost(postId:string,notif:string)
+{
+if(notif=='love'||notif=='comment')
 {
   console.log(postId);
 this._FireService.getOnePost(postId).subscribe({
   next:(res)=>{
-    
 this.thePost=res;
-console.log(res);
-console.log(this.thePost);
 this.showPost=true;
   }
+
 })
 }
-
+else
+{
+this._Router.navigate(['/frinds'])
+}
+}
+hidePost()
+{
+  this.showPost=false;
+}
 }
 // getQuery(collectionName:string,fieldName:string,condition:any,value:any):Observable<any>
 
