@@ -6,14 +6,14 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import { Subscription } from 'rxjs';
 import { zoomInOut } from '../../animation';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ThePostComponent } from '../../the-post/the-post.component';
 import { SendRequstComponent } from '../../send-requst/send-requst.component';
 import { FrindsComponent } from '../../frinds/frinds.component';
 
 @Component({
   selector: 'app-user',
-  imports: [CommonModule,MatTabsModule,MatCardModule,ThePostComponent,SendRequstComponent,FrindsComponent],
+  imports: [CommonModule,MatTabsModule,MatCardModule,ThePostComponent,SendRequstComponent,FrindsComponent,RouterModule],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
   animations:[zoomInOut]
@@ -28,17 +28,28 @@ myId:string=localStorage.getItem("userId")||'';
   userPosts:any[]=[];
   constructor( private _FireService:FireService, private _ActivatedRoute:ActivatedRoute)
   {
-this.userId=_ActivatedRoute.snapshot.params['id'];
+// this.userId=_ActivatedRoute.snapshot.params['id'];
+this.scrollToTop();
 
   }
   ngOnInit()
   {
+    this._ActivatedRoute.paramMap.subscribe(params => {
+      this.userId = params.get('id')!;
   this.getUserData();
+      
+    });
   this.getUserPosts();
+
 
   }
   notNum:number=0;
 
+
+  scrollToTop()
+  {
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
   getUserPosts()
   {
     const condition="=="

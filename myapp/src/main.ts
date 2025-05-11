@@ -12,6 +12,7 @@ import { provideStorage, getStorage }        from '@angular/fire/storage';
 import { AppComponent }                     from './app/app.component';
 import { routes }                           from './app/app.routes';
 import { LogLevel, setLogLevel } from '@angular/fire';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 const environment = {
   firebase: {
     apiKey: "AIzaSyAfeaOPtEkZ1JF37sW0c7-LK9NiZ2Eg3S8",
@@ -30,6 +31,10 @@ bootstrapApplication(AppComponent, {
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
+    provideAuth(() => getAuth()),
+    
+
+  
 
     // ———— بقية الـ providers ————
     provideHttpClient(),

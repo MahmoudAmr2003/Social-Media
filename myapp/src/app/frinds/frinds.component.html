@@ -50,18 +50,19 @@
     </div>
 
 
-    <div *ngIf="showAllFrinds" class="col-md-8 mx-auto col-10 shadow-sm p-3" style="height: 60vh; overflow-y: auto; background-color: white; position: relative;" @zoomInOut>
-        <div (click)="showAll()" class="skip" style="position: absolute; top: 5px; right: 5px;">
+    <div *ngIf="showAllFrinds" class="px-4 py-3" style="width: 300px; height: 50vh; overflow-y: auto; background-color: white; position: absolute; z-index: 999999999; top: 50%;" @zoomInOut>
+        <div (click)="showAll()" class="skip" style="position: absolute; top: 5px; left: 5px;">
             <i class="fa-solid fa-xmark"></i>
         </div>
         <div class="my-4">
-            <input (keyup)="search(frind)" type="text" name="" id="" class="w-100 p-2" placeholder="search" #frind>
+            <input (keyup)="search(frind)" type="text" name="" id="" class="w-75 p-2" placeholder="search" #frind>
         </div>
-        <div *ngFor="let frind of searchedFrinds;trackBy:trackById" class="d-flex align-items-center">
-            <div class="img" style="width: 80px; height: 80px;">
+        <div (click)="scrollToTop()" *ngFor="let frind of searchedFrinds;trackBy:trackById" class="frind d-flex align-items-center py-1" [routerLink]="['/userProfile',frind.frindShip.frindId]">
+            <div class="img" style="width: 60px; height: 60px;">
             <img [src]="frind.frindShip.frindImage" alt="" class="w-100" >
             </div>
             <h6 class="mx-3">{{frind.frindShip.frindName}}</h6>
+            <hr>
+
                 </div>
-                <hr>
     </div>

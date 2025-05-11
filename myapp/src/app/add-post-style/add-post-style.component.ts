@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AddPostComponent } from '../add-post/add-post.component';
 import { CommonModule } from '@angular/common';
@@ -14,6 +14,8 @@ import { AddImgPostComponent } from '../add-img-post/add-img-post.component';
 
 })
 export class AddPostStyleComponent {
+
+
   show_dialog:boolean=false;
   showDialog()
   {

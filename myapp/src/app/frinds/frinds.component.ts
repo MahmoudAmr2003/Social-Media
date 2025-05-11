@@ -3,14 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Component,ElementRef,Input,OnDestroy,OnInit } from '@angular/core';
 import { FrindsrequestsComponent } from '../component/frindsrequests/frindsrequests.component';
 import { FireService } from '../fire.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { zoomInOut } from '../animation';
 import { Subscription } from 'rxjs';
-import { hide } from '@popperjs/core';
-import { sub } from 'date-fns';
 @Component({
   selector: 'app-frinds',
-  imports: [CommonModule,CommonModule,FrindsrequestsComponent],
+  imports: [CommonModule,CommonModule,FrindsrequestsComponent,RouterLink],
   templateUrl: './frinds.component.html',
   styleUrl: './frinds.component.scss',
   animations:[zoomInOut]
@@ -37,9 +35,15 @@ this.subs=  this._FireService.getMyFrinds(this.myId).subscribe({
   next:(res)=>{
 this.myFrinds=res;
 this.searchedFrinds=this.myFrinds;
-console.log(this.myFrinds);
+
   }
 })
+ }
+
+ scrollToTop()
+ {
+  window.scrollTo({top:0,behavior:'smooth'});
+  this.showAllFrinds=false;
  }
  state:string='show';
  showAll()

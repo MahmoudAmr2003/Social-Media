@@ -24,15 +24,21 @@
         </div>
      
        <div >
-        <div class="cont" style="width: 200px; margin-left: 20px;">
+        <div class="cont d-flex justify-content-between align-items-center" style="width: 200px; margin-left: 20px;">
+         <div>
             <h5>{{i.fullName}}</h5>
             <p cl class="m-0">{{i.jop}}</p>
+         </div>
+            <div *ngIf="i.id!=myId" routerLink="/chat"      [queryParams]="{ name: i.fullName, photo: i.img1,id:i.id }">
+            <i class="fa-brands fa-facebook-messenger my-0  text-success" style="font-size: 30px;"></i>
+
+            </div>
             </div>
 
        </div>
 
        <div>
-        <app-send-requst [resiverId]="i.userId" [personName]="i.fullName" [personImage]="i.img1"></app-send-requst>
+        <app-send-requst [resiverId]="i.id" [personName]="i.fullName" [personImage]="i.img1"></app-send-requst>
     </div>
     
 </div>

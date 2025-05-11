@@ -17,7 +17,15 @@ constructor()
 }
   
 
-
+clearNotifivations(id:string)
+{
+  runInInjectionContext(this.injector, async ()=>{
+    const docRef=doc(this.firestore,`users/${id}`);
+    console.log('hello');
+    console.log(id);
+  await updateDoc(docRef,{notifs:[]});
+  })
+}
    
 getCollection(collectionName:string):Observable<any>
 {

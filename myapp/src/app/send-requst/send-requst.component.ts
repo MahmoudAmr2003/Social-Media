@@ -1,5 +1,5 @@
-import { Frinds } from './../frinds';
-import { Subscription } from 'rxjs';
+
+import { pipe, Subscription, take } from 'rxjs';
 import { serverTimestamp } from '@angular/fire/firestore';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FireService } from '../fire.service';
@@ -57,13 +57,14 @@ user:any={};
   {
     this._MyDataService.setMyData();
   this.user=this._MyDataService.userData;
- 
+ console.log(this.user);
+ console.log(this.resiverId);
     const reqData={senderId:this.myId,resiverId:this.resiverId,userImg:this.user.image,userName:this.user.name,date:serverTimestamp()};
   const date=new Date();
     this._FireService.addFrind(reqData).subscribe({
       next:(res)=>{
    this._LikeCommentService.sendFrindRequstNotif(this.user,`${this.user.name} Sended request to you`,this.resiverId);
-  this._LikeCommentService.inAndDisNotifNumber(this.user.id);
+  this._LikeCommentService.inAndDisNotifNumber(this.resiverId);
 
       },
       error:(error)=>{
@@ -101,7 +102,6 @@ user:any={};
     
   this._FireService.getQuery('frindsRequst','resiverId','==',this.myId).subscribe({
     next:(res)=>{
-
   this.senderPeople=res;
   this.check_If_This_Person_Send_To_Me();
   
@@ -186,9 +186,9 @@ this._FireService.acceptTheRequest2(frindShip);
   {
    
   this.subscribtion.push(
-    this._FireService.getMyFrinds(this.user.id).subscribe({
+    this._FireService.getMyFrinds(this.user.id).pipe(take(1)).subscribe({
       next:(res)=>{
-        console.log(res);
+
 this.myFrins=res.map((f:any)=>f.frindShip.frindId);
 
       }

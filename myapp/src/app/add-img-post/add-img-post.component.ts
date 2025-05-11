@@ -61,7 +61,7 @@ uploadimages(file:HTMLInputElement)
 const theFile=file.files?.item(0);
 if(theFile)
 {
-  this._CloudinaryService.uplodImg(theFile).subscribe({
+  this._CloudinaryService.uplodImg1(theFile).subscribe({
   next:(res)=>{
 this.realImgUrl=res.secure_url;
 this.senPost();
@@ -74,13 +74,20 @@ this.senPost();
 }
 showSpinner:boolean=false;
 
+scrollToTop()
+{
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
 senPost()
 {
   const userData=this._MyDataService.userData;
  
 const date=new Date();
 const dataOfPost={userData,date:date,imgUrl:this.realImgUrl,cabtio:this.cabtion,likeCount:0,commentCount:0};
-this._FireService.sendPost(dataOfPost);
+this._FireService.sendPost(dataOfPost).then(()=>{
+  this.scrollToTop();
+})
 
 this.clear();
 this.sended.emit('');

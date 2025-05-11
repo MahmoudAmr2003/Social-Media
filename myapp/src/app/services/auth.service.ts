@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { createUserWithEmailAndPassword ,Auth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail} from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -17,40 +18,55 @@ export class AuthService {
 isUserDataCame=new BehaviorSubject<boolean>(localStorage.getItem("userDataTaken")!==null);
 $isUserDataCame=this.isUserDataCame.asObservable();
 
-  isLogged=new BehaviorSubject<boolean>(localStorage.getItem("userDataTaken")!==null);
+  isLogged=new BehaviorSubject<boolean>(localStorage.getItem("userDataTaken")!==null); 
   $isLogged=this.isLogged.asObservable();
-  constructor(private _http:HttpClient,private _Router:Router)
+  constructor(private _http:HttpClient,private _Router:Router,private auth:Auth)
   {
 
   }
-  resign(userForm:any):Observable<any>
-  {
-    return this._http.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAfeaOPtEkZ1JF37sW0c7-LK9NiZ2Eg3S8",userForm);
-  }
-  
-  login(userForm:any):Observable<any>
-  {
-    return this._http.post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAfeaOPtEkZ1JF37sW0c7-LK9NiZ2Eg3S8",userForm);
-  }
+
 logOut()
 {
   localStorage.removeItem("userId");
   localStorage.removeItem("userImg");
   localStorage.removeItem("userName");
-
-
-
   this.isLogged.next(false);
   this.islight.next(false);
 this._Router.navigate(['/login']);
-console.log(this.isLogged.getValue());
 
 }
 
- isLight()
- {
-this.islight.next(!this.islight.getValue());
- }
+
+async regiester(form:any)
+{
+return await createUserWithEmailAndPassword(this.auth,form.get('email')?.value,form.get('password')?.value);
+}
+logIn(form:any)
+{
+return signInWithEmailAndPassword(this.auth,form.get('email')?.value,form.get('password')?.value);
+}
+
+loginWithGoogle() {
+  const provider = new GoogleAuthProvider();
+  return signInWithPopup(this.auth, provider)
+}
+async resstPassword(email:string)
+{
+return  await sendPasswordResetEmail(this.auth,email)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

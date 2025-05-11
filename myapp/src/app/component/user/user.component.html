@@ -13,7 +13,7 @@
 
                 
         <div class="w-50 m-4">
-            <app-send-requst [resiverId]="profileData.userId" [personName]="profileData.fullName" [personImage]="profileData.img1"></app-send-requst>
+            <app-send-requst [resiverId]="profileData.id" [personName]="profileData.fullName" [personImage]="profileData.img1"></app-send-requst>
 
         </div>
 
@@ -31,9 +31,12 @@
 
 </ul>
 
-<app-frinds [myId]="userId"></app-frinds>
+<div class="col-12">
+<app-frinds [myId]="userId" class="w-100"></app-frinds>
+
+</div>
 <hr>
-<div class="d-flex align-items-center bg-success p-2 text-white">
+<div routerLink="/chat"      [queryParams]="{ name: profileData.fullName, photo: profileData.img1,id:profileData.id }" class="d-flex align-items-center bg-success p-2 text-white" style="cursor: pointer;">
     <i class="fa-brands fa-facebook-messenger my-0 " style="font-size: 30px; color: white;"></i>
 
     <h4 class="mx-4">Texting</h4>
@@ -47,7 +50,7 @@
 
 
 
-<div class="mt-4">
+<div class="mt-4 col-md-7  col-11">
     <h4>Posts : {{userPosts.length}}</h4>
     <app-the-post [allPosts]="userPosts"></app-the-post>
 </div>

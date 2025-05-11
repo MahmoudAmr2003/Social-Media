@@ -1,116 +1,149 @@
-<section class="container" style="position: relative; background-color: white; color: black !important;">
-<div class="row  shadow-sm p-3 mx-auto mt-2" style="height: 90vh;">
-    <h4>Build Your Profile</h4>
-
-    <div  class=" col-md-4 col-11  mx-auto  py-4 " style="height: 500px !important;">
-
-<div class="bg w-100" style="border: solid rgba(0, 0, 0, 0.248) 0.1px; border-radius: 4px; position: relative; height: 350px; ">
-<div class="w-100 h-100" style="overflow: hidden;">
-    <img [src]="img1Url" alt="" class="w-100">
-    <div class="w-100 h-100 d-flex justify-content-center align-items-center" *ngIf="!img1Url">
-
-    </div>
-
-</div>
-<div class="" style="position: absolute; bottom: -25px; left: 10px;  ">
-   
-    <label for="img1">
-        <i class="fa-solid fa-camera" style="font-size: 30px;"></i>
-
-    </label>
-    <input type="file" id="img1" #myImg1 (change)="getLinkForImg1(myImg1)" style="display: none;">
-
-</div>
-<div class="profileImg " style="position: absolute; bottom:-150px; right: 40px; " >
-<div class="" style=" border-radius: 50%;  height: 170px;  width: 170px; border: solid rgba(0, 0, 0, 0.519) 0.1px; ">
-<img [src]="img2Url" alt="" class="w-100">
-
-</div>
-<div style="position: absolute; bottom: 0px; left: 40%; z-index: 9999999;" class="">
-    <label for="img2">
-   
-        <i class="fa-solid fa-camera" style="font-size: 30px;"></i>
-     
-    </label>
-
-</div>
-<input type="file" id="img2" #myImg2 style="display: none;" (change)="getLinkForImg2(myImg2)">
-
-</div>
-</div>
-
-    </div>
-
-   
-
-<div  class=" col-md-8 col-11 p-2 mt-4 mx-auto"> 
-<div class="w-100">
-<form [formGroup]="myForm" action="" class="row w-100 px-3 mx-auto py-2  data">
-<div class="py-2 col-md-6 col-12">
-    <label for="">Full Name</label>
-    <input formControlName="fullName" type="text" class=" py-2 px-3  " placeholder="Full Name" >
-</div>
-<div class="py-2  col-md-6 col-12">
-    <label for="">Mobile Phone</label>
-    <input formControlName="mobilePhone" type="text" class=" py-2 px-3" placeholder="Mobile Phone">
-</div>
-<div class="py-2  col-md-6 col-12">
-    <label for="">Jop</label>
-    <input formControlName="jop" type="text" class=" py-2 px-3  mt-2" placeholder="Job">
-</div>
-<div class="py-2  col-md-6 col-12">
- 
-
- <label for="Gender">Gender</label>
-      <div class="form-check form-check-inline d-flex align-items-center">
-        <input name="gender"  formControlName="gender" class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="Male">
-        <label class="" for="inlineRadio1">Male</label>
+<div class="container mt-5">
+    <form [formGroup]="myForm" (ngSubmit)="uploadImg2(img2Input)" class="row g-4 p-4 shadow-sm rounded bg-white">
+      <div class="col-12 text-center row">
+        <h2 class="mb-4">Adding and Editing Profile Data</h2>
       </div>
-      <div class="form-check form-check-inline d-flex align-items-center">
-        <input name="gender" formControlName="gender" class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="Female">
-        <label class="" for="inlineRadio2">Female</label>
+  
+      
+      <div class="col-md-8 mx-auto p-3" style="height: 300px; border:dashed black 0.1px ; overflow: hidden;">
+        <label for="img1Input" class="form-label d-block text-center w-100 h-100">
+          <img *ngIf="img1Url" [src]="img1Url " 
+               alt="Profile Image 1" 
+               class="w-100 mb-2" >
+
+         
+        </label>
+        <input #img1Input type="file" id="img1Input" accept="image/*" class="d-none" (change)="getLinkForImg1(img1Input)" />
+      </div>
+      <div class="text-center w-100 d-flex justify-content-center">
+        <button (click)="img1Input.click()" mat-raised-button color="primary" type="button" style="width: auto;display: block;">
+          Cover Image 
+        </button>
       </div>
       
+      <div class="col-md-8 mx-auto" style="overflow: hidden; height: 100px; width: 100px;border-radius: 50%; border: dashed black 0.1px; ">
+        <label for="img2Input" class="form-label d-block text-center mt-3" >
+          <img  *ngIf="img2Url" [src]="img2Url" 
+               alt="Profile Image 2" 
+               class="w-100" 
+              >
+              
+          
+        </label>
+        <input #img2Input type="file" id="img2Input" accept="image/*" class="d-none" (change)="getLinkForImg2(img2Input)" />
+      </div>
+      <div class="d-flex justify-content-center w-100">
+        <button (click)="img2Input.click()" mat-raised-button color="accent" type="button">
+          Profile Image
+        </button>
+      </div>
   
-</div>
-<div class="py-2  col-md-6 col-12">
-    <label>Birth Day</label> 
-    <input formControlName="birthDay" type="date"  min="1940-01-01" max="2023-12-31"  name="" id="" class=" mt-0 py-1">
-</div>
-<div class="py-2  col-md-6 col-12">
-<label>Hobbies</label>
-<select class="py-2" id="hobbies" formControlName="hobbies">
-    <option value="sports" selected>Sports</option>
-    <option value="music">Music</option>
-    <option value="reading">Reading</option>
-    <option value="travel">Travel</option>
-    <option value="gaming">Gaming</option>
-    <option value="Writing">Writing</option>
-    <option value="Art">Art</option>
-    <option value="Programing">Programing</option>
-  </select>
-</div>
-<h6 class="mt-2 mb-0">Short Bio</h6>
-<div class="mt-3 col-12">
-<textarea formControlName="shortBio" name="" id="" placeholder="Write Short bio About Your Selfe" class="w-100"></textarea>
-<div class="mt-3 d-flex justify-content-end">
-</div>
-</div>
-<button (click)="uploadImg(myImg1);uploadImg(myImg2)"  class="btn btn-light mx-3  px-3 py-2">Finish</button>
+      <!-- الاسم الكامل -->
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> Full Name</mat-label>
+          <input matInput formControlName="fullName" placeholder="ادخل الاسم الكامل">
+          <mat-error *ngIf="myForm.get('fullName')?.hasError('required')">
+            Required
+        </mat-error>
+          <mat-error *ngIf="myForm.get('fullName')?.hasError('minlength')">
+            MinLength is 3
+        </mat-error>
+          <mat-error *ngIf="myForm.get('fullName')?.hasError('pattern')">
+            Just A-Z
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- رقم الموبايل -->
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> Phone Number</mat-label>
+          <input matInput formControlName="mobilePhone" placeholder="01XXXXXXXXX">
+          <mat-error *ngIf="myForm.get('mobilePhone')?.hasError('required')">
+             Required
+          </mat-error>
+          <mat-error *ngIf="myForm.get('mobilePhone')?.hasError('pattern')">
+            Enter Available Phone Number
+        </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- المهنة -->
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Job</mat-label>
+          <input matInput formControlName="jop" placeholder="ادخل المهنة">
+          <mat-error *ngIf="myForm.get('jop')?.hasError('required')">
+            Required 
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- الجنس -->
+      <div class="col-md-6">
+        <label class="d-block mb-1">Gender</label>
+        <mat-radio-group formControlName="gender" class="d-flex gap-3">
+          <mat-radio-button value="male">Male</mat-radio-button>
+          <mat-radio-button value="female">Female</mat-radio-button>
+        </mat-radio-group>
+        <div *ngIf="myForm.get('gender')?.invalid && myForm.get('gender')?.touched" class="text-danger small">
+           Gender
+        </div>
+      </div>
+  
+      <!-- تاريخ الميلاد -->
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> Birth Day</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="birthDay" placeholder="اختر التاريخ">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="myForm.get('birthDay')?.hasError('required')">
+              Required
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- الهوايات -->
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Hoppies</mat-label>
+          <mat-select formControlName="hobbies">
+            <mat-option value="sport">SPORT</mat-option>
+            <mat-option value="music">MUSOC</mat-option>
+            <mat-option value="reading">READING</mat-option>
+            <mat-option value="travel">TRAVELLING</mat-option>
+            <mat-option value="travel">PROGRAMING</mat-option>
+            <mat-option value="travel">SWEMING</mat-option>
 
-</form>
-</div>
-    </div> 
-
-</div>
-
-
-
-
-
-<div *ngIf="load"  class="w-100 d-flex justify-content-center align-items-center " style=" position:absolute; top: 0; height: 100%;">
-    <app-loading></app-loading>
-</div>
-</section> 
-
-
+          </mat-select>
+          <mat-error *ngIf="myForm.get('hobbies')?.hasError('required')">
+             HOBBIES
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- نبذة قصيرة -->
+      <div class="col-12">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> Short bio</mat-label>
+          <textarea matInput formControlName="shortBio" rows="4" placeholder="عن نفسك"></textarea>
+          <mat-error *ngIf="myForm.get('shortBio')?.hasError('required')">
+            Required
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- زر الحفظ -->
+      <div class="col-12 text-center">
+        <button mat-raised-button color="primary" type="button" (click)="uploadImg1(img1Input,img2Input);">
+          {{ load ? ' ...LOADING' : ' SAVEING' }}
+        </button>
+        <button routerLink="/home" mat-raised-button color="danger" type="button" class="mx-5">
+          {{ load ? ' ...LOADING' : ' Skip' }}
+        </button>
+      </div>
+    </form>
+  </div>
+  

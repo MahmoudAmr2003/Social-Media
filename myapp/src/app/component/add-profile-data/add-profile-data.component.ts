@@ -3,19 +3,39 @@ import { SharedmoduleModule } from '../../sharedmodule/sharedmodule.module';
 import { FormGroup,FormControl,Validators } from '@angular/forms';
 import { doc, Firestore, serverTimestamp, updateDoc } from '@angular/fire/firestore';
 import { FireService } from '../../fire.service';
-import { Router } from '@angular/router';
-import {LoadingComponent } from '../../loading/loading.component';
+import { Router, RouterModule } from '@angular/router';
 import { CloudinaryService } from '../../cloudinary.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatRadioModule} from '@angular/material/radio';
-import { AuthService } from '../../services/auth.service';
 
+import { AuthService } from '../../services/auth.service';
+import { ReactiveFormsModule }           from '@angular/forms';
+import { MatInputModule }                from '@angular/material/input';
+import { MatButtonModule }               from '@angular/material/button';
+import { MatRadioModule }                from '@angular/material/radio';
+import { MatDatepickerModule }           from '@angular/material/datepicker';
+import { MatNativeDateModule }           from '@angular/material/core';
+import { MatSelectModule }               from '@angular/material/select';
+import { MatIconModule }                 from '@angular/material/icon';       // إذا أردت أيقونات
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-profile-data',
-  imports: [SharedmoduleModule,LoadingComponent,MatFormFieldModule,MatRadioModule],
+  imports: [MatFormFieldModule,MatRadioModule,
+  
+    ReactiveFormsModule,RouterModule,
+    CommonModule,
+   
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatIconModule,],
   templateUrl: './add-profile-data.component.html',
-  styleUrl: './add-profile-data.component.scss'
+  styleUrl: './add-profile-data.component.scss',
+  standalone:true
 })
 export class AddProfileDataComponent implements OnInit {
 img2Url:string='';
@@ -60,41 +80,49 @@ getLinkForImg2(img2:HTMLInputElement)
   {
   if(img2.files)
   {
-
-
  this.img2Url=URL.createObjectURL(img2.files[0]);
-
-
   }
 }
+
+
 load:boolean=false;
 
-
-
-uploadImg(file:HTMLInputElement)
+uploadImg1(file:HTMLInputElement,file2:HTMLInputElement)
 {
 this.load=true;
-
-  const theFile=file.files?.item(0);
+const theFile=file.files?.item(0);
 if(theFile)
 {
-  this._CloudinaryService.uplodImg(theFile).subscribe({
+  console.log('file1 exist');
+  this._CloudinaryService.uplodImg1(theFile).subscribe({
     next:(res)=>{
 
-      if(this.myForm.get('img1')?.value=='')
-              {
         this.myForm.get('img1')?.setValue(res.secure_url);
-              }
-              else
-              {
-        this.myForm.get('img2')?.setValue(res.secure_url);
-        
-              }
-                    this.saveUserData();
+        this.uploadImg2(file2);
+    },
+    error:(error)=>{
+      this.load=false;
+    }
+  })
+}
+  else
+  {
+    this.saveAndRoute();
+  }
+}
+uploadImg2(file2:HTMLInputElement)
+{
+this.load=true;
+const theFile=file2.files?.item(0);
+if(theFile)
+{
+  console.log('file2 exist');
+
+  this._CloudinaryService.uplodImg1(theFile).subscribe({
+    next:(res)=>{
+        this.myForm.get('img2')?.setValue(res.secure_url);   
+         this.saveUserData();
                     this._AuthService.isLogged.next(true);
-      
-this._Router.navigate(['/home']);
-              
     },
     error:(error)=>{
       this.load=false;
@@ -103,15 +131,22 @@ this._Router.navigate(['/home']);
 }
 else
 {
-this.load=true;
-
-this.saveUserData();
-this._Router.navigate(['/home']);
-
-
+    this.saveAndRoute();
 }
   
 }
+ 
+saveAndRoute()
+{
+    this.load=true;
+this.saveUserData()
+this._Router.navigate(['/home']);
+    localStorage.setItem('reloadOnce', 'true');
+
+
+}
+
+
 
 // editeData()
 // {
@@ -145,6 +180,7 @@ this._Router.navigate(['/home']);
 saveUserData()
 {
   const id=localStorage.getItem('userId');
+  console.log(id);
   const docRef=doc(this._Firestore,`users/${id}`);
   updateDoc(docRef,this.myForm.value);
 this.getMyData();
@@ -152,13 +188,13 @@ this.getMyData();
 }
 
 
-myId:string=localStorage.getItem("userId")||'';
 
 getMyData()
 {
-  if(this.myId)
+const myId:string=localStorage.getItem("userId")||'';
+  if(myId)
   {
-    this._FireService.getMyData(this.myId).subscribe({
+    this._FireService.getMyData(myId).subscribe({
       next:(res)=>{
     this.myForm.patchValue(res);
     this.img1Url=res.img2;

@@ -8,6 +8,8 @@ import { Router, RouterModule } from '@angular/router';
 import { AddPostStyleComponent } from '../add-post-style/add-post-style.component';
 import { ThePostComponent } from '../the-post/the-post.component';
 import { FrindsComponent } from '../frinds/frinds.component';
+import { AuthService } from '../services/auth.service';
+import { MyDataService } from '../my-data.service';
 
 
 @Component({
@@ -22,13 +24,19 @@ export class HomeComponent implements OnInit,OnDestroy {
   myData:object={};
   allPosts:any[]=[];
   private isSubscribe:Subscription[]=[];
-constructor(private _FireService:FireService, private _Router:Router)
+constructor(private _FireService:FireService, private _Router:Router,private _AuthService:AuthService, private _MyDataService:MyDataService)
 {
-
 }
 ngOnInit(): void {
-  
-  this.getMyData();
+    const shouldReload = localStorage.getItem('reloadOnce');
+
+  if (shouldReload === 'true') {
+    localStorage.removeItem('reloadOnce'); // نحذفه عشان متعملش ريلود تاني
+    window.location.reload();
+  }
+this._AuthService.isLogged.next(true);  
+this.getMyData();
+
 this.getPosts();
 }
 notNum:number=0;
@@ -41,8 +49,10 @@ this.isSubscribe.push(
   
 this._FireService.getMyData(this.myId).subscribe({
   next:(res)=>{
+ 
 this.myData=res;
-
+localStorage.setItem('user',JSON.stringify(res));
+this._MyDataService.setMyData();
   }
 })
 )
@@ -80,5 +90,4 @@ this.sortedPosts=this.allPosts.sort((a,b)=>b.date?.seconds-a.date?.seconds);
   })
 )
 }
-
 }

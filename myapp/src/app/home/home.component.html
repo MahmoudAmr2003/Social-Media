@@ -1,23 +1,25 @@
 <div class="container" style="position: relative; " @zoomInOut> 
 
     <div class="row">
-        <div class="col-md-4 col-12" style=" right: 0;overflow-y: auto;height: auto;">
-            <div class="py-3">
-          <app-frinds [myId]="myId"></app-frinds>
-            </div>
-
-<div>
+        <div class="col-md-4 col-12" style=" right: 0;overflow-y: auto">
+       
+            <div class="py-3 w-100 ">
+                <app-frinds [myId]="myId" class="w-100"></app-frinds>
+                  </div>
+<div class="mt-5"> 
+   
     <app-add-post-style></app-add-post-style>
     
 </div>
-<hr>
-<div>
+
+
+<div class="mt-3 " routerLink="/chat" style="cursor: pointer;">
     <h1>Message</h1>
     <hr>
 </div>
         </div>
 
-        <div class="col-md-8 col-12 ">
+        <div class="col-md-8 col-12  mt-0">
             <!-- Search  -->
             <h1>Posts</h1>
       

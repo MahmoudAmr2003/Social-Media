@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MyDataService } from '../my-data.service';
+import { user } from '@angular/fire/auth';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { MyDataService } from '../my-data.service';
 })
 export class AddPostComponent implements OnInit {
 @Output() sended =new EventEmitter<string>();
+
   profilData:any={};
   
 ngOnInit(): void {
@@ -54,11 +56,13 @@ getmyInfo()
 senPost()
 {
   const userData=this._MyDataService.userData;
+  console.log(userData);
 const date=new Date();
 const dataOfPost={userData,post:this.post,date:date,likeCount:0,commentCount:0};
 this._FireService.sendPost(dataOfPost);
 
 this.clear();
 this.sended.emit('');
+window.scrollTo({top:0,behavior:'smooth'})
 }
 }

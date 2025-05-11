@@ -26,8 +26,8 @@
                 </div>
                 
                 <div class="mx-3 text-dark">
-                <h6>{{post.userData.name}}</h6>
-                <p class="date m-0">{{post.date.toDate()|date:'short'}}</p>
+                <h4>{{post.userData.name}}</h4>
+                <p class=" m-0">{{post.date.toDate()|date:'short'}}</p>
                 </div>
            </div>
            <div (click)="showAndaHideMore(n,post.docId)" class="more d-flex justify-content-center align-items-center text-dark" style="width: 40px ;height: 40px ; border: solid rgba(0, 0, 0, 0.267) 0.1px; border-radius: 50%; ">
@@ -53,8 +53,8 @@
             </div>
     </div>
     <!--post content  -->
-    <div class="text-center text-dark" style="word-wrap: break-word;">
-    <h3 >{{post.post}}</h3>
+    <div class="text-center text-dark px-3" style="word-wrap: break-word;">
+    <h5>{{post.post}}</h5>
     </div>
     
     <div>
@@ -79,7 +79,7 @@
          
     </div>
 <!-- commentes -->
-    <div (click)="getComments(post.docId)"  class="btn btn-secondary me-2"
+    <div (click)="getComments(post.docId);openComments(post)"  class="btn btn-secondary me-2"
     type="button"
     data-bs-toggle="offcanvas"
     data-bs-target="#offcanvasComments"
@@ -99,50 +99,53 @@
     </div>
     </div>
    
-    
-
-<div class="offcanvas offcanvas-bottom col-md-6 col-12 mx-auto " tabindex="-1" id="offcanvasComments" aria-labelledby="offcanvasCommentsLabel" style="height: 70vh; overflow-y: auto;">
-<div class="offcanvas-header">
-<h5 id="offcanvasCommentsLabel">Comments</h5>
-<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
-</div>
-<div class="offcanvas-body d-flex flex-column p-3">
-<!-- Comments List -->
-<div *ngFor="let c of allComments;trackBy:trackById2" class="d-flex mb-3">
-<img [src]="c.userImage"
-   class="rounded-circle me-2"
-   width="40" height="40"
-   alt="{{c.userName}}">
-<div class="bg-light rounded px-3 py-2 flex-grow-1">
-<strong>{{ c.userName }}</strong>
-<p class="mb-1">{{ c.comment }}</p>
-<small class="text-muted">{{ (c.date ).toDate()| date:'short' }}</small>
-</div>
-</div>
-
-<!-- Spacer to push input to bottom -->
-<div class="d-flex justify-content-center py-2">
-  <div class="mt-auto pt-2 border-top col-md-5 mx-auto  col-11 px-3 " style="position: fixed;bottom: 5px; background-color: white; z-index: 99999999;">
-    <div class="input-group">
-    <input [(ngModel)]="comment"
-           type="text"
-           class="form-control"
-           placeholder="Write a comment..."
-           aria-label="Write a comment">
-    <button class="btn btn-primary" (click)="sendComment(post)"
-    >
-      Post
-    </button>
-    </div>
-    </div>
-</div>
-</div>
-</div>
+  
 
 
   
     </div>
     
+  
+
+    <div class="offcanvas offcanvas-bottom col-md-6 col-12 mx-auto " tabindex="-1" id="offcanvasComments" aria-labelledby="offcanvasCommentsLabel" style="height: 70vh; overflow-y: auto;">
+      <div class="offcanvas-header">
+      <h5 id="offcanvasCommentsLabel">Comments</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column p-3">
+      <!-- Comments List -->
+      <div *ngFor="let c of allComments;trackBy:trackById2" class="d-flex mb-3">
+      <img [routerLink]="['/userProfile',c.userId]"  data-bs-dismiss="offcanvas" [src]="c.userImage"
+         class="rounded-circle me-2"
+         width="40" height="40"
+         alt="{{c.userName}}">
+      <div class="bg-light rounded px-3 py-2 flex-grow-1">
+      <strong>{{ c.userName }}</strong>
+      <p class="mb-1">{{ c.comment }}</p>
+      <small class="text-muted">{{ (c.date ).toDate()| date:'short' }}</small>
+      </div>
+      </div>
+      
+      <!-- Spacer to push input to bottom -->
+      <div class="d-flex justify-content-center py-2">
+        <div class="mt-auto pt-2 border-top col-md-5 mx-auto  col-11 px-3 " style="position: fixed;bottom: 5px; background-color: white; z-index: 99999999;">
+          <div class="input-group">
+          <input [(ngModel)]="comment"
+                 type="text"
+                 class="form-control"
+                 placeholder="Write a comment..."
+                 aria-label="Write a comment">
+          <button class="btn btn-primary" (click)="sendComment()"
+          >
+            Post
+          </button>
+          </div>
+          </div>
+      </div>
+      </div>
+      </div>
+
+
 </ng-container>
 
 <div>

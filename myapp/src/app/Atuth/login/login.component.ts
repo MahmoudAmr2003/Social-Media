@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingComponent } from '../../loading/loading.component';
+import { MatButtonModule }               from '@angular/material/button';
 
 import { ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -14,7 +15,7 @@ import { MyDataService } from '../../my-data.service';
 
 @Component({
   selector: 'app-login',
-  imports: [SharedmoduleModule,LoadingComponent],
+  imports: [SharedmoduleModule,LoadingComponent,MatButtonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 
   templateUrl: './login.component.html',
@@ -42,36 +43,7 @@ mahmoud:string='Mahmoud';
   }
 load:boolean=false;
 
-  loginForm(login:FormGroup)
-
-  {
-this.load=true;
-this.isSubscribe= this._AuthService.login(login.value).subscribe(
-    {
-    next:(response)=>{
-  this.load=false;
-  
-      this._AuthService.isLogged.next(true);
-    localStorage.setItem("userDataTaken","done");
-    this._Router.navigate(['/home']);
-    localStorage.setItem("userId",response.localId);
-this.getmyInfo();
-
-
-     
-},
-error:(error)=>{
-  this.load=false;
-  this.cd.detectChanges();
-alert("Error");
-}
-
-  }
-)
-
-
-}
-
+Email:string='';
 
 subscription:any[]=[];
 
@@ -79,29 +51,56 @@ profilData:any={};
 getmyInfo()
 { 
   const id=localStorage.getItem('userId')||'';
-this.subscription.push(
-  this._FireService.getMyData(id).subscribe({
-    next:(res)=>{
-      
-  this.profilData=res;
+  if(id)
+  {
+    this.subscription.push(
+      this._FireService.getMyData(id).subscribe({
+        next:(res)=>{
+          
+      this.profilData=res;
+    
+     localStorage.setItem('user',JSON.stringify(res));
+     this._MyDataService.setMyData();
+        },
+        error:(error)=>{
+      alert(`Eror:  ${error}`);
+        }
+       }) 
+    )
+  }
 
- localStorage.setItem('user',JSON.stringify(res));
- this._MyDataService.setMyData();
-    },
-    error:(error)=>{
-  alert(`Eror:  ${error}`);
-    }
-   }) 
+}
+
+logIn(form:FormGroup)
+{
+this.load=true;
+this.subscription.push(
+  this._AuthService.logIn(form).then((response)=>{
+    console.log(response.user);
+    this._AuthService.isLogged.next(true);
+    localStorage.setItem("userDataTaken","done");
+    this._Router.navigate(['/home']);
+    localStorage.setItem('reloadOnce', 'true');
+    localStorage.setItem("userId",response.user.uid);
+  this.getmyInfo();
+  
+  
+  }).catch((error)=>{
+    console.log(error);
+    this.load=false;
+    this.cd.detectChanges();
+  alert("Error");
+  })
 )
+{
+
+}
 }
 
 
 
 
-
-
     eye:string='visibility';
-  // 
   hide = signal(true);
   clickEvent(event: MouseEvent) {
 if(this.eye=="visibility")
@@ -114,15 +113,27 @@ if(this.eye=="visibility")
   
 }
     this.hide.set(!this.hide());
-    
     event.stopPropagation();
   }
 
 
-  getMyData()
-  {
+logInWithGoogle()
+{
+  this._AuthService.loginWithGoogle().then((res)=>{
+    console.log(res);
+  })
+}
+resetPassword()
+{
+  this._AuthService.resstPassword(this.Email).then(()=>{
+    alert('RESET password has been sended to your email check')
+  }).catch((error)=>{
+    console.log(error)
+  })
+}
+reset:boolean=false;
 
-  }
+
   ngOnDestroy(): void {
     if(this.isSubscribe)
     {

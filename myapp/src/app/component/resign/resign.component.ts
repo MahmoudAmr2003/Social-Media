@@ -8,10 +8,12 @@ import { Router } from '@angular/router';
 import { DatabaseService } from '../../services/database.service';
 import { FireService } from '../../fire.service';
 import { MyDataService } from '../../my-data.service';
+import { user } from '@angular/fire/auth';
+import { MatButtonModule }               from '@angular/material/button';
 
 @Component({
   selector: 'app-resign',
-  imports: [SharedmoduleModule,LoadingComponent],
+  imports: [SharedmoduleModule,LoadingComponent,MatButtonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './resign.component.html',
   styleUrl: './resign.component.scss',
@@ -64,43 +66,24 @@ event.stopPropagation();
 
 
   load:boolean=false;
-  resignForm(resign:FormGroup)
-{
-  this.load=true;
-  this.auth.resign(resign.value).subscribe({
-    next:(response)=>{
-      this.onLoginSuccess();
-      
-    localStorage.setItem("userId",response.localId);
-    localStorage.setItem("role",resign.value.role);
-
-    console.log(localStorage.getItem("userId"))
-  this.load=false;
-    //********************************** */
-  this._DatabaseService.postUserData(resign.value).subscribe({
-    next:(response)=>{
-    // إيقاف التحميل في النهاية.
- 
-      this.goToDashbored()
-    },
-  
-  })
-
-//******************************** */
-    },
-    error:(error)=>
-    {
-     
-      this.onLoginFailed();
-    // إيقاف التحميل في النهاية.
-
-      
-
-    },
+  register(FormGroup:FormGroup)
+  {
     
-  })
-  }
+  this.load=true;
+this._AuthService.regiester(FormGroup).then((response)=>{
+  localStorage.setItem('userId',response.user.uid);
 
+   this.afterResign(response.user.uid,FormGroup.value);
+
+})
+.catch((error)=>{
+  
+  this.load=false;
+
+  this.onLoginFailed();
+
+})
+  }
 
 
 
@@ -108,9 +91,39 @@ goToDashbored()
 {
  
       this._router.navigate(['/add_data']);
+
  
 }
+logInWithGoogle() {
+  this._AuthService.loginWithGoogle()
+    .then((res) => {
+      
+      localStorage.setItem('userId',res.user.uid);
+   
+      this.afterResign(res.user.uid, res.user.providerData[0]);
+    })
+    .catch((err) => {
 
+      this.load = false;
+    });
+}
+
+afterResign(id:string, userData: any) {
+  this.onLoginSuccess();
+
+  
+  this.load = true;
+
+  this._DatabaseService.postUserData(userData,id).then(()=>{
+    this.load = false;
+  
+    
+    this.goToDashbored();
+
+  }).catch(()=>{
+    this.load=false;
+  })
+}
 
 
 onLoginSuccess() {
@@ -131,45 +144,3 @@ onLoginFailed() {
 
 }
 }
-
-
-// @ViewChild('name') name!:ElementRef;
-// @ViewChild('email') email!:ElementRef;
-// @ViewChild('password') password!:ElementRef;
-
-
-// catchInValid(field:string)
-// {
-//   let myfield;
-// if(field=="name")
-// {
-//  myfield=this.name;
-// }
-// else if(field=="email")
-// {
-//   myfield=this.email;
-
-// }
-// else
-// {
-//  myfield=this.password;
-
-// }
-//   if(this.resign.get(field)?.errors!=null)
-//   {
-//    myfield.nativeElement.style.outline="none";
-//    myfield.nativeElement.style.border="red solid 2px";
-
-//   }
-//   else
-//   {
-//     myfield.nativeElement.style.border="green solid 2px";
-  
-
-//   }
-
-
-
-
-
-

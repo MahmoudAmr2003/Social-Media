@@ -1,15 +1,12 @@
-import { CommentComponent } from './comment/comment.component';
-import { provideRouter, Routes } from '@angular/router';
+
+import {  Routes } from '@angular/router';
 import { ResignComponent } from './component/resign/resign.component';
 import { LoginComponent } from './Atuth/login/login.component';
 import { mygardGuard } from './gards/mygard.guard';
 import { SidesComponent } from './component/sides/sides.component';
-import { AddProfileDataComponent } from './component/add-profile-data/add-profile-data.component';
-
 import { PersonsComponent } from './component/persons/persons.component';
-import { LoadingComponent } from './loading/loading.component';
-import { bootstrapApplication } from '@angular/platform-browser';
-import { HomeComponent } from './home/home.component';
+// import { bootstrapApplication } from '@angular/platform-browser';
+
 
 
 
@@ -23,8 +20,7 @@ export const routes: Routes = [
     {path:"login",component:LoginComponent},
  
     {path:"side",canActivate:[mygardGuard],component:SidesComponent},
-    {path:"add_data",canActivate:[mygardGuard],component:AddProfileDataComponent},
-    {path:"load",component:LoadingComponent},
+
 
     {path:"resign",component:ResignComponent},
 
@@ -33,6 +29,11 @@ export const routes: Routes = [
      
         canActivate:[mygardGuard],
         loadComponent: () => import('./component/frindsrequests/frindsrequests.component').then(m => m.FrindsrequestsComponent),
+      },
+      {
+path:'add_data',
+canActivate:[mygardGuard],
+loadComponent:()=>import('./component/add-profile-data/add-profile-data.component').then(m=>m.AddProfileDataComponent)
       },
       
       {
@@ -95,6 +96,10 @@ loadComponent:()=>import('./frinds/frinds.component').then(m=>m.FrindsComponent)
         path:'comment',
         canActivate:[mygardGuard],
         loadComponent:()=>import('./comment/comment.component').then(m=>m.CommentComponent)
+      },
+      {
+path:'chat',
+loadComponent:()=>import('./chat/chat.component').then(x=>x.ChatComponent)
       },
       {
         path:'send',

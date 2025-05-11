@@ -25,19 +25,7 @@ constructor(private _FireService:FireService,private _LikeCommentService:LikeCom
 
 }
 ngOnInit(): void {
-this.getNotif();
-}
-getNotif()
-{
-  const myId=localStorage.getItem('userId')||'';
- this.isSubscirbe=this._LikeCommentService.getNotifications(myId).subscribe({
-  next:(res)=>{
-this.notifications=res;
-console.log(res);
-this.sortedNotifications=this.notifications.sort((a,b)=>b.date?.seconds-a.date?.seconds); // معناها ان لb هو الاكبر يعني فنتا خليه الاحدث 
-
-  }
- })
+  this.getMyData()
 }
 trackById(index:number,item:any)
 {
@@ -74,6 +62,21 @@ hidePost()
 {
   this.showPost=false;
 }
+
+notifs:any[]=[];
+getMyData()
+{
+
+const id =localStorage.getItem('userId')||'';  
+this._FireService.getMyData(id).subscribe({
+  next:(res)=>{
+this.notifs=res.notifs;
+  }
+})
+
+}
+
+
 }
 // getQuery(collectionName:string,fieldName:string,condition:any,value:any):Observable<any>
 

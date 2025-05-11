@@ -1,77 +1,66 @@
-
-
-<section class=" col-11 col-md-6  mx-auto   d-flex justify-content-center align-items-center shadow-lg mt-5 bg-white text-black  py-2" style="  position: relative; background-color: transparent; color:white; height:60vh;">
- 
-    <div class="resign d-flex justify-content-start p-2 " style="width: 100%; height: 100%; z-index: 0; position: relative;overflow: hidden;">
+<div *ngIf="!reset" class="container mt-5 py-5 col-md-6 col-11 shadow" style="max-width: 600px;">
+  <h1 style="font-weight: 800;" class="text-primary">LogIn</h1>
+  <form [formGroup]="login" (ngSubmit)="logIn(login)" class="mt-3 formAuth">
     
-    <div class="theform  d-flex justify-content-center px-3 align-items-center" style="    padding-bottom: 10px;">
-      <div class="w-100">
-       
-        <h4 class="m-4 ">Log In</h4>
-        <form [formGroup]="login" (ngSubmit)="loginForm(login)">
-    <div class="myinputs d-flex justify-content-center w-100">
-      <div class="w-100">
-      <div class="mb-3" style="position: relative;">
-        <input   [ngStyle]="{'border': login.get('email')?.errors!=null&&login.get('email')?.touched? 'solid red':' solid black '}" formControlName="email" type="text" placeholder="Email" class="w-100 ">
 
-<div class="px-3 d-flex justify-content-start align-items-center" style="width: 100%; height: 100%; position: absolute; top: 0; z-index: -1;">
-  <mat-icon class="icon">account_circle</mat-icon>
+    <div class="form-group mb-3">
+      <label>Email address</label>
+      <input type="email" class="w-100" formControlName="email" name="email" required>
+
+      <div *ngIf="login.get('email')?.touched && login.get('email')?.invalid" class="text-danger mt-1">
+        <div *ngIf="login.get('email')?.errors?.['required']">Email is required</div>
+        <div *ngIf="login.get('email')?.errors?.['email']">Please enter a valid email address</div>
+        <div *ngIf="login.get('email')?.errors?.['pattern']">Invalid email format</div>
+      </div>
+    </div>
+
+   
+    <div class="form-group mb-3">
+      <label>Password</label>
+      <input type="password" class="w-100" formControlName="password" name="password" required>
+
+      <div *ngIf="login.get('password')?.touched && login.get('password')?.invalid" class="text-danger mt-1">
+        <div *ngIf="login.get('password')?.errors?.['required']">Password is required</div>
+        <div *ngIf="login.get('password')?.errors?.['minlength']">Password must be at least 5 characters</div>
+        <div *ngIf="login.get('password')?.errors?.['maxlength']">Password must not exceed 20 characters</div>
+        <div *ngIf="login.get('password')?.errors?.['pattern']">Password must contain only letters and numbers (English or Arabic)</div>
+      </div>
+    </div>
+
+    <p (click)="reset=true" class="my-0"><a style="color: blue; cursor: pointer;">Forget Password?</a></p>
+
+    <button type="submit" class="btn btn-primary w-75 mt-5" [disabled]="login.invalid">Log In</button>
+
+    <div class="py-2">
+      <p class="mt-0"><a routerLink="/resign">Sign Up</a> if you don’t have an account</p>
+    </div>
+  </form>
+
+  <div *ngIf="load==true" [hidden]="!load" class="w-100 d-flex justify-content-center align-items-center " style="height: 100%; position:absolute; top: 0;">
+    <app-loading></app-loading>
+  </div>
+</div>
+
+
+
+
+<div *ngIf="reset" class="d-flex justify-content-center align-items-center " style="height: 80vh;">
+  <div class="formAuth w-100 shadow-lg p-4" style="max-width: 600px; position: relative;">
+  <h4>Reset Password</h4>
+<div (click)="reset=false" style="position: absolute; top: 20px; right: 20px;">
+<i class="fa-solid fa-circle-xmark"></i>
+</div>
+<input type="text" id="email" name="email"   [(ngModel)]="Email" #emailRef="ngModel" placeholder="Drop Your Email Address"class="w-100" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"/>
+
+<!-- Validation messages -->
+<div *ngIf="emailRef.invalid && emailRef.touched" class="text-danger mt-1">
+  <div *ngIf="emailRef.errors?.['required']">Email is required</div>
+  <div *ngIf="emailRef.errors?.['pattern']">Please enter a valid email address</div>
+</div>
+
+<button (click)="resetPassword()" [disabled]="!emailRef.valid" mat-raised-button color="primary" type="button" class="btn btn-primary w-100 mt-2">
+  {{ load ? ' ...LOADING' : ' Sign Up' }}
+</button>
+  </div>
 
 </div>
-    
-    <div class="warn"  *ngIf="login.get('email')?.errors!=null&&login.get('email')?.touched">
-      <p *ngIf="login.get('email')?.errors?.['required']">Email is required</p>
-          <p *ngIf="login.get('email')?.errors?.['email']">Unavailable Email</p>
-         </div>
-        </div>
-         <div class="" style="position: relative;">
-          <input   [ngStyle]="{'border': login.get('password')?.errors!=null&&login.get('password')?.touched? 'solid red':' solid black '}"  formControlName="password"  type="text" placeholder="Password" class=" mb-0" matInput [type]="hide() ? 'password' : 'text'" />
-
-
-          <div class="px-3 d-flex justify-content-start align-items-center" style="width: 100%; height: 100%; position: absolute; top: 0; z-index: -1;">
-            <i class="fa-solid fa-lock"></i>
-          
-          </div>
-  
-    <div class="warn" *ngIf="login.get('password')?.errors!=null&& login.get('password')?.touched">
-      <p *ngIf="login.get('password')?.errors?.['required']"> Password is required</p>
-      <p *ngIf="login.get('password')?.errors?.['minlength']">Minimum is 5</p>
-      <p *ngIf="login.get('password')?.errors?.['maxlength']">Maximum is 30</p>
-    
-      <p *ngIf="login.get('password')?.errors?.['pattern']">Unavailable Password</p>
-    </div>
-    
-  </div>
-          <button class="mt-0" mat-button
-          type="button"
-          matSuffix
-          (click)="clickEvent($event)"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide()"><mat-icon>{{eye}}</mat-icon></button>
-      </div>
-    </div>
-      
-      <div class="d-flex justify-content-center w-100 mt-3">
-      </div>
-<div class="w-100  d-flex justify-content-center">
-  <button [disabled]="login.invalid" type="submit"  class="btn btn-dark px-4 py-2 w-50" style="border-radius:0;">Log in</button>
-
-</div>    
-        </form>
-        <div class="text-center mt-3 d-flex justify-content-between ">
-       <div class="d-flex">
-        <p> Have not an account </p>
-        <a routerLink="/resign"  class=" mb-3 mx-2">Sign Up</a>
-       </div>
-        
-          </div>
-      </div>
-    </div>
-  
-    </div>
-    <div *ngIf="load==true" [hidden]="!load"  class="w-100 d-flex justify-content-center align-items-center " style="height: 100%; position:absolute; top: 0;">
-      <app-loading></app-loading>
-  </div>
-    </section>
- 
-

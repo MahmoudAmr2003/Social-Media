@@ -76,12 +76,7 @@ this.subsArray.push(
   })
 )
 }
-sendComment(post:any)
-{
 
-this._LikeCommentService.sendComment(post,this.user,this.comment);
-this.comment='';
-}
 
 allComments:any[]=[];
 getComments(postId:string)
@@ -105,12 +100,20 @@ this.subsArray.push(
 
 
 
+currentPost:any|null=null;
+    openComments(post:any)
+    {
+this.currentPost=post;
+    }
 
-    
+    sendComment()
+    {
+    if(!this.currentPost) return;
 
-
+    this._LikeCommentService.sendComment(this.currentPost,this.user,this.comment);
+    this.comment='';
+    }
   
-
 
 trackById(index:number,item:any)
 {

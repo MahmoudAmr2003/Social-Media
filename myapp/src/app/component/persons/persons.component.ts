@@ -20,6 +20,7 @@ export class PersonsComponent implements OnInit,OnDestroy {
  isSubscribe!:Subscription
   userId: string = '';
   noresult: boolean = false;
+  myId:string='';
   usersData: any[] = [];
   usersDataShowing:any[]=[];
 
@@ -35,6 +36,7 @@ private _FireService:FireService
   ngOnInit(): void {
     this._AuthService.isLogged.next(true);
     this.getPersonsData();
+    this.myId=localStorage.getItem('userId')||'';
   }
 
   searchUsers(event: any): void {

@@ -13,7 +13,8 @@ export class MyDataService {
 
 this.userData={
   name:user.fullName,
-  id:user.userId,
+  
+  id:user.id,
   image:user.img1
 }
   }

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable, Injector, runInInjectionContext } from '@angular/core';
+import { addDoc, collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -35,25 +36,19 @@ export class DatabaseService {
     'Sohag'
   ];
   
-  private storageUrl = 'https://firebasestorage.googleapis.com/v0/b/adding-poduct.appspot.com/o/';
-
+ fireStore=inject(Firestore);
+ injector=inject(Injector)
  
   constructor(private _HttpClient:HttpClient) { }
 
 
-postUserData(userForm:any):Observable<any>
+async postUserData(form:any,id:string)
 {
-  const userid=localStorage.getItem("userId");
- 
-const userData={
-   fields:{
-    name:{stringValue:userForm.name},
-  email:{stringValue:userForm.email},
-  password:{stringValue:userForm.password},
-  userId:{stringValue:userid},
-}
-}
-return this._HttpClient.patch(`https://firestore.googleapis.com/v1/projects/note-auth-4a724/databases/(default)/documents/users/${userid}`, userData);
+return await runInInjectionContext(this.injector,()=>{
+  const collRef=doc(this.fireStore,`users/${id}`);
+   setDoc(collRef,{form,id});
+
+})
 }
 
 
