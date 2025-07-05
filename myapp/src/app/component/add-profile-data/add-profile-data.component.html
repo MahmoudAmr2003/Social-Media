@@ -1,71 +1,66 @@
-<div class="container mt-5">
-    <form [formGroup]="myForm" (ngSubmit)="uploadImg2(img2Input)" class="row g-4 p-4 shadow-sm rounded bg-white">
+ 
+ <div class="container shadow" >
+
+    <form [formGroup]="myForm"  class="row bg-white col-md-10 mx-auto  p-4 col-12 shadow-sm rounded " style="position: relative;">
       <div class="col-12 text-center row">
-        <h2 class="mb-4">Adding and Editing Profile Data</h2>
+        <h2 class="">Adding and Editing Profile Data</h2>
       </div>
   
       
-      <div class="col-md-8 mx-auto p-3" style="height: 300px; border:dashed black 0.1px ; overflow: hidden;">
+      <div class="col-md-8 mx-auto p-3 " style="position: relative;height: 300px; border:dashed black 0.1px ;">
         <label for="img1Input" class="form-label d-block text-center w-100 h-100">
-          <img *ngIf="img1Url" [src]="img1Url " 
+        <div class="w-100 h-100" style="overflow: hidden;">
+  <img *ngIf="img1Url" [src]="img1Url " 
                alt="Profile Image 1" 
-               class="w-100 mb-2" >
+               class="w-100 h-100 mb-2" >
 
          
+        </div>
         </label>
         <input #img1Input type="file" id="img1Input" accept="image/*" class="d-none" (change)="getLinkForImg1(img1Input)" />
-      </div>
-      <div class="text-center w-100 d-flex justify-content-center">
-        <button (click)="img1Input.click()" mat-raised-button color="primary" type="button" style="width: auto;display: block;">
-          Cover Image 
-        </button>
-      </div>
+     
       
-      <div class="col-md-8 mx-auto" style="overflow: hidden; height: 100px; width: 100px;border-radius: 50%; border: dashed black 0.1px; ">
-        <label for="img2Input" class="form-label d-block text-center mt-3" >
-          <img  *ngIf="img2Url" [src]="img2Url" 
+      <div class="plusIcon btn bg-primary ">
+<i class="fa-solid fa-plus text-white" (click)="img1Input.click()" style="font-size: 20px; cursor: pointer;"></i>
+      </div>
+    <div class="w-100 d-flex justify-content-center align-items-center">
+        <div class=" mx-auto " style=" height: 100px; width: 100px;border-radius: 50%; border: dashed black 0.1px; position: absolute; bottom: -50px;  ">
+              <div class="" style="overflow: hidden !important;height: 100px; width: 100px;border-radius: 50%;">
+           <img  *ngIf="img2Url" [src]="img2Url" 
                alt="Profile Image 2" 
-               class="w-100" 
+               class="w-100 h-100" 
               >
               
+       </div>
+        <label for="img2Input" class="form-label d-block text-center mt-3 w-100">
+   
           
         </label>
         <input #img2Input type="file" id="img2Input" accept="image/*" class="d-none" (change)="getLinkForImg2(img2Input)" />
+             <div class="plusIcon2 btn bg-primary ">
+<i class="fa-solid fa-plus text-white" (click)="img2Input.click()" style="font-size: 20px; cursor: pointer;"></i>
       </div>
-      <div class="d-flex justify-content-center w-100">
-        <button (click)="img2Input.click()" mat-raised-button color="accent" type="button">
-          Profile Image
-        </button>
       </div>
+    </div>
+       </div>
+     
   
       <!-- الاسم الكامل -->
-      <div class="col-md-6">
+      <div class="col-md-6 mt-5">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label> Full Name</mat-label>
           <input matInput formControlName="fullName" placeholder="ادخل الاسم الكامل">
-          <mat-error *ngIf="myForm.get('fullName')?.hasError('required')">
-            Required
-        </mat-error>
-          <mat-error *ngIf="myForm.get('fullName')?.hasError('minlength')">
-            MinLength is 3
-        </mat-error>
-          <mat-error *ngIf="myForm.get('fullName')?.hasError('pattern')">
-            Just A-Z
-          </mat-error>
+         
         </mat-form-field>
       </div>
   
       <!-- رقم الموبايل -->
-      <div class="col-md-6">
+      <div class="col-md-6 mt-5">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label> Phone Number</mat-label>
           <input matInput formControlName="mobilePhone" placeholder="01XXXXXXXXX">
-          <mat-error *ngIf="myForm.get('mobilePhone')?.hasError('required')">
-             Required
-          </mat-error>
-          <mat-error *ngIf="myForm.get('mobilePhone')?.hasError('pattern')">
-            Enter Available Phone Number
-        </mat-error>
+         
+        
         </mat-form-field>
       </div>
   
@@ -74,9 +69,7 @@
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Job</mat-label>
           <input matInput formControlName="jop" placeholder="ادخل المهنة">
-          <mat-error *ngIf="myForm.get('jop')?.hasError('required')">
-            Required 
-          </mat-error>
+      
         </mat-form-field>
       </div>
   
@@ -99,9 +92,7 @@
           <input matInput [matDatepicker]="picker" formControlName="birthDay" placeholder="اختر التاريخ">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="myForm.get('birthDay')?.hasError('required')">
-              Required
-          </mat-error>
+        
         </mat-form-field>
       </div>
   
@@ -129,21 +120,20 @@
         <mat-form-field appearance="outline" class="w-100">
           <mat-label> Short bio</mat-label>
           <textarea matInput formControlName="shortBio" rows="4" placeholder="عن نفسك"></textarea>
-          <mat-error *ngIf="myForm.get('shortBio')?.hasError('required')">
-            Required
-          </mat-error>
+          
         </mat-form-field>
       </div>
   
       <!-- زر الحفظ -->
       <div class="col-12 text-center">
-        <button mat-raised-button color="primary" type="button" (click)="uploadImg1(img1Input,img2Input);">
-          {{ load ? ' ...LOADING' : ' SAVEING' }}
-        </button>
-        <button routerLink="/home" mat-raised-button color="danger" type="button" class="mx-5">
-          {{ load ? ' ...LOADING' : ' Skip' }}
-        </button>
+        <button class="btn btn-dark p-2 w-50" (click)="upload(img1Input,img2Input);">Finish</button>
+       
       </div>
+       <div *ngIf="load" class="d-flex justify-content-center align-items-center col-md-8 col-12" style="position: fixed; height: 100%;top: 0;">
+  <app-loading></app-loading>
+  </div>
     </form>
+    
+ 
   </div>
   

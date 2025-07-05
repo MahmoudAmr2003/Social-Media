@@ -1,35 +1,3 @@
-<!-- 
-
-
-
-    <section @zoomInOut class="container-fluid mt-3 px-3">
-        <div class="myinput my-3" style="position: relative;">
-            <input type="text" placeholder="search Frinds" (keyup)="searchAboutFrinds($event)">
-            <div class="d-flex align-items-center justify-content-center" style="position: absolute; font-size: 25px;  top: 0; height: 60px; width: 100px;">
-                <i class="fa-solid fa-magnifying-glass " style="color: black;"></i>
-            </div>
-        </div>
-<div class="row">
-<div>
-    <h5> Frinds {{myFrinds.length}} </h5>
-</div>
-  <div class="row d-flex flex-wrap">
-    <div  *ngFor="let i of myNewFrinds;trackBy:trackById" class="frind col-md-4 col-lg-2 col-6  mx-0 frind p-3 my-2" >
-        <div  (click)="userProfile(i.frindId)"  class="inCenter justify-content-start" >
-        <div class="img" style="width: 80px; height: 80px;">
-        <img [src]="i.frindImg" alt="" class="w-100">
-        </div>
-        <p class="mx-2">{{i.frindName}}</p>
-        <button class="btn btn-success w-100 d-flex align-items-center justify-content-center gap-2" >
-            <i class="bi bi-person-check-fill"></i>
-         Frind
-          </button>
-        </div>
-        </div>
-  </div>
-
-        </div>
-    </section> -->
 
     <div @zoomInOut>
         <app-frindsrequests></app-frindsrequests>
@@ -45,19 +13,21 @@
 <img [src]="frind.frindShip.frindImage" alt="" class="w-100">
 </div>
     </div>
-    <button class="btn p-2"  (click)="showAll()">{{state}} All</button>
+    <button class="btn mx-3 p-2"     type="button"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasFrinds"
+  (click)="showAll()">{{state}} All</button>
 </div>
     </div>
 
 
-    <div *ngIf="showAllFrinds" class="px-4 py-3" style="width: 300px; height: 50vh; overflow-y: auto; background-color: white; position: absolute; z-index: 999999999; top: 50%;" @zoomInOut>
-        <div (click)="showAll()" class="skip" style="position: absolute; top: 5px; left: 5px;">
-            <i class="fa-solid fa-xmark"></i>
+
+     <div class="offcanvas offcanvas-bottom w-100   mx-auto "  id="offcanvasFrinds"  style="height: 70vh; overflow-y: auto !important; position: absolute;left: 0;z-index: 999999999 !important;">
+         
+        <div class="my-4 p-3 myinput">
+            <input (keyup)="search(frind)" type="text" name="" id="" class=" w-75 py-3" placeholder="search" #frind>
         </div>
-        <div class="my-4">
-            <input (keyup)="search(frind)" type="text" name="" id="" class="w-75 p-2" placeholder="search" #frind>
-        </div>
-        <div (click)="scrollToTop()" *ngFor="let frind of searchedFrinds;trackBy:trackById" class="frind d-flex align-items-center py-1" [routerLink]="['/userProfile',frind.frindShip.frindId]">
+        <div (click)="scrollToTop()" *ngFor="let frind of searchedFrinds;trackBy:trackById" class="frind d-flex align-items-center px-4 my-2" [routerLink]="['/userProfile',frind.frindShip.frindId]">
             <div class="img" style="width: 60px; height: 60px;">
             <img [src]="frind.frindShip.frindImage" alt="" class="w-100" >
             </div>
@@ -65,4 +35,5 @@
             <hr>
 
                 </div>
-    </div>
+                
+      </div>

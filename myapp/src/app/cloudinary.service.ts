@@ -20,14 +20,5 @@ const url = `https://api.cloudinary.com/v1_1/${this.cloudName}/image/upload`;
 return this._HttpClient.post(url,formData1);
 
   }
-  uploadImage2(file2:File):Observable<any>
-  {
-
-    const formData2=new FormData();
-    formData2.append('file',file2);
-    formData2.append('upload_preset',this.uploadPreset);
-    const url = `https://api.cloudinary.com/v1_1/${this.cloudName}/image/upload`;
-    return this._HttpClient.post(url,formData2);
-    
-  }
+ 
 }

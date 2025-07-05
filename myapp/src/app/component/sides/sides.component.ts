@@ -44,7 +44,7 @@ getmyData()
 this._FireService.getMyData(myId).subscribe({
   next:(res)=>{
   
-this.imgUrl=res.img1;
+this.imgUrl=res.img2;
 this.notifNum=res.notifNum;
 
   }

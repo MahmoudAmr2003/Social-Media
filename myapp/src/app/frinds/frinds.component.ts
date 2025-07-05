@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component,ElementRef,Input,OnDestroy,OnInit } from '@angular/core';
 import { FrindsrequestsComponent } from '../component/frindsrequests/frindsrequests.component';
 import { FireService } from '../fire.service';
-import { Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { zoomInOut } from '../animation';
 import { Subscription } from 'rxjs';
 @Component({
@@ -20,8 +20,17 @@ export class FrindsComponent implements OnInit,OnDestroy {
   @Input() myId:string='';
   showAllFrinds:boolean=false;
  constructor(private _FireService:FireService, private _Router:Router){
-
- }
+   this._Router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // ✅ لما تتنقل لأي راوت، رجّع الحالة الطبيعية للـ body
+        document.body.style.overflow = 'auto';
+        document.body.style.position = '';
+        document.body.classList.remove('offcanvas-backdrop');
+        document.body.classList.remove('modal-open');
+      }
+    });
+  }
+ 
 myFrinds:any[]=[];
 
 searchedFrinds:any[]=[];

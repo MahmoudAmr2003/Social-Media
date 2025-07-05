@@ -2,13 +2,13 @@
 
 
   
-  <div class="container  py-5 col-md-6 col-11 shadow" style="max-width: 600px;">
-    <h1 class="text-primary" style="font-weight: 800;">Sign Up</h1>
-    <form [formGroup]="resign" (ngSubmit)="register(resign)" class="mt-3 formAuth">
+  <div class="container  py-3 col-md-6 col-11 " style="max-width: 900px;">
+    <h1 class="text-black text-center" style="font-weight: 800;">Sign Up</h1>
+    <form [formGroup]="resign" (ngSubmit)="register(resign)" class=" w-75  mx-auto formAuth">
   
-      <div class="form-group mb-3">
+      <div class="form-group mb-4">
         <label>NAME</label>
-        <input type="email" class="w-100" formControlName="name" name="name" required>
+        <input type="email" class="w-100" formControlName="displayName" name="name" required placeholder="Name">
         <div *ngIf="resign.get('name')?.invalid && resign.get('name')?.touched" class="text-danger">
           <div *ngIf="resign.get('name')?.errors?.['required']">Name is required</div>
           <div *ngIf="resign.get('name')?.errors?.['minlength']">Name must be at least 3 characters</div>
@@ -17,9 +17,9 @@
         </div>
       </div>
   
-      <div class="form-group mb-3">
+      <div class="form-group mb-4">
         <label>Email address</label>
-        <input type="email" class="w-100" formControlName="email" name="email" required>
+        <input type="email" class="w-100" formControlName="email" name="email" required placeholder="Email">
         <div *ngIf="resign.get('email')?.invalid && resign.get('email')?.touched" class="text-danger">
           <div *ngIf="resign.get('email')?.errors?.['required']">Email is required</div>
           <div *ngIf="resign.get('email')?.errors?.['email'] || resign.get('email')?.errors?.['pattern']">
@@ -28,9 +28,9 @@
         </div>
       </div>
   
-      <div class="form-group mb-3">
+      <div class="form-group mb-4">
         <label>Password</label>
-        <input type="password" class="w-100" formControlName="password" name="password" required>
+        <input type="password" class="w-100" formControlName="password" name="password" required placeholder="Password">
         <div *ngIf="resign.get('password')?.invalid && resign.get('password')?.touched" class="text-danger">
           <div *ngIf="resign.get('password')?.errors?.['required']">Password is required</div>
           <div *ngIf="resign.get('password')?.errors?.['minlength']">Password must be at least 5 characters</div>
@@ -40,18 +40,31 @@
       </div>
   
       <!-- <button type="submit"  class="btn btn-primary w-75 mt-5">Sign Up</button> -->
-      <button [disabled]="resign.invalid" mat-raised-button color="primary" type="submit" class="btn btn-primary w-75">
-        {{ load ? ' ...LOADING' : ' Sign Up' }}
-      </button>
-      <button type="button"
+     <div class="w-100 d-flex justify-content-center my-4">
+<div class="w-100 d-flex justify-content-center">
+  <div class="w-100">
+    <button class="btn btn-dark p-2 w-100 "  [disabled]="resign.invalid" style="border-radius: 0 !important;">Sign Up</button>
+      <p class="mt-1"><a routerLink="/login">Log In </a>If you  have an account</p>
+  </div>
+</div>
+
+     </div>
+
+<div class="line mb-4">
+<div class="inLine d-flex  justify-content-center align-items-center px-2" style="height: 30px; ">
+  <p >LogIn With Other</p>
+</div>
+</div>
+    <div class="mt-4 d-flex justify-content-center">
+  <button type="button"
         (click)="logInWithGoogle()"
-        class="flex items-center mt-3 btn btn-outline-primary w-75"
-      >
+        class="d-flex align-items-center justify-content-center mt-3 btn btn  w-100"
+    style="border:  solid rgba(0, 0, 0, 0.222) 0.009px; border-radius: 0 !important;"  >
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width: 35px;">
         <span class="text-sm font-medium text-gray-700">Google</span>
       </button>
+    </div>
   
-      <p class="mt-4"><a routerLink="/login">LogIN </a>If you  have an account</p>
     </form>
   
     <div *ngIf="load==true" [hidden]="!load" class="w-100 d-flex justify-content-center align-items-center" style="height: 100%; position:absolute; top: 0;">

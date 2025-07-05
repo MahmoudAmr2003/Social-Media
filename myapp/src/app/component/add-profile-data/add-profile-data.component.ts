@@ -6,7 +6,6 @@ import { FireService } from '../../fire.service';
 import { Router, RouterModule } from '@angular/router';
 import { CloudinaryService } from '../../cloudinary.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
-
 import { AuthService } from '../../services/auth.service';
 import { ReactiveFormsModule }           from '@angular/forms';
 import { MatInputModule }                from '@angular/material/input';
@@ -17,12 +16,14 @@ import { MatNativeDateModule }           from '@angular/material/core';
 import { MatSelectModule }               from '@angular/material/select';
 import { MatIconModule }                 from '@angular/material/icon';       // إذا أردت أيقونات
 import { CommonModule } from '@angular/common';
+import { LoadingComponent } from '../../loading/loading.component';
+
 
 @Component({
   selector: 'app-add-profile-data',
   imports: [MatFormFieldModule,MatRadioModule,
   
-    ReactiveFormsModule,RouterModule,
+    ReactiveFormsModule,RouterModule,LoadingComponent,
     CommonModule,
    
     MatFormFieldModule,
@@ -53,13 +54,13 @@ date:any;
  myForm=new FormGroup({
   img1:new FormControl(''),
   img2:new FormControl(''),
-  fullName:new FormControl(null,[Validators.required,Validators.minLength(3),Validators.pattern('^[a-zA-Z ]+$'),Validators.maxLength(20)]),
-  mobilePhone:new FormControl(null,[Validators.required,Validators.pattern('^(010|011|012|015)[0-9]{8}$')]),
-  jop:new FormControl(null,[Validators.required,Validators.pattern('[a-zA-Z ]{3,15}')]),
-  gender:new FormControl(null,[Validators.required]),
-  birthDay:new  FormControl(null,[Validators.required]),
-  hobbies:new FormControl('sport',[Validators.required]),
-  shortBio:new FormControl(null,[Validators.required]),
+  fullName:new FormControl(null,),
+  mobilePhone:new FormControl(null),
+  jop:new FormControl(null),
+  gender:new FormControl(null),
+  birthDay:new  FormControl(null),
+  hobbies:new FormControl('sport'),
+  shortBio:new FormControl(null),
 date:new FormControl(serverTimestamp())
  })
 
@@ -87,104 +88,98 @@ getLinkForImg2(img2:HTMLInputElement)
 
 load:boolean=false;
 
-uploadImg1(file:HTMLInputElement,file2:HTMLInputElement)
-{
-this.load=true;
-const theFile=file.files?.item(0);
-if(theFile)
-{
-  console.log('file1 exist');
-  this._CloudinaryService.uplodImg1(theFile).subscribe({
-    next:(res)=>{
 
-        this.myForm.get('img1')?.setValue(res.secure_url);
-        this.uploadImg2(file2);
-    },
-    error:(error)=>{
-      this.load=false;
+async upload(file: HTMLInputElement, file2: HTMLInputElement) {
+  this.load = true;
+
+  try {
+    if (file && file.files?.length && file2 && file2.files?.length) {
+      await this.uploadImg1(file);
+      await this.uploadImg2(file2);
+      this.saveAndRoute();
+      console.log('Tow');
     }
-  })
-}
-  else
-  {
-    this.saveAndRoute();
+
+    else if (file && file.files?.length && (!file2 || !file2.files?.length)) {
+      await this.uploadImg1(file);
+      this.saveAndRoute();
+      console.log('one');
+    }
+
+    else if (file2 && file2.files?.length && (!file || !file.files?.length)) {
+      console.log('kkkkkkkkkk');
+      
+      await this.uploadImg2(file2);
+
+      this.saveAndRoute();
+      
+    }
+
+    else {
+      this.saveAndRoute();
+    }
+
+  } catch (error) {
+    console.error('حدث خطأ أثناء رفع الصور:', error);
+    this.load = false;
   }
 }
-uploadImg2(file2:HTMLInputElement)
-{
-this.load=true;
-const theFile=file2.files?.item(0);
-if(theFile)
-{
-  console.log('file2 exist');
 
-  this._CloudinaryService.uplodImg1(theFile).subscribe({
-    next:(res)=>{
-        this.myForm.get('img2')?.setValue(res.secure_url);   
-         this.saveUserData();
-                    this._AuthService.isLogged.next(true);
-    },
-    error:(error)=>{
-      this.load=false;
-    }
-  })
+async uploadImg1(file: HTMLInputElement): Promise<void> {
+  const theFile = file.files?.item(0);
+  if (!theFile) return;
+
+  return new Promise((resolve, reject) => {
+    this._CloudinaryService.uplodImg1(theFile).subscribe({
+      next: (res) => {
+        this.myForm.get('img1')?.setValue(res.secure_url);
+        resolve();
+      },
+      error: (err) => {
+        this.load = false;
+        reject(err);
+      }
+    });
+  });
 }
-else
-{
-    this.saveAndRoute();
+
+async uploadImg2(file2: HTMLInputElement): Promise<void> {
+  const theFile = file2.files?.item(0);
+  if (!theFile) return;
+
+  return new Promise((resolve, reject) => {
+    this._CloudinaryService.uplodImg1(theFile).subscribe({
+      next: (res) => {
+        this.myForm.get('img2')?.setValue(res.secure_url);
+console.log(this.myForm.get('img2')?.value);
+
+        this._AuthService.isLogged.next(true);
+        resolve();
+      },
+      error: (err) => {
+        this.load = false;
+        reject(err);
+      }
+    });
+  });
 }
-  
-}
- 
+
 saveAndRoute()
 {
-    this.load=true;
-this.saveUserData()
-this._Router.navigate(['/home']);
-    localStorage.setItem('reloadOnce', 'true');
-
+  console.log('saved');
+this.saveUserData();
+  this._Router.navigate(['/home']);
 
 }
 
 
 
-// editeData()
-// {
-//   const theFile=file.files?.item(0);
-
-//   if(theFile)
-//     {
-//       this._CloudinaryService.uplodImg(theFile).subscribe({
-//         next:(res)=>{
-    
-//           if(this.myForm.get('img1')?.value=='')
-//                   {
-//             this.myForm.get('img1')?.setValue(res.secure_url);
-//                   }
-//                   else
-//                   {
-//             this.myForm.get('img2')?.setValue(res.secure_url);
-            
-//                   }
-//                         this.saveUserData();
-          
-//     this._Router.navigate(['/home']);
-                  
-//         },
-//         error:(error)=>{
-//           this.load=false;
-//         }
-//       })
-//     }
-// }
 saveUserData()
 {
   const id=localStorage.getItem('userId');
-  console.log(id);
   const docRef=doc(this._Firestore,`users/${id}`);
   updateDoc(docRef,this.myForm.value);
 this.getMyData();
-  localStorage.setItem("userDataTaken",'true');
 }
 
 
@@ -197,9 +192,9 @@ const myId:string=localStorage.getItem("userId")||'';
     this._FireService.getMyData(myId).subscribe({
       next:(res)=>{
     this.myForm.patchValue(res);
-    this.img1Url=res.img2;
+    this.img1Url=res.img1;
     localStorage.setItem('user',JSON.stringify(res));
-    this.img2Url=res.img1;
+    this.img2Url=res.img2;
     
       }
     })

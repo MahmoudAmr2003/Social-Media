@@ -1,23 +1,26 @@
-<div *ngIf="!reset" class="container mt-5 py-5 col-md-6 col-11 shadow" style="max-width: 600px;">
-  <h1 style="font-weight: 800;" class="text-primary">LogIn</h1>
-  <form [formGroup]="login" (ngSubmit)="logIn(login)" class="mt-3 formAuth">
+<div *ngIf="!reset" class="container mt-5 py-3 col-md-6 col-11 " style="max-width: 900px;">
+  <h1 style="font-weight: 800; font-weight: 800;" class="text-black text-center">LogIn</h1>
+  <form [formGroup]="login" (ngSubmit)="logIn(login)" class=" formAuth w-75 mx-auto">
     
 
-    <div class="form-group mb-3">
-      <label>Email address</label>
-      <input type="email" class="w-100" formControlName="email" name="email" required>
+    <div class="form-group d-flex justify-content-center  mb-4">
+     <div class="w-100">
+       <label class="d-block">Email address</label>
+      <input type="email" class="w-100" formControlName="email" name="email" required placeholder="Email">
 
       <div *ngIf="login.get('email')?.touched && login.get('email')?.invalid" class="text-danger mt-1">
         <div *ngIf="login.get('email')?.errors?.['required']">Email is required</div>
         <div *ngIf="login.get('email')?.errors?.['email']">Please enter a valid email address</div>
         <div *ngIf="login.get('email')?.errors?.['pattern']">Invalid email format</div>
       </div>
+     </div>
     </div>
 
    
-    <div class="form-group mb-3">
-      <label>Password</label>
-      <input type="password" class="w-100" formControlName="password" name="password" required>
+    <div class="form-group d-flex justify-content-center  mb-4">
+     <div class="w-100">
+       <label class="d-block">Password</label>
+      <input type="password" class="w-100" formControlName="password" name="password" required placeholder="Password">
 
       <div *ngIf="login.get('password')?.touched && login.get('password')?.invalid" class="text-danger mt-1">
         <div *ngIf="login.get('password')?.errors?.['required']">Password is required</div>
@@ -25,27 +28,56 @@
         <div *ngIf="login.get('password')?.errors?.['maxlength']">Password must not exceed 20 characters</div>
         <div *ngIf="login.get('password')?.errors?.['pattern']">Password must contain only letters and numbers (English or Arabic)</div>
       </div>
+    <p (click)="reset=true" class="my-0 w-75 "><a style="color: blue; cursor: pointer;">Forget Password?</a></p>
+
+     </div>
+
     </div>
 
-    <p (click)="reset=true" class="my-0"><a style="color: blue; cursor: pointer;">Forget Password?</a></p>
 
-    <button type="submit" class="btn btn-primary w-75 mt-5" [disabled]="login.invalid">Log In</button>
-
-    <div class="py-2">
+  <div class="d-flex justify-content-center my-3"> 
+     <div class="w-100">
+       <button type="submit" class="btn btn-dark mx-auto w-100 mt-2" [disabled]="login.invalid" style="border-radius: 0 !important;">Log In</button>
       <p class="mt-0"><a routerLink="/resign">Sign Up</a> if you don’t have an account</p>
+
+     </div>
+  </div>
+
+     
+<div class="inLine d-flex  justify-content-center align-items-center px-2" style="height: 30px; ">
+ <div>
+  
+   <p >LogIn With Other</p>
+  
+    
+    
+
+ </div>
+
+</div>
+
+    <div class=" d-flex justify-content-center">
+  <button type="button"
+        (click)="logInWithGoogle()"
+        class="flex items-center mt-3 btn   w-100 m-auto  "
+    style="border:  solid rgba(0, 0, 0, 0.222) 0.009px; border-radius: 0 !important;"  >
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width: 30px;">
+        <span class="text-sm font-medium text-gray-700">Google</span>
+      </button>
     </div>
   </form>
 
   <div *ngIf="load==true" [hidden]="!load" class="w-100 d-flex justify-content-center align-items-center " style="height: 100%; position:absolute; top: 0;">
     <app-loading></app-loading>
   </div>
+ 
 </div>
 
 
 
 
 <div *ngIf="reset" class="d-flex justify-content-center align-items-center " style="height: 80vh;">
-  <div class="formAuth w-100 shadow-lg p-4" style="max-width: 600px; position: relative;">
+  <div class="formAuth w-100 -lg p-4" style="max-width: 600px; position: relative;">
   <h4>Reset Password</h4>
 <div (click)="reset=false" style="position: absolute; top: 20px; right: 20px;">
 <i class="fa-solid fa-circle-xmark"></i>
@@ -62,5 +94,5 @@
   {{ load ? ' ...LOADING' : ' Sign Up' }}
 </button>
   </div>
-
+iv class="line mb-4">
 </div>

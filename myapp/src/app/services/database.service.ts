@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, Injector, runInInjectionContext } from '@angular/core';
 import { addDoc, collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { getDoc } from 'firebase/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -45,12 +46,23 @@ export class DatabaseService {
 async postUserData(form:any,id:string)
 {
 return await runInInjectionContext(this.injector,()=>{
+  const UserData={
+email:form.email,
+name:form.displayName,
+uid:id
+  }
   const collRef=doc(this.fireStore,`users/${id}`);
-   setDoc(collRef,{form,id});
+   setDoc(collRef,{UserData,id});
 
 })
 }
-
+checkIfUserExist(uId:string):Promise<boolean>
+{
+  return runInInjectionContext(this.injector, () => {
+    const docRef = doc(this.fireStore, `users/${uId}`);
+    return getDoc(docRef).then(docBack => docBack.exists());
+  });
+}
 
 // 
 

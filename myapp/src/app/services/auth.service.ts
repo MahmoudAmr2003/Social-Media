@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable, Injector, runInInjectionContext } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { createUserWithEmailAndPassword ,Auth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail} from '@angular/fire/auth';
@@ -10,6 +10,7 @@ import { createUserWithEmailAndPassword ,Auth, signInWithEmailAndPassword, Googl
 })
 export class AuthService {
   userId=new BehaviorSubject<string>(localStorage.getItem("userId")||'');
+  private injector=inject(Injector);
   $userId=this.userId.asObservable();
 //  counter=new BehaviorSubject<number>(9);
 // $conter=this.counter.asObservable();
@@ -55,23 +56,6 @@ async resstPassword(email:string)
 return  await sendPasswordResetEmail(this.auth,email)
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
-
-// increament()
-// {
-//  this.counter.next(this.counter.getValue()+1);
-// }

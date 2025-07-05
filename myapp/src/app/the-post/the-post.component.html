@@ -1,6 +1,6 @@
 
-<ng-container *ngIf="allPosts; else noPosts" class="col-12" >
-    <div    *ngFor="let post of allPosts;let n=index;trackBy:trackById"  class="post my-3 shadow-lg mt-2  text-white col-12" style="font-weight: 500;position: relative;"> 
+<ng-container *ngIf="allPosts; else noPosts" class="col-12 " >
+    <div    *ngFor="let post of allPosts;let n=index;trackBy:trackById"  class="post my-3 shadow-lg mt-2  text-white col-12" style="font-weight: 500;position: relative;z-index: 0;"> 
      
  <div class="d-flex justify-content-center align-items-center" >
     
@@ -25,16 +25,16 @@
             
                 </div>
                 
-                <div class="mx-3 text-dark">
-                <h4>{{post.userData.name}}</h4>
-                <p class=" m-0">{{post.date.toDate()|date:'short'}}</p>
+                <div class="mx-3 ">
+                <h4 class="text-dark">{{post.userData.name}}</h4>
+                <p class="date m-0">{{post.date.toDate()|date:'short'}}</p>
                 </div>
            </div>
            <div (click)="showAndaHideMore(n,post.docId)" class="more d-flex justify-content-center align-items-center text-dark" style="width: 40px ;height: 40px ; border: solid rgba(0, 0, 0, 0.267) 0.1px; border-radius: 50%; ">
             <i class="bi bi-three-dots-vertical "></i>
          </div>
     
-     <div *ngIf="indexOfMore==n" class="" style="position: absolute; top: 60px; right: 20px; width: 200px;">
+     <div *ngIf="indexOfMore==n" class="" style="position:absolute; top: 60px; right: 20px; width: 200px; z-index: 0;">
       
        <ul class="w-100 px-0 py-2" style="list-style: none; background-color: white; color: black; padding: 20px 10px; ">
         <li (click)="pushUserInSaver(post.docId)" class="w-100 p-2 my-1 d-flex justify-content-between align-items-center">
@@ -128,7 +128,7 @@
       
       <!-- Spacer to push input to bottom -->
       <div class="d-flex justify-content-center py-2">
-        <div class="mt-auto pt-2 border-top col-md-5 mx-auto  col-11 px-3 " style="position: fixed;bottom: 5px; background-color: white; z-index: 99999999;">
+        <div class="mt-auto pt-2 border-top col-md-5 mx-auto  col-11 px-3 " style="position: fixed;bottom: 5px; background-color: white; z-index: 0;">
           <div class="input-group">
           <input [(ngModel)]="comment"
                  type="text"
@@ -182,5 +182,7 @@
 </div>
     </div>
   </div>
+
+
 
   <!-- post-detail.component.html -->

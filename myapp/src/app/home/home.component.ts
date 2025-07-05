@@ -28,12 +28,7 @@ constructor(private _FireService:FireService, private _Router:Router,private _Au
 {
 }
 ngOnInit(): void {
-    const shouldReload = localStorage.getItem('reloadOnce');
 
-  if (shouldReload === 'true') {
-    localStorage.removeItem('reloadOnce'); // نحذفه عشان متعملش ريلود تاني
-    window.location.reload();
-  }
 this._AuthService.isLogged.next(true);  
 this.getMyData();
 

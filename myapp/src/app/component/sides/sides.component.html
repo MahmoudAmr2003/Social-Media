@@ -7,8 +7,8 @@
 
             <div class="mb-1 px-3">
                 
-                <img  [src]="imgUrl" alt="" class="smallImg" style="margin-right:0px;">
-      
+                <img *ngIf="imgUrl"  [src]="imgUrl" alt="" class="smallImg" style="margin-right:0px;">
+      <img  *ngIf="!imgUrl"   src="/mmm/user.png" alt="">
        
 
             </div>

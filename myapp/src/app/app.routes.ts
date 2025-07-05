@@ -110,6 +110,7 @@ loadComponent:()=>import('./chat/chat.component').then(x=>x.ChatComponent)
         path:'savedPosts',
         canActivate:[mygardGuard],
         loadComponent:()=>import('./saved-posts/saved-posts.component').then(m=>m.SavedPostsComponent)
-      }
+      },
+    {path:"**",redirectTo:'login',pathMatch:'full'},
 
 ];
